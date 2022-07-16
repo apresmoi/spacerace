@@ -8,6 +8,15 @@ export type IPosition = {
   y: number;
 };
 
+export type ICellType =
+  | "NEUTRAL"
+  | "START"
+  | "END"
+  | "SUPERNOVAE"
+  | "SATURN"
+  | "KUIPER"
+  | "METEOR";
+
 export type IItem =
   | "ROCKET_TIP"
   | "ROCKET_BODY"
@@ -15,7 +24,7 @@ export type IItem =
   | "ROCKET_FIRE";
 
 export type ICell = IPosition & {
-  type: string;
+  type: ICellType;
   item?: IItem;
 };
 
