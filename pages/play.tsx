@@ -5,7 +5,7 @@ import { RoomList } from "../components/RoomList";
 import { CreateRoom } from "../components/CreateRoom";
 import { GameRoom } from "../components/GameRoom";
 
-const Home: NextPage = () => {
+const Play: NextPage = () => {
   return (
     <div style={{ color: "white" }}>
       <Head>
@@ -15,10 +15,8 @@ const Home: NextPage = () => {
       </Head>
       <GameRoom />
       <ChatWindow />
-      <RoomList />
-      <CreateRoom />
     </div>
   );
 };
 
-export default Home;
+export default Play;

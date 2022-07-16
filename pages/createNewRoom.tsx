@@ -23,7 +23,7 @@ const CreateNewRoom: NextPage = () => {
             Choose a room name <br />
             <small className={styles.small}>(min 6 characters)</small>
           </h1>
-          <CreateRoom />
+          <CreateRoom onCreate={() => router.push("/play")} />
         </div>
       </div>
     </Container>

@@ -34,8 +34,6 @@ export function Cells() {
             style={{
               gridArea: `cell${x}${y}`,
               background: getColor(getBlock(room, x, y)),
-              height: "100%",
-              width: "100%",
               border: `1px solid black`,
             }}
           >

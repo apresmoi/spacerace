@@ -3,7 +3,12 @@ import { useAppStore } from "../../store";
 import { useSocketStore } from "../../store/SocketStore";
 import styles from "./CreateRoom.module.scss";
 
-export function CreateRoom() {
+interface CreateRoomProps {
+  onCreate?: () => {};
+}
+
+export function CreateRoom(props: CreateRoomProps) {
+  const { onCreate } = props;
   const { createRoom, name } = useAppStore();
   const { connect } = useSocketStore();
 
@@ -19,9 +24,12 @@ export function CreateRoom() {
 
   const handleRoomCreate = React.useCallback(() => {
     createRoom(roomName).then((room) => {
-      if (room) connect(room.id, name);
+      if (room) {
+        connect(room.id, name);
+        onCreate?.();
+      }
     });
-  }, [roomName, createRoom, name]);
+  }, [roomName, createRoom, name, onCreate]);
 
   return (
     <div className={styles.createRoom}>
