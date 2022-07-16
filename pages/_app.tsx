@@ -5,6 +5,7 @@ import {
   SocketStoreProvider,
   AppStoreProvider,
   ChatStoreProvider,
+  GameStore,
 } from "../store";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -13,7 +14,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <SocketStoreProvider>
         <AppStoreProvider>
           <ChatStoreProvider>
-            <Component {...pageProps} />
+            <GameStore>
+              <Component {...pageProps} />
+            </GameStore>
           </ChatStoreProvider>
         </AppStoreProvider>
       </SocketStoreProvider>

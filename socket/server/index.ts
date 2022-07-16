@@ -6,6 +6,7 @@ import {
   handleRoomPlayerJoin,
   handleRoomPlayerLeave,
   handleRoomPlayerMessageSend,
+  handleRoomPlayerStart,
   handleRoomPlayerTryDice,
   handleRoomPlayerTryMove,
 } from "./handler/room";
@@ -49,6 +50,7 @@ export function socketHandler(res: SocketNextApiResponse<any>) {
         handleRoomPlayerJoin(room, server, socket, player);
         handleRoomPlayerLeave(room, roomStore, socket, player);
 
+        handleRoomPlayerStart(room, socket, player);
         handleRoomPlayerMessageSend(room, socket, server, player);
         handleRoomPlayerTryDice(room, socket, server, player);
         handleRoomPlayerTryMove(room, socket, server, player);

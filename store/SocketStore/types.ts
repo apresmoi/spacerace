@@ -16,6 +16,7 @@ import {
   SocketRoomPlayerRollDicePayload,
   SocketRoomPlayerMovedPayload,
   SocketRoomPlayerMessagePayload,
+  SocketRoomPlayerStartPayload,
 } from "../../socket/types";
 
 //SocketRoomSubscribers
@@ -36,6 +37,7 @@ export type SocketStoreSubscribers = MakeOverloadings<
 >;
 
 export type SocketEmitterMap = {
+  [SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_START]: SocketRoomPlayerStartPayload;
   [SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_TRY_MOVE]: SocketRoomPlayerTryMovePayload;
   [SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_TRY_DICE]: SocketRoomPlayerTryDicePayload;
   [SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_MESSAGE_SEND]: SocketRoomPlayerMessageSendPayload;
@@ -47,7 +49,7 @@ export type SocketStoreEmitters = MakeOverloadings<
 
 export interface ISocketStore {
   connected: boolean;
-  
+
   connect: (id: string, name: string) => void;
   disconnect: () => void;
 

@@ -4,9 +4,25 @@ import React from "react";
 import {
   IPosition,
   SocketRoomPlayerMessageSendPayload,
+  SocketRoomPlayerStartPayload,
   SocketRoomPlayerTryDicePayload,
   SocketRoomPlayerTryMovePayload,
 } from "../../socket/types";
+
+export function useRoomPlayerStart() {
+  const { emitInmediate } = useSocketStore();
+
+  return React.useMemo(() => {
+    const handler = (payload: SocketRoomPlayerStartPayload) => {
+      if (emitInmediate)
+        emitInmediate(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_START, payload);
+    };
+
+    return () => {
+      handler({});
+    };
+  }, [emitInmediate]);
+}
 
 export function useRoomPlayerTryMove() {
   const { emitInmediate } = useSocketStore();

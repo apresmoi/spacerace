@@ -1,9 +1,9 @@
 import * as React from "react";
-import { IRoom } from "../socket/types";
+import { IRoom, IRoomList } from "../socket/types";
 import { useSocketStore } from "./SocketStore";
 
 type IAppStoreContext = {
-  rooms: (Pick<IRoom, "id" | "name"> & { playerCount: number })[];
+  rooms: IRoomList[];
   updateRooms: () => void;
   createRoom: (name: string) => Promise<IRoom>;
   name: string;
@@ -30,7 +30,7 @@ export function AppStoreProvider(props: React.PropsWithChildren<{}>) {
     setName(localStorage.getItem("name") || "");
   }, []);
 
-  const [rooms, setRooms] = React.useState<Pick<IRoom, "id" | "name">[]>([]);
+  const [rooms, setRooms] = React.useState<IRoomList[]>([]);
 
   const changeName = React.useCallback((name: string) => {
     localStorage.setItem("name", name);
