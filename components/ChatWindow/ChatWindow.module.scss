@@ -1,18 +1,23 @@
 .chatWindow {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 300px;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  height: 200px;
+  width: 200px;
   border: 1px solid white;
   .chatWindowMessages {
     padding: 12px;
+    height: calc(200px - 45px);
+    background: black;
 
     .chatWindowMessage {
-        padding: 2px;
+      padding: 2px;
     }
   }
   .chatWindowInput {
     padding: 12px 6px;
     display: flex;
+    height: 45px;
   }
 }

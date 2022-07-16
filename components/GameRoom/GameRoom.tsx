@@ -1,5 +1,5 @@
 import React from "react";
-import { useGame } from "../../store";
+import { useGame, useSocketStore } from "../../store";
 import { ChatWindow } from "../ChatWindow";
 import { Background } from "./Background";
 import { Board } from "./Board";
@@ -13,13 +13,13 @@ interface GameRoomProps {
 
 export function GameRoom(props: GameRoomProps) {
   const { onNotLoggedIn } = props;
-  const { room } = useGame();
+  const { connected } = useSocketStore();
 
   React.useEffect(() => {
-    if (!room) onNotLoggedIn?.();
-  }, [room]);
+    if (!connected) onNotLoggedIn?.();
+  }, [connected]);
 
-  if (!room) return null;
+  if (!connected) return null;
 
   return (
     <div className={styles.gameRoom}>
