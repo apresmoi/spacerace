@@ -25,9 +25,23 @@ export function CreateRoom() {
 
   return (
     <div className={styles.createRoom}>
-      <label>New room name</label>
-      <input value={roomName} onChange={handleRoomNameChange} />
-      <button onClick={handleRoomCreate}>Create</button>
+      <h1 className={styles.label}>New room name</h1>
+      <input
+        className={styles.input}
+        type="text"
+        placeholder="Room Name"
+        onChange={handleRoomNameChange}
+        value={roomName}
+        required
+        minLength={6}
+      />
+      <button
+        className={styles.button}
+        disabled={roomName.length < 6}
+        onClick={handleRoomCreate}
+      >
+        Create Room!
+      </button>
     </div>
   );
 }

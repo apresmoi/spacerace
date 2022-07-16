@@ -8,10 +8,9 @@ import { RoomList } from "../components/RoomList";
 
 const Rooms: NextPage = () => {
   const router = useRouter();
-  const interval = React.useRef<NodeJS.Timeout>();
 
   const handleCreateRoom = React.useCallback(() => {
-    router.push("/create-room");
+    router.push("/createNewRoom");
   }, []);
 
   return (
