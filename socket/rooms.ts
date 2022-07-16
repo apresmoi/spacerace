@@ -211,8 +211,11 @@ class Room {
       (cell) => cell.x === position.x && cell.y === position.y
     );
 
-    if (cell && cell.item) {
-      this.playerPickupItem(playerID, cell.item, { x: cell.x, y: cell.y });
+    const player = this.getPlayerById(playerID);
+
+    if (player && cell && cell.item && !player.inventory.includes(cell.item)) {
+      player.inventory.push(cell.item);
+      this.triggerPickupItem(player, cell.item, { x: cell.x, y: cell.y });
       cell.item = undefined;
     }
   };
@@ -232,16 +235,12 @@ class Room {
     }
   };
 
-  private playerPickupItem = (
-    playerID: string,
+  private triggerPickupItem = (
+    player: IPlayer,
     item: IItem,
     position: IPosition
   ) => {
-    const player = this.getPlayerById(playerID);
-    if (player) {
-      player.inventory.push(item);
-      this.trigger("onPickUpItem", player, item, position);
-    }
+    this.trigger("onPickUpItem", player, item, position);
   };
 
   private triggerStart = () => {
