@@ -27,6 +27,9 @@ export function GameUI() {
           </div>
         ))}
       </div>
+      <div>
+        Dice: {room.currentDice?.[0]} / {room.currentDice?.[1]}
+      </div>
     </div>
   );
 }

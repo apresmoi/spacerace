@@ -2,9 +2,11 @@ import React from "react";
 import { ICell } from "../../../socket/types";
 import { getBlockId, getCellColor } from "../utils";
 import styles from "../GameRoom.module.scss";
+import { className } from "../../../utils/classnames";
 
 interface CellProps {
   cell: ICell;
+  highlight?: boolean;
 }
 
 export function Cell(props: CellProps) {
@@ -12,7 +14,10 @@ export function Cell(props: CellProps) {
 
   return (
     <div
-      className={styles.cell}
+      className={className(
+        styles.cell,
+        props.highlight && styles.highlight
+      )}
       style={{
         gridArea: getBlockId(cell.x, cell.y),
       }}
