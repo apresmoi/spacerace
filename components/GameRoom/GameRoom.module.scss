@@ -19,7 +19,8 @@
     margin: auto;
 
     .cell,
-    .player {
+    .player,
+    .cellItem {
       padding: 0;
       margin: 0;
       overflow: hidden;
@@ -36,20 +37,15 @@
         border: 1px solid green;
       }
     }
-  }
 
-  .background,
-  .starsBackground {
-    z-index: 0;
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    left: 0;
-    top: 0;
-    overflow: hidden;
-    svg {
-      position: absolute;
-      min-height: 100vh;
+    .cellItem {
+      svg {
+        margin-left: 25%;
+        margin-top: 25%;
+        padding: 0;
+        width: 50%;
+        height: 50%;
+      }
     }
   }
 

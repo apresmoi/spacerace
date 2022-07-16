@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { getRandomName } from "../utils/names";
-import { IPlayer, IPosition, IRoom, IRoomSubscribers } from "./types";
+import { IItem, IPlayer, IPosition, IRoom, IRoomSubscribers } from "./types";
 
 class Room {
   _room: IRoom;
@@ -9,6 +9,7 @@ class Room {
     onPlayerMove: [],
     onTurnChange: [],
     onStart: [],
+    onPickUpItem: [],
   };
 
   subscribe = (
@@ -49,12 +50,12 @@ class Room {
       cells: [
         { x: 7, y: 0, type: "space" },
         { x: 8, y: 0, type: "space" },
-        { x: 9, y: 0, type: "space" },
+        { x: 9, y: 0, type: "space", item: "ROCKET_FIRE" },
         { x: 10, y: 0, type: "space" },
 
         { x: 0, y: 1, type: "space" },
         { x: 1, y: 1, type: "space" },
-        { x: 2, y: 1, type: "space" },
+        { x: 2, y: 1, type: "space", item: "ROCKET_BODY" },
         { x: 7, y: 1, type: "space" },
         { x: 10, y: 1, type: "space" },
         { x: 11, y: 1, type: "space" },
@@ -62,18 +63,18 @@ class Room {
         { x: 0, y: 2, type: "space" },
         { x: 2, y: 2, type: "space" },
         { x: 3, y: 2, type: "space" },
-        { x: 4, y: 2, type: "space" },
+        { x: 4, y: 2, type: "space", item: "ROCKET_BODY" },
         { x: 5, y: 2, type: "space" },
         { x: 6, y: 2, type: "space" },
-        { x: 7, y: 2, type: "space" },
+        { x: 7, y: 2, type: "space", item: "ROCKET_FIRE" },
         { x: 8, y: 2, type: "space" },
         { x: 11, y: 2, type: "space" },
 
-        { x: 0, y: 3, type: "space" },
+        { x: 0, y: 3, type: "space", item: "ROCKET_BODY" },
         { x: 1, y: 3, type: "space" },
         { x: 4, y: 3, type: "space" },
-        { x: 8, y: 3, type: "space" },
-        { x: 10, y: 3, type: "space" },
+        { x: 8, y: 3, type: "space", item: "ROCKET_FIRE" },
+        { x: 10, y: 3, type: "space", item: "ROCKET_FIRE" },
         { x: 11, y: 3, type: "space" },
 
         { x: 1, y: 4, type: "space" },
@@ -83,12 +84,12 @@ class Room {
         { x: 9, y: 4, type: "space" },
         { x: 10, y: 4, type: "space" },
 
-        { x: 2, y: 5, type: "space" },
+        { x: 2, y: 5, type: "space", item: "ROCKET_BODY" },
         { x: 3, y: 5, type: "space" },
-        { x: 4, y: 5, type: "space" },
+        { x: 4, y: 5, type: "space", item: "ROCKET_FINS" },
         { x: 5, y: 5, type: "space" },
         { x: 7, y: 5, type: "space" },
-        { x: 8, y: 5, type: "space" },
+        { x: 8, y: 5, type: "space", item: "ROCKET_TIP" },
         { x: 10, y: 5, type: "space" },
         { x: 11, y: 5, type: "space" },
 
@@ -96,31 +97,31 @@ class Room {
         { x: 5, y: 6, type: "space" },
         { x: 6, y: 6, type: "space" },
         { x: 7, y: 6, type: "space" },
-        { x: 11, y: 6, type: "space" },
+        { x: 11, y: 6, type: "space", item: "ROCKET_TIP" },
 
         { x: 1, y: 7, type: "space" },
-        { x: 2, y: 7, type: "space" },
+        { x: 2, y: 7, type: "space", item: "ROCKET_FINS" },
         { x: 5, y: 7, type: "space" },
         { x: 7, y: 7, type: "space" },
         { x: 11, y: 7, type: "space" },
 
         { x: 1, y: 8, type: "space" },
-        { x: 5, y: 8, type: "space" },
+        { x: 5, y: 8, type: "space", item: "ROCKET_FINS" },
         { x: 7, y: 8, type: "space" },
         { x: 8, y: 8, type: "space" },
         { x: 10, y: 8, type: "space" },
-        { x: 11, y: 8, type: "space" },
+        { x: 11, y: 8, type: "space", item: "ROCKET_TIP" },
         { x: 12, y: 8, type: "space" },
 
         { x: 1, y: 9, type: "space" },
         { x: 2, y: 9, type: "space" },
-        { x: 4, y: 9, type: "space" },
+        { x: 4, y: 9, type: "space", item: "ROCKET_FINS" },
         { x: 5, y: 9, type: "space" },
         { x: 8, y: 9, type: "space" },
         { x: 9, y: 9, type: "space" },
         { x: 10, y: 9, type: "space" },
 
-        { x: 2, y: 10, type: "space" },
+        { x: 2, y: 10, type: "space", item: "ROCKET_TIP" },
         { x: 3, y: 10, type: "space" },
         { x: 4, y: 10, type: "space" },
       ],
@@ -161,6 +162,7 @@ class Room {
       id,
       name,
       ...this._room.playerStartPosition,
+      inventory: [],
       isAdmin: this.getPlayerCount() === 0,
     };
     this._room.players.push(player);
@@ -204,12 +206,24 @@ class Room {
     this._room.players = this._room.players.map((player) =>
       player.id === playerID ? { ...player, ...position } : player
     );
+
+    const cell = this._room.cells.find(
+      (cell) => cell.x === position.x && cell.y === position.y
+    );
+
+    const player = this.getPlayerById(playerID);
+
+    if (player && cell && cell.item && !player.inventory.includes(cell.item)) {
+      player.inventory.push(cell.item);
+      this.triggerPickupItem(player, cell.item, { x: cell.x, y: cell.y });
+      cell.item = undefined;
+    }
   };
 
   private rollDice = () => {
     this._room.currentDice = [
-      Math.floor(Math.random() * 6),
-      Math.floor(Math.random() * 6),
+      Math.floor(Math.random() * 5 + 1),
+      Math.floor(Math.random() * 5 + 1),
     ];
   };
 
@@ -219,6 +233,14 @@ class Room {
       this._room.currentTurnPlayerID = nextPlayer.id;
       this._room.turnStage = "WAITING_FOR_ROLL";
     }
+  };
+
+  private triggerPickupItem = (
+    player: IPlayer,
+    item: IItem,
+    position: IPosition
+  ) => {
+    this.trigger("onPickUpItem", player, item, position);
   };
 
   private triggerStart = () => {

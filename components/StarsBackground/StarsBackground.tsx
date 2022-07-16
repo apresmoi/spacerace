@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./GameRoom.module.scss";
+import styles from "./StarsBackground.module.scss";
 
 export function StarsBackground() {
   return (

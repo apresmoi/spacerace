@@ -1,7 +1,7 @@
 import React from "react";
 import { useGame, useSocketStore } from "../../store";
 import { ChatWindow } from "../ChatWindow";
-import { Background } from "./Background";
+import { Background } from "../Background";
 import { Board } from "./Board";
 import { Cells } from "./Cells";
 import styles from "./GameRoom.module.scss";

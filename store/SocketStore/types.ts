@@ -17,7 +17,8 @@ import {
   SocketRoomPlayerMovedPayload,
   SocketRoomPlayerMessagePayload,
   SocketRoomPlayerStartPayload,
-  SocketRoomStartedPayload
+  SocketRoomStartedPayload,
+  SocketRoomPlayerPickedUpItemPayload,
 } from "../../socket/types";
 
 //SocketRoomSubscribers
@@ -32,6 +33,7 @@ export type SocketEventsMap = {
   [SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_MOVED]: SocketRoomPlayerMovedPayload;
   [SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_MESSAGE]: SocketRoomPlayerMessagePayload;
   [SOCKET_SERVER_TO_CLIENT.ROOM_STARTED]: SocketRoomStartedPayload;
+  [SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_PICKED_UP_ITEM]: SocketRoomPlayerPickedUpItemPayload;
 };
 
 export type SocketStoreSubscribers = MakeOverloadings<

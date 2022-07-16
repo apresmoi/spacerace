@@ -5,6 +5,7 @@ import {
   useRoomPlayerStart,
   useRoomPlayerTryDice,
   useRoomPlayerTryMove,
+  useSocketPlayerPickupItem,
   useSocketRoomJoined,
   useSocketRoomPlayerJoined,
   useSocketRoomPlayerLeft,
@@ -129,6 +130,30 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
         ...room,
         started: true,
         startedAt: new Date(payload.startedAt),
+      };
+    });
+  });
+
+  useSocketPlayerPickupItem((payload) => {
+    setRoom((room) => {
+      if (!room) return room;
+
+      return {
+        ...room,
+        cells: room.cells.map((cell) => {
+          if (cell.x === payload.position.x && cell.y === payload.position.y) {
+            return {
+              ...cell,
+              item: undefined,
+            };
+          }
+          return cell;
+        }),
+        players: room.players.map((player) =>
+          player.id === payload.playerID
+            ? { ...player, inventory: [...player.inventory, payload.item] }
+            : player
+        ),
       };
     });
   });
