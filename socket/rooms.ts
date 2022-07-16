@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { getRandomName } from "../utils/names";
-import { IPlayer, IPosition, IRoom, IRoomSubscribers } from "./types";
+import { IItem, IPlayer, IPosition, IRoom, IRoomSubscribers } from "./types";
 
 class Room {
   _room: IRoom;
@@ -9,6 +9,7 @@ class Room {
     onPlayerMove: [],
     onTurnChange: [],
     onStart: [],
+    onPickUpItem: [],
   };
 
   subscribe = (
@@ -161,6 +162,7 @@ class Room {
       id,
       name,
       ...this._room.playerStartPosition,
+      inventory: [],
       isAdmin: this.getPlayerCount() === 0,
     };
     this._room.players.push(player);
@@ -204,6 +206,15 @@ class Room {
     this._room.players = this._room.players.map((player) =>
       player.id === playerID ? { ...player, ...position } : player
     );
+
+    const cell = this._room.cells.find(
+      (cell) => cell.x === position.x && cell.y === position.y
+    );
+
+    if (cell && cell.item) {
+      this.playerPickupItem(playerID, cell.item, { x: cell.x, y: cell.y });
+      cell.item = undefined;
+    }
   };
 
   private rollDice = () => {
@@ -218,6 +229,18 @@ class Room {
       const nextPlayer = this.getNextPlayer(this._room.currentTurnPlayerID);
       this._room.currentTurnPlayerID = nextPlayer.id;
       this._room.turnStage = "WAITING_FOR_ROLL";
+    }
+  };
+
+  private playerPickupItem = (
+    playerID: string,
+    item: IItem,
+    position: IPosition
+  ) => {
+    const player = this.getPlayerById(playerID);
+    if (player) {
+      player.inventory.push(item);
+      this.trigger("onPickUpItem", player, item, position);
     }
   };
 
