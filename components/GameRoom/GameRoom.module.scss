@@ -14,7 +14,8 @@
     margin: auto;
 
     .cell,
-    .player {
+    .player,
+    .cellItem {
       padding: 0;
       margin: 0;
       overflow: hidden;
@@ -29,6 +30,16 @@
 
       &.highlight {
         border: 1px solid green;
+      }
+    }
+
+    .cellItem {
+      svg {
+        margin-left: 25%;
+        margin-top: 25%;
+        padding: 0;
+        width: 50%;
+        height: 50%;
       }
     }
   }

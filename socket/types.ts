@@ -10,6 +10,7 @@ export type IPosition = {
 
 export type ICell = IPosition & {
   type: string;
+  item?: "ROCKET_TIP" | "ROCKET_BODY" | "ROCKET_FINS" | "ROCKET_FIRE";
 };
 
 export type IMessage = {

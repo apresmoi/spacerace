@@ -2,6 +2,7 @@ import React from "react";
 import { ICell, IPosition, IRoom } from "../../socket/types";
 import { useGame } from "../../store";
 import { Cell } from "./components/Cell";
+import { CellItem } from "./components/CellItem";
 import { findCellByPosition, getBlockId, getPosibleMovements } from "./utils";
 
 export function Cells() {
@@ -52,6 +53,11 @@ export function Cells() {
           onClick={handleCellClick}
         />
       ))}
+      {room.cells
+        .filter((x) => x.item)
+        .map((cell) => (
+          <CellItem key={getBlockId(cell.x, cell.y)} cell={cell} />
+        ))}
     </>
   );
 }

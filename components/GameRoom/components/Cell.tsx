@@ -3,6 +3,7 @@ import { ICell } from "../../../socket/types";
 import { getBlockId, getCellColor } from "../utils";
 import styles from "../GameRoom.module.scss";
 import { className } from "../../../utils/classnames";
+import { CellItem } from "./CellItem";
 
 interface CellProps {
   cell: ICell;
