@@ -37,9 +37,9 @@ export function Cells() {
 
   const handleCellClick = React.useCallback(
     (cell: ICell) => {
-      tryMove({ x: cell.x, y: cell.y });
+      if (isBlockHighlighted(cell)) tryMove({ x: cell.x, y: cell.y });
     },
-    [tryMove]
+    [tryMove, isBlockHighlighted]
   );
 
   return (
