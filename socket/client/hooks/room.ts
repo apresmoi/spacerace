@@ -20,10 +20,10 @@ export function useSocketRoomJoined(
     };
 
     if (id) {
-      subscribe(SOCKET_SERVER_TO_CLIENT.PAGE_JOINED, handler);
+      subscribe(SOCKET_SERVER_TO_CLIENT.ROOM_JOINED, handler);
 
       return () => {
-        unsubscribe(SOCKET_SERVER_TO_CLIENT.PAGE_JOINED, handler);
+        unsubscribe(SOCKET_SERVER_TO_CLIENT.ROOM_JOINED, handler);
       };
     }
   }, [subscribe, unsubscribe, id, onJoin]);

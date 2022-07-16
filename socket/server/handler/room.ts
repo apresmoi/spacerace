@@ -13,11 +13,11 @@ import {
   emitRoomJoined,
   emitRoomPlayerJoined,
   emitRoomPlayerLeft,
-} from "../emitter/page";
+} from "../emitter/room";
 
-import { getPageRoom } from "../utils";
+import { getRoomID } from "../utils";
 
-export async function handlePageUserJoin(
+export async function handleRoomPlayerJoin(
   server: Server,
   socket: Socket,
   player: IPlayer
@@ -25,15 +25,15 @@ export async function handlePageUserJoin(
   const handler = async (payload: SocketRoomPlayerJoinPayload) => {
     console.log(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_JOIN, payload);
 
-    const pageRoom = getPageRoom(payload.id);
-    if (!socket.rooms.has(pageRoom)) {
-      socket.rooms.add(pageRoom);
+    const roomID = getRoomID(payload.id);
+    if (!socket.rooms.has(roomID)) {
+      socket.rooms.add(roomID);
     }
-    socket.join(pageRoom);
+    socket.join(roomID);
 
     const connectedPlayers = await (
-      await socket.in(pageRoom).fetchSockets<ConnectedSocketData>()
-    ).map((d) => d.data.user);
+      await socket.in(roomID).fetchSockets<ConnectedSocketData>()
+    ).map((d) => d.data.player);
 
     emitRoomPlayerJoined(socket, payload.id, {
       id: payload.id,
@@ -50,13 +50,13 @@ export async function handlePageUserJoin(
   socket.on(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_JOIN, handler);
 }
 
-export async function handlePageUserLeave(socket: Socket, player: IPlayer) {
+export async function handleRoomPlayerLeave(socket: Socket, player: IPlayer) {
   const handler = (payload: SocketRoomPlayerLeavePayload) => {
-    const pageRoom = getPageRoom(payload.id);
+    const roomID = getRoomID(payload.id);
 
     console.log(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_LEAVE, payload);
 
-    socket.leave(pageRoom);
+    socket.leave(roomID);
     emitRoomPlayerLeft(socket, payload.id, {
       id: payload.id,
       senderId: socket.id,

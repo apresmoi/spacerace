@@ -14,7 +14,7 @@ import {
 export type SocketEventsMap = {
   [SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_JOINED]: SocketRoomPlayerJoinedPayload;
   [SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_LEFT]: SocketRoomPlayerLeftPayload;
-  [SOCKET_SERVER_TO_CLIENT.PAGE_JOINED]: SocketRoomJoinedPayload;
+  [SOCKET_SERVER_TO_CLIENT.ROOM_JOINED]: SocketRoomJoinedPayload;
 };
 
 export type SocketStoreSubscribers = MakeOverloadings<

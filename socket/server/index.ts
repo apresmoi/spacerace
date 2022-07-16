@@ -2,10 +2,7 @@ import type { SocketNextApiResponse } from "next";
 import { Server as ServerIO, Socket } from "socket.io";
 import { Server as NetServer } from "http";
 
-import {
-  handlePageUserJoin,
-  handlePageUserLeave,
-} from "../server/handler/page";
+import { handleRoomPlayerJoin, handleRoomPlayerLeave } from "./handler/room";
 import { ConnectedSocket } from "../types";
 
 export function socketHandler(res: SocketNextApiResponse<any>) {
@@ -29,8 +26,8 @@ export function socketHandler(res: SocketNextApiResponse<any>) {
         player,
       };
 
-      handlePageUserJoin(server, socket, player);
-      handlePageUserLeave(socket, player);
+      handleRoomPlayerJoin(server, socket, player);
+      handleRoomPlayerLeave(socket, player);
     });
 
     server.on("disconnection", (socket: Socket) => {});
