@@ -40,6 +40,8 @@ export type IRoom = {
   id: string;
   name: string;
 
+  playerStartPosition: IPosition;
+
   players: IPlayer[];
   currentTurnPlayerID?: string;
 

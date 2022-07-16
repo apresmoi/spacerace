@@ -1,6 +1,6 @@
 import { Socket, Server } from "socket.io";
 import { SOCKET_CLIENT_TO_SERVER } from "../../constants";
-import RoomManager, { Room } from "../../store";
+import RoomManager, { Room } from "../../rooms";
 
 import {
   IDice,

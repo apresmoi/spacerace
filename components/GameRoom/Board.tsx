@@ -1,9 +1,6 @@
 import React from "react";
 import { useGame } from "../../store";
-import { Background } from "./Background";
-import { Cells } from "./Cells";
 import styles from "./GameRoom.module.scss";
-import { GameUI } from "./GameUI";
 import { getBlockId } from "./utils";
 
 export function Board(props: React.PropsWithChildren<{}>) {

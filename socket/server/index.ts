@@ -12,8 +12,8 @@ import {
 } from "./handler/room";
 import { ConnectedSocket } from "../types";
 import { getRandomName } from "../../utils/names";
-import store from "../store";
-import RoomManager from "../store";
+import store from "../rooms";
+import RoomManager from "../rooms";
 
 export function socketHandler(res: SocketNextApiResponse<any>) {
   if (!res.socket.server.io) {

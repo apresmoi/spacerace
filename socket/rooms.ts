@@ -43,6 +43,7 @@ class Room {
     this._room = {
       id: uuid(),
       name: name || getRandomName(),
+      playerStartPosition: { x: 12, y: 8 },
       players: [],
       cells: [
         { x: 7, y: 0, type: "space" },
@@ -158,8 +159,7 @@ class Room {
     const player = {
       id,
       name,
-      x: 0,
-      y: 0,
+      ...this._room.playerStartPosition,
       isAdmin: this.getPlayerCount() === 0,
     };
     this._room.players.push(player);

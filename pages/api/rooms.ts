@@ -2,7 +2,7 @@ import type { NextApiRequest, SocketNextApiResponse } from "next";
 import { socketHandler } from "../../socket/server";
 import { getRandomName } from "../../utils/names";
 import { v4 as uuid } from "uuid";
-import store from "../../socket/store";
+import store from "../../socket/rooms";
 
 export const config = {
   api: {

@@ -7,8 +7,6 @@ export function GameUI() {
     useGame();
   if (!room || !player || !turnPlayer) return null;
 
-  console.log(room, player);
-
   return (
     <div className={styles.gameUI}>
       {player.isAdmin && <button onClick={() => tryStart()}>Start Game</button>}

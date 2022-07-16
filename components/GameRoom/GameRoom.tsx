@@ -6,6 +6,7 @@ import { Board } from "./Board";
 import { Cells } from "./Cells";
 import styles from "./GameRoom.module.scss";
 import { GameUI } from "./GameUI";
+import { Players } from "./Players";
 import { StarsBackground } from "./StarsBackground";
 
 interface GameRoomProps {
@@ -28,6 +29,7 @@ export function GameRoom(props: GameRoomProps) {
       <StarsBackground />
       <Board>
         <Cells />
+        <Players />
       </Board>
       <GameUI />
       <ChatWindow />

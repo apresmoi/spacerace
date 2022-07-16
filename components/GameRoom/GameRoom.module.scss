@@ -13,9 +13,11 @@
     position: relative;
     margin: auto;
 
-    .cell {
+    .cell,
+    .player {
       padding: 0;
       margin: 0;
+      overflow: hidden;
       svg {
         margin: 0;
         padding: 0;
@@ -25,7 +27,8 @@
     }
   }
 
-  .background, .starsBackground {
+  .background,
+  .starsBackground {
     z-index: 0;
     position: absolute;
     width: 100vw;
