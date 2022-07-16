@@ -30,7 +30,7 @@ export function useGame() {
 }
 
 export function GameStore(props: React.PropsWithChildren<{}>) {
-  const [playerID, setPlayerID] = React.useState();
+  const [playerID, setPlayerID] = React.useState<string>();
   const [room, setRoom] = React.useState<IRoom>();
 
   const tryStart = useRoomPlayerStart();
@@ -52,8 +52,9 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
   }, [turnPlayer, player]);
 
   useSocketRoomJoined((payload) => {
-    setRoom(payload);
-    setPlayerID(payload.player.id);
+    console.log(payload);
+    setRoom(payload.room);
+    setPlayerID(payload.playerID);
   });
 
   useSocketRoomPlayerJoined((payload) => {

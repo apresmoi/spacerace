@@ -84,8 +84,9 @@ export type SocketRoomPlayerMessageSendPayload = {
 
 //server to client
 
-export type SocketRoomJoinedPayload = IRoom & {
-  player: IPlayer;
+export type SocketRoomJoinedPayload = {
+  room: IRoom;
+  playerID: string;
 };
 
 export type SocketRoomPlayerJoinedPayload = {

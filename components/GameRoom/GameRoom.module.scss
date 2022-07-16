@@ -1,16 +1,42 @@
 .gameRoom {
   position: relative;
+  display: flex;
 
   width: 100vw;
   height: 100vh;
 
   .board {
-    width: 100vh;
-    height: 100vh;
+    width: 80vh;
+    height: 80vh;
     display: grid;
+    z-index: 2;
+    position: relative;
+    margin: auto;
+
+    .cell {
+      padding: 0;
+      margin: 0;
+      svg {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 
   .background {
+    z-index: 0;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    svg {
+      position: absolute;
+      min-height: 100vh;
+    }
   }
 
   .gameUI {

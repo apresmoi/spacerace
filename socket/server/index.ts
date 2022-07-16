@@ -34,24 +34,21 @@ export function socketHandler(res: SocketNextApiResponse<any>) {
       const room = roomStore.getRoom(id);
 
       if (room) {
-        const player = {
-          id: socket.id,
-          name: name || getRandomName(),
-          x: 0,
-          y: 0,
-        };
+        const player = room.addPlayer(id, name);
 
-        socket.data = {
-          player,
-        };
+        if (player) {
+          socket.data = {
+            player,
+          };
 
-        handleRoomPlayerJoin(room, server, socket, player);
-        handleRoomPlayerLeave(room, roomStore, socket, player);
+          handleRoomPlayerJoin(room, server, socket, player);
+          handleRoomPlayerLeave(room, roomStore, socket, player);
 
-        handleRoomPlayerStart(room, socket, player);
-        handleRoomPlayerMessageSend(room, socket, server, player);
-        handleRoomPlayerTryDice(room, socket, server, player);
-        handleRoomPlayerTryMove(room, socket, server, player);
+          handleRoomPlayerStart(room, socket, player);
+          handleRoomPlayerMessageSend(room, socket, server, player);
+          handleRoomPlayerTryDice(room, socket, server, player);
+          handleRoomPlayerTryMove(room, socket, server, player);
+        }
       } else {
         socket.disconnect(true);
       }

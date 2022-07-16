@@ -123,7 +123,7 @@ class Room {
         { x: 4, y: 10, type: "space" },
       ],
       effects: [{ x: 0, y: 0, type: "storm" }],
-      height: 11,
+      height: 13,
       width: 13,
       currentTurnPlayerID: undefined,
       started: false,
@@ -152,12 +152,19 @@ class Room {
     return this._room.players.length;
   };
 
-  addPlayer = (player: IPlayer) => {
+  addPlayer = (id: string, name: string) => {
     if (this.getPlayerCount() === 4) return; //max 4 players
 
+    const player = {
+      id,
+      name,
+      x: 0,
+      y: 0,
+      isAdmin: this.getPlayerCount() === 0,
+    };
     this._room.players.push(player);
 
-    if (this.getPlayerCount() === 1) this._room.players[0].isAdmin = true;
+    return player;
   };
 
   removePlayer = (playerID: string) => {

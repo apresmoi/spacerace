@@ -9,7 +9,7 @@ const getBlock = (room: IRoom, x: number, y: number) => {
 };
 
 const getColor = (block?: ICell) => {
-  if (!block) return "black";
+  if (!block) return "transparent";
   switch (block.type) {
     case "space":
       return "gray";
@@ -33,11 +33,15 @@ export function Cell(props: CellProps) {
     <div
       style={{
         gridArea: getBlockId(x, y),
-        background: getColor(getBlock(room, x, y)),
-        border: `1px solid black`,
       }}
     >
-      {/* {getPlayer(x, y) && <div>{getPlayer(x, y)?.name}</div>} */}
+      <svg viewBox="0 0 167 167" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M0.5 49.1195L49.1195 0.5H117.88L166.5 49.1195V117.88L117.88 166.5H49.1195L0.5 117.88V49.1195Z"
+          fill={getColor(getBlock(room, x, y))}
+          stroke="#0D141E"
+        />
+      </svg>
     </div>
   );
 }

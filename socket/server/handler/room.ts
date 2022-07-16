@@ -31,16 +31,14 @@ export async function handleRoomPlayerJoin(
   if (!socket.rooms.has(room.id)) {
     socket.rooms.add(room.id);
   }
-  room.addPlayer(player);
-
   socket.join(room.id);
 
   emitRoomPlayerJoined(room.id, socket, {
     player,
   });
   emitRoomJoined(server, socket, {
-    ...room.serialized,
-    player,
+    room: room.serialized,
+    playerID: player.id,
   });
 
   //@ts-ignore
