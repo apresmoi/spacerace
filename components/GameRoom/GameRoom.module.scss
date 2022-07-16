@@ -4,7 +4,12 @@
 
   width: 100vw;
   height: 100vh;
-
+  .header{
+    top: 0;
+    position: absolute;
+    width:100%;
+    z-index:2
+  }
   .board {
     width: 80vh;
     height: 80vh;

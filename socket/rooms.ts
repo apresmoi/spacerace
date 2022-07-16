@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { getRandomName } from "../utils/names";
-import { IPlayer, IPosition, IRoom, IRoomSubscribers } from "./types";
+import { IItem, IPlayer, IPosition, IRoom, IRoomSubscribers } from "./types";
 
 class Room {
   _room: IRoom;
@@ -9,6 +9,7 @@ class Room {
     onPlayerMove: [],
     onTurnChange: [],
     onStart: [],
+    onPickUpItem: [],
   };
 
   subscribe = (
@@ -47,84 +48,81 @@ class Room {
       playerStartPosition: { x: 12, y: 8 },
       players: [],
       cells: [
-        { x: 7, y: 0, type: "space" },
-        { x: 8, y: 0, type: "space" },
-        { x: 9, y: 0, type: "space", item: "ROCKET_FIRE" },
-        { x: 10, y: 0, type: "space" },
+        { x: 7, y: 0, type: "METEOR" },
+        { x: 8, y: 0, type: "NEUTRAL" },
+        { x: 9, y: 0, type: "METEOR", item: "ROCKET_FIRE" },
+        { x: 10, y: 0, type: "NEUTRAL" },
 
-        { x: 0, y: 1, type: "space" },
-        { x: 1, y: 1, type: "space" },
-        { x: 2, y: 1, type: "space", item: "ROCKET_BODY" },
-        { x: 7, y: 1, type: "space" },
-        { x: 10, y: 1, type: "space" },
-        { x: 11, y: 1, type: "space" },
+        { x: 0, y: 1, type: "KUIPER" },
+        { x: 1, y: 1, type: "NEUTRAL" },
+        { x: 2, y: 1, type: "KUIPER", item: "ROCKET_BODY" },
+        { x: 7, y: 1, type: "NEUTRAL" },
+        { x: 10, y: 1, type: "METEOR" },
+        { x: 11, y: 1, type: "NEUTRAL" },
 
-        { x: 0, y: 2, type: "space" },
-        { x: 2, y: 2, type: "space" },
-        { x: 3, y: 2, type: "space" },
-        { x: 4, y: 2, type: "space", item: "ROCKET_BODY" },
-        { x: 5, y: 2, type: "space" },
-        { x: 6, y: 2, type: "space" },
-        { x: 7, y: 2, type: "space", item: "ROCKET_FIRE" },
-        { x: 8, y: 2, type: "space" },
-        { x: 11, y: 2, type: "space" },
+        { x: 0, y: 2, type: "NEUTRAL" },
+        { x: 2, y: 2, type: "NEUTRAL" },
+        { x: 3, y: 2, type: "KUIPER" },
+        { x: 4, y: 2, type: "NEUTRAL", item: "ROCKET_BODY" },
+        { x: 5, y: 2, type: "NEUTRAL" },
+        { x: 6, y: 2, type: "NEUTRAL" },
+        { x: 7, y: 2, type: "METEOR", item: "ROCKET_FIRE" },
+        { x: 8, y: 2, type: "NEUTRAL" },
+        { x: 11, y: 2, type: "METEOR" },
 
-        { x: 0, y: 3, type: "space", item: "ROCKET_BODY" },
-        { x: 1, y: 3, type: "space" },
-        { x: 4, y: 3, type: "space" },
-        { x: 8, y: 3, type: "space", item: "ROCKET_FIRE" },
-        { x: 10, y: 3, type: "space", item: "ROCKET_FIRE" },
-        { x: 11, y: 3, type: "space" },
+        { x: 0, y: 3, type: "KUIPER", item: "ROCKET_BODY" },
+        { x: 1, y: 3, type: "NEUTRAL" },
+        { x: 4, y: 3, type: "KUIPER" },
+        { x: 8, y: 3, type: "METEOR", item: "ROCKET_FIRE" },
+        { x: 10, y: 3, type: "METEOR", item: "ROCKET_FIRE" },
+        { x: 11, y: 3, type: "NEUTRAL" },
 
-        { x: 1, y: 4, type: "space" },
-        { x: 2, y: 4, type: "space" },
-        { x: 4, y: 4, type: "space" },
-        { x: 8, y: 4, type: "space" },
-        { x: 9, y: 4, type: "space" },
-        { x: 10, y: 4, type: "space" },
+        { x: 1, y: 4, type: "KUIPER" },
+        { x: 2, y: 4, type: "NEUTRAL" },
+        { x: 4, y: 4, type: "NEUTRAL" },
+        { x: 8, y: 4, type: "NEUTRAL" },
+        { x: 9, y: 4, type: "METEOR" },
+        { x: 10, y: 4, type: "NEUTRAL" },
 
-        { x: 2, y: 5, type: "space", item: "ROCKET_BODY" },
-        { x: 3, y: 5, type: "space" },
-        { x: 4, y: 5, type: "space", item: "ROCKET_FINS" },
-        { x: 5, y: 5, type: "space" },
-        { x: 7, y: 5, type: "space" },
-        { x: 8, y: 5, type: "space", item: "ROCKET_TIP" },
-        { x: 10, y: 5, type: "space" },
-        { x: 11, y: 5, type: "space" },
+        { x: 2, y: 5, type: "KUIPER", item: "ROCKET_BODY" },
+        { x: 3, y: 5, type: "NEUTRAL" },
+        { x: 4, y: 5, type: "SATURN", item: "ROCKET_FINS" },
+        { x: 5, y: 5, type: "NEUTRAL" },
+        { x: 7, y: 5, type: "NEUTRAL" },
+        { x: 8, y: 5, type: "SUPERNOVAE", item: "ROCKET_TIP" },
+        { x: 10, y: 5, type: "SUPERNOVAE" },
+        { x: 11, y: 5, type: "NEUTRAL" },
 
-        { x: 2, y: 6, type: "space" },
-        { x: 5, y: 6, type: "space" },
-        { x: 6, y: 6, type: "space" },
-        { x: 7, y: 6, type: "space" },
-        { x: 11, y: 6, type: "space", item: "ROCKET_TIP" },
+        { x: 2, y: 6, type: "NEUTRAL" },
+        { x: 5, y: 6, type: "SATURN" },
+        { x: 6, y: 6, type: "END" },
+        { x: 7, y: 6, type: "SUPERNOVAE" },
+        { x: 11, y: 6, type: "SUPERNOVAE", item: "ROCKET_TIP" },
 
-        { x: 1, y: 7, type: "space" },
-        { x: 2, y: 7, type: "space", item: "ROCKET_FINS" },
-        { x: 5, y: 7, type: "space" },
-        { x: 7, y: 7, type: "space" },
-        { x: 11, y: 7, type: "space" },
+        { x: 1, y: 7, type: "NEUTRAL" },
+        { x: 2, y: 7, type: "SATURN", item: "ROCKET_FINS" },
+        { x: 5, y: 7, type: "NEUTRAL" },
+        { x: 7, y: 7, type: "NEUTRAL" },
+        { x: 11, y: 7, type: "NEUTRAL" },
 
-        { x: 1, y: 8, type: "space" },
-        { x: 5, y: 8, type: "space", item: "ROCKET_FINS" },
-        { x: 7, y: 8, type: "space" },
-        { x: 8, y: 8, type: "space" },
-        { x: 10, y: 8, type: "space" },
-        { x: 11, y: 8, type: "space", item: "ROCKET_TIP" },
-        { x: 12, y: 8, type: "space" },
+        { x: 1, y: 8, type: "SATURN" },
+        { x: 5, y: 8, type: "SATURN", item: "ROCKET_FINS" },
+        { x: 7, y: 8, type: "SUPERNOVAE" },
+        { x: 8, y: 8, type: "NEUTRAL" },
+        { x: 10, y: 8, type: "NEUTRAL" },
+        { x: 11, y: 8, type: "SUPERNOVAE", item: "ROCKET_TIP" },
+        { x: 12, y: 8, type: "START" },
 
-        { x: 1, y: 9, type: "space" },
-        { x: 2, y: 9, type: "space" },
-        { x: 4, y: 9, type: "space", item: "ROCKET_FINS" },
-        { x: 5, y: 9, type: "space" },
-        { x: 8, y: 9, type: "space" },
-        { x: 9, y: 9, type: "space" },
-        { x: 10, y: 9, type: "space" },
-
-        { x: 2, y: 10, type: "space", item: "ROCKET_TIP" },
-        { x: 3, y: 10, type: "space" },
-        { x: 4, y: 10, type: "space" },
+        { x: 1, y: 9, type: "NEUTRAL" },
+        { x: 2, y: 9, type: "SATURN" },
+        { x: 3, y: 9, type: "NEUTRAL" },
+        { x: 4, y: 9, type: "SATURN", item: "ROCKET_FINS" },
+        { x: 5, y: 9, type: "NEUTRAL" },
+        { x: 8, y: 9, type: "SUPERNOVAE", item: "ROCKET_TIP" },
+        { x: 9, y: 9, type: "NEUTRAL" },
+        { x: 10, y: 9, type: "SUPERNOVAE" },
       ],
-      effects: [{ x: 0, y: 0, type: "storm" }],
+      effects: [],
       height: 13,
       width: 13,
       currentTurnPlayerID: undefined,
@@ -161,6 +159,7 @@ class Room {
       id,
       name,
       ...this._room.playerStartPosition,
+      inventory: [],
       isAdmin: this.getPlayerCount() === 0,
     };
     this._room.players.push(player);
@@ -204,6 +203,18 @@ class Room {
     this._room.players = this._room.players.map((player) =>
       player.id === playerID ? { ...player, ...position } : player
     );
+
+    const cell = this._room.cells.find(
+      (cell) => cell.x === position.x && cell.y === position.y
+    );
+
+    const player = this.getPlayerById(playerID);
+
+    if (player && cell && cell.item && !player.inventory.includes(cell.item)) {
+      player.inventory.push(cell.item);
+      this.triggerPickupItem(player, cell.item, { x: cell.x, y: cell.y });
+      cell.item = undefined;
+    }
   };
 
   private rollDice = () => {
@@ -219,6 +230,14 @@ class Room {
       this._room.currentTurnPlayerID = nextPlayer.id;
       this._room.turnStage = "WAITING_FOR_ROLL";
     }
+  };
+
+  private triggerPickupItem = (
+    player: IPlayer,
+    item: IItem,
+    position: IPosition
+  ) => {
+    this.trigger("onPickUpItem", player, item, position);
   };
 
   private triggerStart = () => {

@@ -20,6 +20,7 @@ export function CellItem(props: CellItemProps) {
       className={className(styles.cellItem)}
       style={{
         gridArea: getBlockId(cell.x, cell.y),
+        pointerEvents: 'none'
       }}
     >
       {cell.item === "ROCKET_BODY" && <RocketBody />}

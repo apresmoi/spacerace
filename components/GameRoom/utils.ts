@@ -11,11 +11,19 @@ export const getRoomCell = (room: IRoom, x: number, y: number) => {
 export const getCellColor = (cell?: ICell) => {
   if (!cell) return "transparent";
   switch (cell.type) {
-    case "space":
-      return "gray";
-    case "wall":
-    default:
-      return "green";
+    case "START":
+    case "END":
+      return "#FF6B00";
+    case "KUIPER":
+      return "#563EB2";
+    case "METEOR":
+      return "#3A4390";
+    case "NEUTRAL":
+      return "#63A5B7";
+    case "SATURN":
+      return "#4E66ED";
+    case "SUPERNOVAE":
+      return "#B4C4FA";
   }
 };
 

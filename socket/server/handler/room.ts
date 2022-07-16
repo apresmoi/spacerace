@@ -4,7 +4,9 @@ import RoomManager, { Room } from "../../rooms";
 
 import {
   IDice,
+  IItem,
   IPlayer,
+  IPosition,
   IRoomTurnStage,
   SocketRoomPlayerMessageSendPayload,
   SocketRoomPlayerStartPayload,
@@ -17,6 +19,7 @@ import {
   emitRoomPlayerLeft,
   emitRoomPlayerMessage,
   emitRoomPlayerMoved,
+  emitRoomPlayerPickUpItem,
   emitRoomPlayerRollDice,
   emitRoomPlayerRollingDice,
   emitRoomPlayerStarted,
@@ -56,6 +59,18 @@ export async function handleRoomPlayerJoin(
       startedAt,
     });
   });
+
+  room.subscribe(
+    "onPickUpItem",
+    //@ts-ignore
+    (player: IPlayer, item: IItem, position: IPosition) => {
+      emitRoomPlayerPickUpItem(room.id, server, socket, {
+        playerID: player.id,
+        item,
+        position,
+      });
+    }
+  );
 }
 
 export async function handleRoomPlayerStart(

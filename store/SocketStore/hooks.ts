@@ -6,6 +6,7 @@ import {
   SocketRoomPlayerLeftPayload,
   SocketRoomPlayerMessagePayload,
   SocketRoomPlayerMovedPayload,
+  SocketRoomPlayerPickedUpItemPayload,
   SocketRoomPlayerRollDicePayload,
   SocketRoomPlayerRollingDicePayload,
   SocketRoomPlayerTurnChangePayload,
@@ -182,4 +183,23 @@ export function useSocketRoomStarted(
       unsubscribe(SOCKET_SERVER_TO_CLIENT.ROOM_STARTED, handler);
     };
   }, [subscribe, unsubscribe, onStart]);
+}
+
+//** This gets triggered when a user leaves the page */
+export function useSocketPlayerPickupItem(
+  onPickup?: (payload: SocketRoomPlayerPickedUpItemPayload) => void
+) {
+  const { subscribe, unsubscribe } = useSocketStore();
+
+  React.useEffect(() => {
+    const handler = (payload: SocketRoomPlayerPickedUpItemPayload) => {
+      onPickup?.(payload);
+    };
+
+    subscribe(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_PICKED_UP_ITEM, handler);
+
+    return () => {
+      unsubscribe(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_PICKED_UP_ITEM, handler);
+    };
+  }, [subscribe, unsubscribe, onPickup]);
 }

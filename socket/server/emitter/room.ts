@@ -5,6 +5,7 @@ import type {
   SocketRoomPlayerLeftPayload,
   SocketRoomPlayerMessagePayload,
   SocketRoomPlayerMovedPayload,
+  SocketRoomPlayerPickedUpItemPayload,
   SocketRoomPlayerRollDicePayload,
   SocketRoomPlayerRollingDicePayload,
   SocketRoomPlayerTurnChangePayload,
@@ -109,4 +110,16 @@ export function emitRoomPlayerStarted(
 ) {
   console.log(SOCKET_SERVER_TO_CLIENT.ROOM_STARTED);
   server.to(roomID).emit(SOCKET_SERVER_TO_CLIENT.ROOM_STARTED, payload);
+}
+
+export function emitRoomPlayerPickUpItem(
+  roomID: string,
+  server: Server,
+  socket: Socket,
+  payload: SocketRoomPlayerPickedUpItemPayload
+) {
+  console.log(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_PICKED_UP_ITEM);
+  server
+    .to(roomID)
+    .emit(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_PICKED_UP_ITEM, payload);
 }

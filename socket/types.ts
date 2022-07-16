@@ -8,9 +8,24 @@ export type IPosition = {
   y: number;
 };
 
+export type ICellType =
+  | "NEUTRAL"
+  | "START"
+  | "END"
+  | "SUPERNOVAE"
+  | "SATURN"
+  | "KUIPER"
+  | "METEOR";
+
+export type IItem =
+  | "ROCKET_TIP"
+  | "ROCKET_BODY"
+  | "ROCKET_FINS"
+  | "ROCKET_FIRE";
+
 export type ICell = IPosition & {
-  type: string;
-  item?: "ROCKET_TIP" | "ROCKET_BODY" | "ROCKET_FINS" | "ROCKET_FIRE";
+  type: ICellType;
+  item?: IItem;
 };
 
 export type IMessage = {
@@ -23,6 +38,7 @@ export type IPlayer = IPosition & {
   id: string;
   name: string;
   isAdmin?: boolean;
+  inventory: IItem[];
 };
 
 export type IRoomTurnStage =
@@ -36,6 +52,7 @@ export type IRoomSubscribers = {
   onTurnChange: Array<(player: IPlayer, turn: IRoomTurnStage) => void>;
   onDiceRolled: Array<(player: IPlayer, dice: IDice) => void>;
   onStart: Array<(player: IPlayer, startDate: Date) => void>;
+  onPickUpItem: Array<(player: IPlayer, item: IItem) => void>;
 };
 
 export type IRoom = {
@@ -126,4 +143,10 @@ export type SocketRoomPlayerMessagePayload = {
 
 export type SocketRoomStartedPayload = {
   startedAt: string;
+};
+
+export type SocketRoomPlayerPickedUpItemPayload = {
+  playerID: string;
+  item: IItem;
+  position: IPosition;
 };
