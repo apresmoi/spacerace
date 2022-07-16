@@ -23,7 +23,6 @@ export function ChatStoreProvider(props: React.PropsWithChildren<{}>) {
   const sendMessage = useRoomPlayerMessageSend();
 
   useSocketRoomPlayerMessage((payload) => {
-    console.log("new message", payload);
     setMessages((list) => [...list, payload.message]);
   });
 

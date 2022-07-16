@@ -1,14 +1,15 @@
 import { Socket } from "socket.io";
 import { DefaultEventsMap, EventsMap } from "socket.io/dist/typed-events";
 
-export type IDice = {
-  dice1: number;
-  dice2: number;
-};
+export type IDice = [number, number];
 
 export type IPosition = {
   x: number;
   y: number;
+};
+
+export type ICell = IPosition & {
+  type: string;
 };
 
 export type IMessage = {
@@ -23,11 +24,39 @@ export type IPlayer = IPosition & {
   isAdmin?: boolean;
 };
 
+export type IRoomTurnStage =
+  | "WAITING_FOR_START"
+  | "WAITING_FOR_ROLL"
+  | "ROLLING_DICES"
+  | "WAITING_FOR_MOVE";
+
+export type IRoomSubscribers = {
+  onPlayerMove: Array<(player: IPlayer, position: IPosition) => void>;
+  onTurnChange: Array<(player: IPlayer, turn: IRoomTurnStage) => void>;
+  onDiceRolled: Array<(player: IPlayer, dice: IDice) => void>;
+};
+
 export type IRoom = {
   id: string;
   name: string;
+
   players: IPlayer[];
   currentTurnPlayerID?: string;
+
+  width: number;
+  height: number;
+  cells: ICell[];
+  effects: ICell[];
+
+  currentDice: IDice;
+  started: boolean;
+  startedAt?: Date;
+
+  turnStage: IRoomTurnStage;
+};
+
+export type IRoomList = Pick<IRoom, "id" | "name"> & {
+  playerCount: number;
 };
 
 export type ConnectedSocketData = {
@@ -46,6 +75,8 @@ export type ConnectedSocket = Socket<
 export type SocketRoomPlayerTryMovePayload = {
   position: IPosition;
 };
+export type SocketRoomPlayerStartPayload = {};
+
 export type SocketRoomPlayerTryDicePayload = {};
 export type SocketRoomPlayerMessageSendPayload = {
   message: Pick<IMessage, "content">;
@@ -67,6 +98,7 @@ export type SocketRoomPlayerLeftPayload = {
 
 export type SocketRoomPlayerTurnChangePayload = {
   playerID: string;
+  turn: IRoomTurnStage;
 };
 
 export type SocketRoomPlayerRollingDicePayload = {
@@ -80,7 +112,7 @@ export type SocketRoomPlayerRollDicePayload = {
 
 export type SocketRoomPlayerMovedPayload = {
   playerID: string;
-  dice: IDice;
+  position: IPosition;
 };
 
 export type SocketRoomPlayerMessagePayload = {

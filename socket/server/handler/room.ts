@@ -2,7 +2,14 @@ import { Socket, Server } from "socket.io";
 import { SOCKET_CLIENT_TO_SERVER } from "../../constants";
 import RoomManager, { Room } from "../../store";
 
-import { IPlayer, SocketRoomPlayerMessageSendPayload } from "../../types";
+import {
+  IDice,
+  IPlayer,
+  IRoomTurnStage,
+  SocketRoomPlayerMessageSendPayload,
+  SocketRoomPlayerStartPayload,
+  SocketRoomPlayerTryMovePayload,
+} from "../../types";
 
 import {
   emitRoomJoined,
@@ -10,7 +17,9 @@ import {
   emitRoomPlayerLeft,
   emitRoomPlayerMessage,
   emitRoomPlayerMoved,
+  emitRoomPlayerRollDice,
   emitRoomPlayerRollingDice,
+  emitRoomPlayerTurnChange,
 } from "../emitter/room";
 
 export async function handleRoomPlayerJoin(
@@ -33,6 +42,28 @@ export async function handleRoomPlayerJoin(
     ...room.serialized,
     player,
   });
+
+  //@ts-ignore
+  room.subscribe("onTurnChange", (player: IPlayer, turn: IRoomTurnStage) => {
+    emitRoomPlayerTurnChange(room.id, server, socket, {
+      playerID: player.id,
+      turn,
+    });
+  });
+}
+
+export async function handleRoomPlayerStart(
+  room: Room,
+  socket: Socket,
+  player: IPlayer
+) {
+  const handler = async (payload: SocketRoomPlayerStartPayload) => {
+    console.log(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_START, payload);
+
+    room.start();
+  };
+
+  socket.on(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_START, handler);
 }
 
 export async function handleRoomPlayerLeave(
@@ -81,11 +112,19 @@ export async function handleRoomPlayerTryMove(
   server: Server,
   player: IPlayer
 ) {
-  const handler = async (payload: SocketRoomPlayerMessageSendPayload) => {
+  const handler = async (payload: SocketRoomPlayerTryMovePayload) => {
     console.log(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_TRY_MOVE, payload);
 
-    // emitRoomPlayerMoved(room.id, server, socket, {});
+    room.tryMovePlayer(player.id, payload.position);
   };
+
+  //@ts-ignore
+  room.subscribe("onPlayerMove", (player: IPlayer, position: IPosition) => {
+    emitRoomPlayerMoved(room.id, server, socket, {
+      playerID: player.id,
+      position,
+    });
+  });
 
   socket.on(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_TRY_MOVE, handler);
 }
@@ -97,10 +136,20 @@ export async function handleRoomPlayerTryDice(
   player: IPlayer
 ) {
   const handler = async (payload: SocketRoomPlayerMessageSendPayload) => {
-    console.log(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_TRY_MOVE, payload);
+    console.log(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_TRY_DICE, payload);
+
+    room.tryRollDice(player.id);
 
     // emitRoomPlayerRollingDice(room.id, server, socket, {});
   };
 
-  socket.on(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_TRY_MOVE, handler);
+  //@ts-ignore
+  room.subscribe("onDiceRolled", (player: IPlayer, dice: IDice) => {
+    emitRoomPlayerRollDice(room.id, server, socket, {
+      playerID: player.id,
+      dice,
+    });
+  });
+
+  socket.on(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_TRY_DICE, handler);
 }

@@ -46,10 +46,14 @@ export function emitRoomPlayerMessage(
 ) {
   console.log(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_MESSAGE);
 
-  //broadcast is to send the message to everbody but the sender
-  socket.broadcast
-    .to(roomID)
+  server
+    .to(socket.id)
     .emit(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_MESSAGE, payload);
+
+  //broadcast is to send the message to everbody but the sender
+  // socket.broadcast
+  //   .to(roomID)
+  //   .emit(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_MESSAGE, payload);
 }
 
 export function emitRoomPlayerMoved(

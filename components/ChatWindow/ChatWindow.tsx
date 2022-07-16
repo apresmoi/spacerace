@@ -1,6 +1,6 @@
 import React from "react";
 import { IMessage } from "../../socket/types";
-import { useChat } from "../../store";
+import { useChat, useGame } from "../../store";
 import {
   useRoomPlayerMessageSend,
   useSocketRoomPlayerMessage,
@@ -9,6 +9,7 @@ import styles from "./ChatWindow.module.scss";
 
 export function ChatWindow() {
   const { messages, sendMessage } = useChat();
+  const { room } = useGame();
 
   const [message, setMessage] = React.useState("");
 
@@ -25,12 +26,20 @@ export function ChatWindow() {
     []
   );
 
+  const getPlayerName = React.useCallback(
+    (playerID: string) => {
+      if (!room) return "";
+      return room.players.find((player) => player.id === playerID)?.name || "";
+    },
+    [room]
+  );
+
   return (
     <div className={styles.chatWindow}>
       <div className={styles.chatWindowMessages}>
         {messages.map((m, i) => (
           <div key={i} className={styles.chatWindowMessage}>
-            {m.playerID}: {m.content}
+            {getPlayerName(m.playerID)}: {m.content}
           </div>
         ))}
       </div>

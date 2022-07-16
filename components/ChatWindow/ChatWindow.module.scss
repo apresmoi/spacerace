@@ -1,4 +1,7 @@
 .chatWindow {
+  position: absolute;
+  right: 0;
+  bottom: 0;
   width: 300px;
   border: 1px solid white;
   .chatWindowMessages {
