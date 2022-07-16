@@ -5,9 +5,9 @@ import { getBlockId } from "./utils";
 
 export function Board(props: React.PropsWithChildren<{}>) {
   const { room } = useGame();
-  if (!room) return null;
 
-  const { width, height } = room;
+  const width = room?.width;
+  const height = room?.height;
 
   const gridTemplateAreas = React.useMemo(() => {
     return new Array(height)
@@ -40,6 +40,8 @@ export function Board(props: React.PropsWithChildren<{}>) {
       .map((_, y) => "1fr")
       .join(" ");
   }, [height]);
+
+  if (!room) return null;
 
   return (
     <div

@@ -302,7 +302,6 @@ class RoomManager {
   };
 
   getRoom = (id: string) => {
-    console.log("rooms", this._rooms);
     return this._rooms.find((room) => room.id === id);
   };
 

@@ -26,7 +26,9 @@ export function CreateRoom(props: CreateRoomProps) {
     createRoom(roomName).then((room) => {
       if (room) {
         connect(room.id, name);
-        onCreate?.();
+        setTimeout(() => {
+          onCreate?.();
+        }, 100);
       }
     });
   }, [roomName, createRoom, name, onCreate]);
