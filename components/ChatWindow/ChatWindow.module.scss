@@ -1,0 +1,15 @@
+.chatWindow {
+  width: 300px;
+  border: 1px solid white;
+  .chatWindowMessages {
+    padding: 12px;
+
+    .chatWindowMessage {
+        padding: 2px;
+    }
+  }
+  .chatWindowInput {
+    padding: 12px 6px;
+    display: flex;
+  }
+}

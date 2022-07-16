@@ -1,15 +1,33 @@
 import { Socket } from "socket.io";
 import { DefaultEventsMap, EventsMap } from "socket.io/dist/typed-events";
 
-export type IPlayer = {
+export type IDice = {
+  dice1: number;
+  dice2: number;
+};
+
+export type IPosition = {
+  x: number;
+  y: number;
+};
+
+export type IMessage = {
+  playerID: string;
+  date: Date;
+  content: string;
+};
+
+export type IPlayer = IPosition & {
   id: string;
   name: string;
+  isAdmin?: boolean;
 };
 
 export type IRoom = {
   id: string;
   name: string;
   players: IPlayer[];
+  currentTurnPlayerID?: string;
 };
 
 export type ConnectedSocketData = {
@@ -25,23 +43,46 @@ export type ConnectedSocket = Socket<
 
 //client to server
 
-export type SocketRoomPlayerJoinPayload = Pick<IRoom, "id">;
-
-export type SocketRoomPlayerLeavePayload = Pick<IRoom, "id">;
+export type SocketRoomPlayerTryMovePayload = {
+  position: IPosition;
+};
+export type SocketRoomPlayerTryDicePayload = {};
+export type SocketRoomPlayerMessageSendPayload = {
+  message: Pick<IMessage, "content">;
+};
 
 //server to client
 
-export type SocketRoomJoinedPayload = Pick<IRoom, "id"> & {
+export type SocketRoomJoinedPayload = IRoom & {
   player: IPlayer;
-  players: IPlayer[];
 };
 
-export type SocketRoomPlayerLeftPayload = Pick<IRoom, "id"> & {
-  senderId: string;
-  userId: string;
+export type SocketRoomPlayerJoinedPayload = {
+  player: IPlayer;
 };
 
-export type SocketRoomPlayerJoinedPayload = Pick<IRoom, "id"> & {
-  senderId: string;
-  player: IPlayer;
+export type SocketRoomPlayerLeftPayload = {
+  playerID: string;
+};
+
+export type SocketRoomPlayerTurnChangePayload = {
+  playerID: string;
+};
+
+export type SocketRoomPlayerRollingDicePayload = {
+  playerID: string;
+};
+
+export type SocketRoomPlayerRollDicePayload = {
+  playerID: string;
+  dice: IDice;
+};
+
+export type SocketRoomPlayerMovedPayload = {
+  playerID: string;
+  dice: IDice;
+};
+
+export type SocketRoomPlayerMessagePayload = {
+  message: IMessage;
 };

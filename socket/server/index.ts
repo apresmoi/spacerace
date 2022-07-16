@@ -2,8 +2,15 @@ import type { SocketNextApiResponse } from "next";
 import { Server as ServerIO, Socket } from "socket.io";
 import { Server as NetServer } from "http";
 
-import { handleRoomPlayerJoin, handleRoomPlayerLeave } from "./handler/room";
+import {
+  handleRoomPlayerJoin,
+  handleRoomPlayerLeave,
+  handleRoomPlayerMessageSend,
+} from "./handler/room";
 import { ConnectedSocket } from "../types";
+import { getRandomName } from "../../utils/names";
+import store from "../store";
+import RoomManager from "../store";
 
 export function socketHandler(res: SocketNextApiResponse<any>) {
   if (!res.socket.server.io) {
@@ -13,27 +20,42 @@ export function socketHandler(res: SocketNextApiResponse<any>) {
     const server = new ServerIO(httpServer, {
       path: "/api/socket",
     });
+    const roomStore = new RoomManager();
 
     server.on("connection", async (socket: ConnectedSocket) => {
       console.log("Socket connected", socket.id);
 
-      const player = {
-        id: socket.id,
-        name: "Hola",
-      };
+      const id = socket.handshake.query.id as string;
+      const name = (socket.handshake.query.name as string) || getRandomName();
 
-      socket.data = {
-        player,
-      };
+      const room = roomStore.getRoom(id);
 
-      handleRoomPlayerJoin(server, socket, player);
-      handleRoomPlayerLeave(socket, player);
+      if (room) {
+        const player = {
+          id: socket.id,
+          name: name || getRandomName(),
+          x: 0,
+          y: 0,
+        };
+
+        socket.data = {
+          player,
+        };
+
+        handleRoomPlayerJoin(room, roomStore, server, socket, player);
+        handleRoomPlayerLeave(room, roomStore, socket, player);
+
+        handleRoomPlayerMessageSend(room, roomStore, socket, server, player);
+      } else {
+        // socket.disconnect(true);
+      }
     });
 
     server.on("disconnection", (socket: Socket) => {});
 
     // Append Socket.IO server for all the requests that follow.
     res.socket.server.io = server;
+    res.socket.server.rooms = roomStore;
   } else {
     console.log("Socker.io is already running.");
   }

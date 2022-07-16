@@ -1,68 +1,77 @@
 import { Socket, Server } from "socket.io";
-
 import { SOCKET_CLIENT_TO_SERVER } from "../../constants";
+import RoomManager from "../../store";
 
 import {
-  ConnectedSocketData,
   IPlayer,
-  SocketRoomPlayerJoinPayload,
-  SocketRoomPlayerLeavePayload,
+  IRoom,
+  SocketRoomPlayerMessageSendPayload,
 } from "../../types";
 
 import {
   emitRoomJoined,
   emitRoomPlayerJoined,
   emitRoomPlayerLeft,
+  emitRoomPlayerMessage,
 } from "../emitter/room";
 
-import { getRoomID } from "../utils";
-
 export async function handleRoomPlayerJoin(
+  room: IRoom,
+  roomStore: RoomManager,
   server: Server,
   socket: Socket,
   player: IPlayer
 ) {
-  const handler = async (payload: SocketRoomPlayerJoinPayload) => {
-    console.log(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_JOIN, payload);
+  if (!socket.rooms.has(room.id)) {
+    socket.rooms.add(room.id);
+  }
+  roomStore.addPlayer(room.id, player);
 
-    const roomID = getRoomID(payload.id);
-    if (!socket.rooms.has(roomID)) {
-      socket.rooms.add(roomID);
-    }
-    socket.join(roomID);
+  socket.join(room.id);
 
-    const connectedPlayers = await (
-      await socket.in(roomID).fetchSockets<ConnectedSocketData>()
-    ).map((d) => d.data.player);
-
-    emitRoomPlayerJoined(socket, payload.id, {
-      id: payload.id,
-      player,
-      senderId: socket.id,
-    });
-    emitRoomJoined(server, socket, {
-      id: payload.id,
-      player,
-      players: connectedPlayers,
-    });
-  };
-
-  socket.on(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_JOIN, handler);
+  emitRoomPlayerJoined(room.id, socket, {
+    player,
+  });
+  emitRoomJoined(server, socket, {
+    ...room,
+    player,
+  });
 }
 
-export async function handleRoomPlayerLeave(socket: Socket, player: IPlayer) {
-  const handler = (payload: SocketRoomPlayerLeavePayload) => {
-    const roomID = getRoomID(payload.id);
+export async function handleRoomPlayerLeave(
+  room: IRoom,
+  roomStore: RoomManager,
+  socket: Socket,
+  player: IPlayer
+) {
+  const handler = () => {
+    socket.leave(room.id);
 
-    console.log(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_LEAVE, payload);
+    emitRoomPlayerLeft(room.id, socket, {
+      playerID: player.id,
+    });
 
-    socket.leave(roomID);
-    emitRoomPlayerLeft(socket, payload.id, {
-      id: payload.id,
-      senderId: socket.id,
-      userId: player.id,
+    roomStore.removePlayer(room.id, player.id);
+    if (!roomStore.getPlayerCount(room.id)) roomStore.destroyRoom(room.id);
+  };
+
+  socket.on("disconnection", handler);
+}
+
+export async function handleRoomPlayerMessageSend(
+  room: IRoom,
+  _roomStore: RoomManager,
+  socket: Socket,
+  server: Server,
+  player: IPlayer
+) {
+  const handler = async (payload: SocketRoomPlayerMessageSendPayload) => {
+    console.log(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_MESSAGE_SEND, payload);
+
+    emitRoomPlayerMessage(room.id, server, socket, {
+      message: { ...payload.message, date: new Date(), playerID: player.id },
     });
   };
 
-  socket.on(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_LEAVE, handler);
+  socket.on(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_MESSAGE_SEND, handler);
 }

@@ -9,3 +9,8 @@ export function uniquePredicate<T>(
     index
   );
 }
+
+export function arrayRandomElement<T>(array: T[]) {
+  const rndIndex = Math.round(Math.random() * array.length);
+  return array[rndIndex];
+}
