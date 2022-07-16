@@ -6,6 +6,7 @@ import { Board } from "./Board";
 import { Cells } from "./Cells";
 import styles from "./GameRoom.module.scss";
 import { GameUI } from "./GameUI";
+import { StarsBackground } from "./StarsBackground";
 
 interface GameRoomProps {
   onNotLoggedIn?: () => void;
@@ -24,6 +25,7 @@ export function GameRoom(props: GameRoomProps) {
   return (
     <div className={styles.gameRoom}>
       <Background />
+      <StarsBackground />
       <Board>
         <Cells />
       </Board>
