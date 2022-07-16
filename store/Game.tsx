@@ -11,6 +11,7 @@ import {
   useSocketRoomPlayerMoved,
   useSocketRoomPlayerRollDice,
   useSocketRoomPlayerTurnChange,
+  useSocketRoomStarted,
 } from "./SocketStore";
 
 type IGameStoreContext = {
@@ -48,7 +49,7 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
   }, [room]);
 
   const isMyTurn = React.useMemo(() => {
-    return turnPlayer && player && turnPlayer.id === player.id;
+    return (turnPlayer && player && turnPlayer.id === player.id) || false;
   }, [turnPlayer, player]);
 
   useSocketRoomJoined((payload) => {
@@ -116,6 +117,18 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
             ? { ...player, ...payload.position }
             : player
         ),
+      };
+    });
+  });
+
+  useSocketRoomStarted((payload) => {
+    setRoom((room) => {
+      if (!room) return room;
+
+      return {
+        ...room,
+        started: true,
+        startedAt: new Date(payload.startedAt),
       };
     });
   });

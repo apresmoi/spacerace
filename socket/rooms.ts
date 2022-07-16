@@ -8,6 +8,7 @@ class Room {
     onDiceRolled: [],
     onPlayerMove: [],
     onTurnChange: [],
+    onStart: [],
   };
 
   subscribe = (
@@ -220,6 +221,10 @@ class Room {
     }
   };
 
+  private triggerStart = () => {
+    this.trigger("onStart", this._room.startedAt?.toISOString());
+  };
+
   private triggerTurnChange = () => {
     if (this._room.currentTurnPlayerID) {
       const currentPlayer = this.getPlayerById(this._room.currentTurnPlayerID);
@@ -253,14 +258,18 @@ class Room {
     }
   };
 
-  start = () => {
-    this._room.started = true;
-    this._room.startedAt = new Date();
+  start = (playerID: string) => {
+    const player = this.getPlayerById(playerID);
+    if (player?.isAdmin) {
+      this._room.started = true;
+      this._room.startedAt = new Date();
 
-    this._room.currentTurnPlayerID = this.getRandomPlayer().id;
-    this._room.turnStage = "WAITING_FOR_ROLL";
+      this._room.currentTurnPlayerID = this.getRandomPlayer().id;
+      this._room.turnStage = "WAITING_FOR_ROLL";
 
-    this.triggerTurnChange();
+      this.triggerStart();
+      this.triggerTurnChange();
+    }
   };
 
   tryRollDice = (playerID: string) => {

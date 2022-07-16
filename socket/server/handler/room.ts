@@ -19,6 +19,7 @@ import {
   emitRoomPlayerMoved,
   emitRoomPlayerRollDice,
   emitRoomPlayerRollingDice,
+  emitRoomPlayerStarted,
   emitRoomPlayerTurnChange,
 } from "../emitter/room";
 
@@ -48,17 +49,25 @@ export async function handleRoomPlayerJoin(
       turn,
     });
   });
+
+  //@ts-ignore
+  room.subscribe("onStart", (player: IPlayer, startedAt: string) => {
+    emitRoomPlayerStarted(room.id, server, socket, {
+      startedAt,
+    });
+  });
 }
 
 export async function handleRoomPlayerStart(
   room: Room,
+  server: Server,
   socket: Socket,
   player: IPlayer
 ) {
   const handler = async (payload: SocketRoomPlayerStartPayload) => {
     console.log(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_START, payload);
 
-    room.start();
+    room.start(player.id);
   };
 
   socket.on(SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_START, handler);

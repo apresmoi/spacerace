@@ -9,6 +9,7 @@ import {
   SocketRoomPlayerRollDicePayload,
   SocketRoomPlayerRollingDicePayload,
   SocketRoomPlayerTurnChangePayload,
+  SocketRoomStartedPayload,
 } from "../../socket/types";
 import { useSocketStore } from "./SocketStore";
 
@@ -162,4 +163,23 @@ export function useSocketRoomPlayerMessage(
       unsubscribe(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_MESSAGE, handler);
     };
   }, [subscribe, unsubscribe, onMessage]);
+}
+
+//** This gets triggered when a user leaves the page */
+export function useSocketRoomStarted(
+  onStart?: (payload: SocketRoomStartedPayload) => void
+) {
+  const { subscribe, unsubscribe } = useSocketStore();
+
+  React.useEffect(() => {
+    const handler = (payload: SocketRoomStartedPayload) => {
+      onStart?.(payload);
+    };
+
+    subscribe(SOCKET_SERVER_TO_CLIENT.ROOM_STARTED, handler);
+
+    return () => {
+      unsubscribe(SOCKET_SERVER_TO_CLIENT.ROOM_STARTED, handler);
+    };
+  }, [subscribe, unsubscribe, onStart]);
 }

@@ -8,6 +8,7 @@ import type {
   SocketRoomPlayerRollDicePayload,
   SocketRoomPlayerRollingDicePayload,
   SocketRoomPlayerTurnChangePayload,
+  SocketRoomStartedPayload,
 } from "../../types";
 import { SOCKET_SERVER_TO_CLIENT } from "../../constants";
 
@@ -46,9 +47,7 @@ export function emitRoomPlayerMessage(
 ) {
   console.log(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_MESSAGE);
 
-  server
-    .to(roomID)
-    .emit(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_MESSAGE, payload);
+  server.to(roomID).emit(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_MESSAGE, payload);
 
   //broadcast is to send the message to everbody but the sender
   // socket.broadcast
@@ -100,4 +99,14 @@ export function emitRoomPlayerTurnChange(
   server
     .to(roomID)
     .emit(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_TURN_CHANGE, payload);
+}
+
+export function emitRoomPlayerStarted(
+  roomID: string,
+  server: Server,
+  socket: Socket,
+  payload: SocketRoomStartedPayload
+) {
+  console.log(SOCKET_SERVER_TO_CLIENT.ROOM_STARTED);
+  server.to(roomID).emit(SOCKET_SERVER_TO_CLIENT.ROOM_STARTED, payload);
 }

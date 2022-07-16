@@ -44,7 +44,7 @@ export function socketHandler(res: SocketNextApiResponse<any>) {
           handleRoomPlayerJoin(room, server, socket, player);
           handleRoomPlayerLeave(room, roomStore, socket, player);
 
-          handleRoomPlayerStart(room, socket, player);
+          handleRoomPlayerStart(room, server, socket, player);
           handleRoomPlayerMessageSend(room, socket, server, player);
           handleRoomPlayerTryDice(room, socket, server, player);
           handleRoomPlayerTryMove(room, socket, server, player);

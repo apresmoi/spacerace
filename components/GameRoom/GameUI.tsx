@@ -5,13 +5,15 @@ import styles from "./GameRoom.module.scss";
 export function GameUI() {
   const { room, player, turnPlayer, isMyTurn, tryStart, tryDice, tryMove } =
     useGame();
-  if (!room || !player || !turnPlayer) return null;
-
-  console.log(player, turnPlayer);
+  if (!room) return null;
 
   return (
     <div className={styles.gameUI}>
-      {player.isAdmin && <button onClick={() => tryStart()}>Start Game</button>}
+      {player?.isAdmin && (
+        <button disabled={room.started} onClick={() => tryStart()}>
+          Start Game
+        </button>
+      )}
       {isMyTurn && (
         <>
           <button onClick={() => tryDice()}>Roll dice</button>

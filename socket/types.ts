@@ -34,6 +34,7 @@ export type IRoomSubscribers = {
   onPlayerMove: Array<(player: IPlayer, position: IPosition) => void>;
   onTurnChange: Array<(player: IPlayer, turn: IRoomTurnStage) => void>;
   onDiceRolled: Array<(player: IPlayer, dice: IDice) => void>;
+  onStart: Array<(player: IPlayer, startDate: Date) => void>;
 };
 
 export type IRoom = {
@@ -120,4 +121,8 @@ export type SocketRoomPlayerMovedPayload = {
 
 export type SocketRoomPlayerMessagePayload = {
   message: IMessage;
+};
+
+export type SocketRoomStartedPayload = {
+  startedAt: string;
 };
