@@ -19,28 +19,28 @@ export const getCellColor = (cell?: ICell) => {
   }
 };
 
-export function findCellByPosition(cells: ICell[], position: IPosition) {
+export function findCellByPosition(cells: IPosition[], position: IPosition) {
   return cells.find((cell) => cell.x === position.x && cell.y === position.y);
 }
 
 export const getPosibleMovements = (
-  cells: ICell[],
+  cells: IPosition[],
   prevPosition: IPosition,
   currentPosition: IPosition,
   steps: number
 ): IPosition[] => {
   if (!findCellByPosition(cells, currentPosition)) {
-    console.log("cell exists");
     return [];
   }
 
-  if (!steps) return [currentPosition];
+  if (!steps) {
+    return [currentPosition];
+  }
 
   let moves: IPosition[] = [];
 
   //Sino exploro las 4 posibilidades
-  if (prevPosition.x != currentPosition.x + 1) {
-    
+  if (prevPosition.x !== currentPosition.x + 1) {
     moves = [
       ...moves,
       ...getPosibleMovements(
@@ -52,7 +52,7 @@ export const getPosibleMovements = (
     ];
   }
 
-  if (prevPosition.x != currentPosition.x - 1) {
+  if (prevPosition.x !== currentPosition.x - 1) {
     moves = [
       ...moves,
       ...getPosibleMovements(
@@ -64,7 +64,7 @@ export const getPosibleMovements = (
     ];
   }
 
-  if (prevPosition.y != currentPosition.y + 1) {
+  if (prevPosition.y !== currentPosition.y + 1) {
     moves = [
       ...moves,
       ...getPosibleMovements(
@@ -76,7 +76,7 @@ export const getPosibleMovements = (
     ];
   }
 
-  if (prevPosition.y != currentPosition.y - 1) {
+  if (prevPosition.y !== currentPosition.y - 1) {
     moves = [
       ...moves,
       ...getPosibleMovements(

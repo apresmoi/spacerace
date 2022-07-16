@@ -7,20 +7,23 @@ import { className } from "../../../utils/classnames";
 interface CellProps {
   cell: ICell;
   highlight?: boolean;
+  onClick?: (cell: ICell) => void;
 }
 
 export function Cell(props: CellProps) {
-  const { cell } = props;
+  const { cell, onClick } = props;
+
+  const handleClick = React.useCallback(() => {
+    onClick?.(cell);
+  }, [onClick, cell]);
 
   return (
     <div
-      className={className(
-        styles.cell,
-        props.highlight && styles.highlight
-      )}
+      className={className(styles.cell, props.highlight && styles.highlight)}
       style={{
         gridArea: getBlockId(cell.x, cell.y),
       }}
+      onClick={handleClick}
     >
       <svg viewBox="0 0 167 167" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path

@@ -17,7 +17,6 @@ export function GameUI() {
       {isMyTurn && (
         <>
           <button onClick={() => tryDice()}>Roll dice</button>
-          <button onClick={() => tryMove({ x: 5, y: 1 })}>Player Move</button>
         </>
       )}
       <div>
