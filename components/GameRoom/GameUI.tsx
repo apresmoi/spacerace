@@ -11,6 +11,11 @@ export function GameUI() {
       <button onClick={() => tryStart()}>Start Game</button>
       <button onClick={() => tryDice()}>Roll dice</button>
       <button onClick={() => tryMove({ x: 5, y: 1 })}>Player Move</button>
+      <div>
+        {room.players.map((player) => (
+          <div key={player.id}>{player.name}</div>
+        ))}
+      </div>
     </div>
   );
 }

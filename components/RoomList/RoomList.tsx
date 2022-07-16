@@ -7,7 +7,12 @@ import {
 } from "../../store/SocketStore";
 import styles from "./RoomList.module.scss";
 
-export function RoomList() {
+interface RoomListProps {
+  onJoin?: () => {};
+}
+
+export function RoomList(props: RoomListProps) {
+  const { onJoin } = props;
   const { name, updateRooms, rooms, createRoom } = useAppStore();
   const { connect } = useSocketStore();
 
@@ -15,9 +20,10 @@ export function RoomList() {
     (id: string) => {
       return () => {
         connect(id, name);
+        onJoin?.();
       };
     },
-    [name, connect]
+    [name, connect, onJoin]
   );
 
   React.useEffect(() => {
