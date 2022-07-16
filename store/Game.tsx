@@ -20,6 +20,7 @@ type IGameStoreContext = {
   room?: IRoom;
   player?: IPlayer;
   turnPlayer?: IPlayer;
+  isMyTurn: boolean;
 };
 
 export const GameStoreContext = React.createContext<IGameStoreContext>({});
@@ -45,6 +46,10 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
     if (!room) return undefined;
     return room.players.find((p) => p.id === room.currentTurnPlayerID);
   }, [room]);
+
+  const isMyTurn = React.useMemo(() => {
+    return turnPlayer && player && turnPlayer.id === player.id;
+  }, [turnPlayer, player]);
 
   useSocketRoomJoined((payload) => {
     setRoom(payload);
@@ -115,8 +120,8 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
   });
 
   const contextValue = React.useMemo(
-    () => ({ tryMove, tryDice, tryStart, player, turnPlayer, room }),
-    [tryMove, tryDice, tryStart, player, turnPlayer, room]
+    () => ({ tryMove, tryDice, tryStart, isMyTurn, player, turnPlayer, room }),
+    [tryMove, tryDice, tryStart, isMyTurn, player, turnPlayer, room]
   );
 
   return (

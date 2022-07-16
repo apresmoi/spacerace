@@ -4,6 +4,7 @@ import { Background } from "./Background";
 import { Cells } from "./Cells";
 import styles from "./GameRoom.module.scss";
 import { GameUI } from "./GameUI";
+import { getBlockId } from "./utils";
 
 export function Board(props: React.PropsWithChildren<{}>) {
   const { room } = useGame();
@@ -20,7 +21,7 @@ export function Board(props: React.PropsWithChildren<{}>) {
           new Array(width)
             .fill(0)
             .map((_, x) => {
-              return `cell${x}${y}`;
+              return getBlockId(x, y);
             })
             .join(" ") +
           '"'

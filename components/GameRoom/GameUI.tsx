@@ -3,17 +3,26 @@ import { useGame } from "../../store";
 import styles from "./GameRoom.module.scss";
 
 export function GameUI() {
-  const { room, tryStart, tryDice, tryMove } = useGame();
-  if (!room) return null;
+  const { room, player, turnPlayer, isMyTurn, tryStart, tryDice, tryMove } =
+    useGame();
+  if (!room || !player || !turnPlayer) return null;
+
+  console.log(room, player);
 
   return (
     <div className={styles.gameUI}>
-      <button onClick={() => tryStart()}>Start Game</button>
-      <button onClick={() => tryDice()}>Roll dice</button>
-      <button onClick={() => tryMove({ x: 5, y: 1 })}>Player Move</button>
+      {player.isAdmin && <button onClick={() => tryStart()}>Start Game</button>}
+      {isMyTurn && (
+        <>
+          <button onClick={() => tryDice()}>Roll dice</button>
+          <button onClick={() => tryMove({ x: 5, y: 1 })}>Player Move</button>
+        </>
+      )}
       <div>
         {room.players.map((player) => (
-          <div key={player.id}>{player.name}</div>
+          <div key={player.id}>
+            {player.isAdmin ? "(Admin)" : ""} {player.name}
+          </div>
         ))}
       </div>
     </div>

@@ -45,32 +45,86 @@ class Room {
       name: name || getRandomName(),
       players: [],
       cells: [
+        { x: 7, y: 0, type: "space" },
+        { x: 8, y: 0, type: "space" },
+        { x: 9, y: 0, type: "space" },
+        { x: 10, y: 0, type: "space" },
+
         { x: 0, y: 1, type: "space" },
         { x: 1, y: 1, type: "space" },
         { x: 2, y: 1, type: "space" },
-        { x: 3, y: 1, type: "space" },
-        { x: 4, y: 1, type: "space" },
-        { x: 5, y: 1, type: "space" },
-        { x: 6, y: 1, type: "space" },
+        { x: 7, y: 1, type: "space" },
+        { x: 10, y: 1, type: "space" },
+        { x: 11, y: 1, type: "space" },
+
+        { x: 0, y: 2, type: "space" },
         { x: 2, y: 2, type: "space" },
-        { x: 2, y: 3, type: "space" },
+        { x: 3, y: 2, type: "space" },
+        { x: 4, y: 2, type: "space" },
+        { x: 5, y: 2, type: "space" },
+        { x: 6, y: 2, type: "space" },
+        { x: 7, y: 2, type: "space" },
+        { x: 8, y: 2, type: "space" },
+        { x: 11, y: 2, type: "space" },
+
+        { x: 0, y: 3, type: "space" },
+        { x: 1, y: 3, type: "space" },
+        { x: 4, y: 3, type: "space" },
+        { x: 8, y: 3, type: "space" },
+        { x: 10, y: 3, type: "space" },
+        { x: 11, y: 3, type: "space" },
+
+        { x: 1, y: 4, type: "space" },
         { x: 2, y: 4, type: "space" },
-        { x: 3, y: 4, type: "space" },
         { x: 4, y: 4, type: "space" },
-        { x: 6, y: 4, type: "space" },
-        { x: 7, y: 4, type: "space" },
         { x: 8, y: 4, type: "space" },
         { x: 9, y: 4, type: "space" },
-        { x: 5, y: 2, type: "space" },
-        { x: 5, y: 3, type: "space" },
-        { x: 5, y: 4, type: "space" },
+        { x: 10, y: 4, type: "space" },
+
+        { x: 2, y: 5, type: "space" },
+        { x: 3, y: 5, type: "space" },
+        { x: 4, y: 5, type: "space" },
         { x: 5, y: 5, type: "space" },
+        { x: 7, y: 5, type: "space" },
+        { x: 8, y: 5, type: "space" },
+        { x: 10, y: 5, type: "space" },
+        { x: 11, y: 5, type: "space" },
+
+        { x: 2, y: 6, type: "space" },
         { x: 5, y: 6, type: "space" },
+        { x: 6, y: 6, type: "space" },
+        { x: 7, y: 6, type: "space" },
+        { x: 11, y: 6, type: "space" },
+
+        { x: 1, y: 7, type: "space" },
+        { x: 2, y: 7, type: "space" },
         { x: 5, y: 7, type: "space" },
+        { x: 7, y: 7, type: "space" },
+        { x: 11, y: 7, type: "space" },
+
+        { x: 1, y: 8, type: "space" },
+        { x: 5, y: 8, type: "space" },
+        { x: 7, y: 8, type: "space" },
+        { x: 8, y: 8, type: "space" },
+        { x: 10, y: 8, type: "space" },
+        { x: 11, y: 8, type: "space" },
+        { x: 12, y: 8, type: "space" },
+
+        { x: 1, y: 9, type: "space" },
+        { x: 2, y: 9, type: "space" },
+        { x: 4, y: 9, type: "space" },
+        { x: 5, y: 9, type: "space" },
+        { x: 8, y: 9, type: "space" },
+        { x: 9, y: 9, type: "space" },
+        { x: 10, y: 9, type: "space" },
+
+        { x: 2, y: 10, type: "space" },
+        { x: 3, y: 10, type: "space" },
+        { x: 4, y: 10, type: "space" },
       ],
       effects: [{ x: 0, y: 0, type: "storm" }],
-      height: 10,
-      width: 10,
+      height: 11,
+      width: 13,
       currentTurnPlayerID: undefined,
       started: false,
       currentDice: [0, 0],
@@ -99,13 +153,22 @@ class Room {
   };
 
   addPlayer = (player: IPlayer) => {
+    if (this.getPlayerCount() === 4) return; //max 4 players
+
     this._room.players.push(player);
+
+    if (this.getPlayerCount() === 1) this._room.players[0].isAdmin = true;
   };
 
   removePlayer = (playerID: string) => {
+    const playerToBeRemoved = this.getPlayerById(playerID);
+
     this._room.players = this._room.players.filter(
       (player) => player.id !== playerID
     );
+
+    if (playerToBeRemoved?.isAdmin && this.getPlayerCount() > 0)
+      this._room.players[0].isAdmin = true;
   };
 
   getPlayerById = (playerID: string) => {

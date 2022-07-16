@@ -33,8 +33,6 @@ export function socketHandler(res: SocketNextApiResponse<any>) {
 
       const room = roomStore.getRoom(id);
 
-      console.log({ id, room, handshake: socket.handshake.query });
-
       if (room) {
         const player = {
           id: socket.id,

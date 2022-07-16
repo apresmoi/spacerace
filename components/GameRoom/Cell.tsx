@@ -1,7 +1,6 @@
 import React from "react";
 import { ICell, IRoom } from "../../socket/types";
 import { useGame } from "../../store";
-import { Cell } from "./Cell";
 import styles from "./GameRoom.module.scss";
 import { getBlockId } from "./utils";
 
@@ -20,21 +19,25 @@ const getColor = (block?: ICell) => {
   }
 };
 
-export function Cells() {
+interface CellProps {
+  x: number;
+  y: number;
+}
+
+export function Cell(props: CellProps) {
+  const { x, y } = props;
   const { room } = useGame();
   if (!room) return null;
 
-  const { width, height } = room;
-
   return (
-    <>
-      {new Array(width)
-        .fill(0)
-        .map((_, x) =>
-          new Array(height)
-            .fill(0)
-            .map((_, y) => <Cell key={getBlockId(x, y)} x={x} y={y} />)
-        )}
-    </>
+    <div
+      style={{
+        gridArea: getBlockId(x, y),
+        background: getColor(getBlock(room, x, y)),
+        border: `1px solid black`,
+      }}
+    >
+      {/* {getPlayer(x, y) && <div>{getPlayer(x, y)?.name}</div>} */}
+    </div>
   );
 }
