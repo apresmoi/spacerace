@@ -15,13 +15,17 @@ export default async function handler(
   res: SocketNextApiResponse<any>
 ) {
   if (req.method === "GET") {
-    const rooms = res.socket.server.rooms.getRooms();
+    const rooms = res.socket.server.rooms?.getRooms() || [];
 
-    return res
-      .status(200)
-      .json(rooms.map((room) => ({ id: room.id, name: room.name })));
+    return res.status(200).json(
+      rooms.map((room) => ({
+        id: room.id,
+        name: room.name,
+        playerCount: room.getPlayerCount(),
+      }))
+    );
   } else if (req.method === "POST") {
     const room = res.socket.server.rooms.addRoom(req.body.name);
-    return res.status(200).json(room);
+    return res.status(200).json({ id: room.id, name: room.name });
   }
 }

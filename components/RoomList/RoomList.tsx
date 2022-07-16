@@ -39,12 +39,14 @@ export function RoomList() {
         <thead>
           <tr>
             <th>Name</th>
+            <th>Players</th>
           </tr>
         </thead>
         <tbody>
           {rooms.map((room) => (
             <tr key={room.id} onClick={handleRoomClick(room.id)}>
               <td>{room.name}</td>
+              <td>{room.playerCount}</td>
             </tr>
           ))}
         </tbody>

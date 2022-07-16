@@ -4,6 +4,10 @@ import type {
   SocketRoomPlayerJoinedPayload,
   SocketRoomPlayerLeftPayload,
   SocketRoomPlayerMessagePayload,
+  SocketRoomPlayerMovedPayload,
+  SocketRoomPlayerRollDicePayload,
+  SocketRoomPlayerRollingDicePayload,
+  SocketRoomPlayerTurnChangePayload,
 } from "../../types";
 import { SOCKET_SERVER_TO_CLIENT } from "../../constants";
 
@@ -46,4 +50,50 @@ export function emitRoomPlayerMessage(
   socket.broadcast
     .to(roomID)
     .emit(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_MESSAGE, payload);
+}
+
+export function emitRoomPlayerMoved(
+  roomID: string,
+  server: Server,
+  socket: Socket,
+  payload: SocketRoomPlayerMovedPayload
+) {
+  console.log(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_MOVED);
+  server.to(roomID).emit(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_MOVED, payload);
+}
+
+export function emitRoomPlayerRollingDice(
+  roomID: string,
+  server: Server,
+  socket: Socket,
+  payload: SocketRoomPlayerRollingDicePayload
+) {
+  console.log(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_ROLLING_DICE);
+  server
+    .to(roomID)
+    .emit(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_ROLLING_DICE, payload);
+}
+
+export function emitRoomPlayerRollDice(
+  roomID: string,
+  server: Server,
+  socket: Socket,
+  payload: SocketRoomPlayerRollDicePayload
+) {
+  console.log(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_ROLL_DICE);
+  server
+    .to(roomID)
+    .emit(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_ROLL_DICE, payload);
+}
+
+export function emitRoomPlayerTurnChange(
+  roomID: string,
+  server: Server,
+  socket: Socket,
+  payload: SocketRoomPlayerTurnChangePayload
+) {
+  console.log(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_TURN_CHANGE);
+  server
+    .to(roomID)
+    .emit(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_TURN_CHANGE, payload);
 }

@@ -6,6 +6,8 @@ import {
   handleRoomPlayerJoin,
   handleRoomPlayerLeave,
   handleRoomPlayerMessageSend,
+  handleRoomPlayerTryDice,
+  handleRoomPlayerTryMove,
 } from "./handler/room";
 import { ConnectedSocket } from "../types";
 import { getRandomName } from "../../utils/names";
@@ -30,6 +32,8 @@ export function socketHandler(res: SocketNextApiResponse<any>) {
 
       const room = roomStore.getRoom(id);
 
+      console.log({ id, room, handshake: socket.handshake.query });
+
       if (room) {
         const player = {
           id: socket.id,
@@ -42,12 +46,14 @@ export function socketHandler(res: SocketNextApiResponse<any>) {
           player,
         };
 
-        handleRoomPlayerJoin(room, roomStore, server, socket, player);
+        handleRoomPlayerJoin(room, server, socket, player);
         handleRoomPlayerLeave(room, roomStore, socket, player);
 
-        handleRoomPlayerMessageSend(room, roomStore, socket, server, player);
+        handleRoomPlayerMessageSend(room, socket, server, player);
+        handleRoomPlayerTryDice(room, socket, server, player);
+        handleRoomPlayerTryMove(room, socket, server, player);
       } else {
-        // socket.disconnect(true);
+        socket.disconnect(true);
       }
     });
 

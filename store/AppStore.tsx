@@ -3,7 +3,7 @@ import { IRoom } from "../socket/types";
 import { useSocketStore } from "./SocketStore";
 
 type IAppStoreContext = {
-  rooms: Pick<IRoom, "id" | "name">[];
+  rooms: (Pick<IRoom, "id" | "name"> & { playerCount: number })[];
   updateRooms: () => void;
   createRoom: (name: string) => Promise<IRoom>;
   name: string;
@@ -37,18 +37,15 @@ export function AppStoreProvider(props: React.PropsWithChildren<{}>) {
     setName(name);
   }, []);
 
-  const createRoom = React.useCallback(
-    (name: string) => {
-      return fetch(`/api/rooms`, {
-        method: "POST",
-        body: JSON.stringify({ name: name }),
-        headers: {
-          "content-type": "application/json",
-        },
-      }).then((response) => response.json()) as Promise<IRoom>;
-    },
-    []
-  );
+  const createRoom = React.useCallback((name: string) => {
+    return fetch(`/api/rooms`, {
+      method: "POST",
+      body: JSON.stringify({ name: name }),
+      headers: {
+        "content-type": "application/json",
+      },
+    }).then((response) => response.json()) as Promise<IRoom>;
+  }, []);
 
   const updateRooms = React.useCallback(() => {
     fetch(`/api/rooms`)
