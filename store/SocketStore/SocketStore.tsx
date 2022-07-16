@@ -1,7 +1,10 @@
 import debounce from "lodash.debounce";
 import * as React from "react";
 import { io, Socket } from "socket.io-client";
-import { SOCKET_CLIENT_TO_SERVER, SOCKET_SERVER_TO_CLIENT } from "../constants";
+import {
+  SOCKET_CLIENT_TO_SERVER,
+  SOCKET_SERVER_TO_CLIENT,
+} from "../../socket/constants";
 import { useSubscriber } from "../../hooks";
 import { ENABLE_SOCKET_LOGGING, SOCKET_DEBOUNCE_MS } from "../../settings";
 import {
@@ -13,11 +16,14 @@ import {
 import { ValueOf } from "../../types/global";
 
 const SocketStore = React.createContext<ISocketStore>({
+  connected: false,
+  connect: () => {},
+  disconnect: () => {},
   subscribe: () => {},
   unsubscribe: () => {},
 });
 
-export function useSocket() {
+export function useSocketStore() {
   return React.useContext(SocketStore);
 }
 
@@ -29,28 +35,42 @@ export function SocketStoreProvider(props: SocketStoreProvider) {
   const [socket, setSocket] = React.useState<Socket>();
   const subscribers = useSubscriber<SOCKET_SERVER_TO_CLIENT, any, void>();
 
+  const [connected, setConnected] = React.useState(false);
+
   React.useEffect(() => {
-    fetch("/api/socket").finally(() => {
-      const socket = io({
-        path: "/api/socket",
-      });
+    fetch("/api/socket");
+  }, []);
 
-      socket.on("connect", () => {
-        if (ENABLE_SOCKET_LOGGING) console.log("Connected to server");
-      });
-
-      socket.on("disconnect", () => {
-        if (ENABLE_SOCKET_LOGGING) console.log("Disconnected from server");
-      });
-
-      for (let key in SOCKET_SERVER_TO_CLIENT) {
-        socket.on(key, (payload) => {
-          if (ENABLE_SOCKET_LOGGING) console.log(key, payload);
-          subscribers.trigger(key as SOCKET_SERVER_TO_CLIENT, payload);
-        });
-      }
-      setSocket(socket);
+  const connect = React.useCallback((id: string, name: string) => {
+    const socket = io(`?id=${id}&name=${name}`, {
+      path: "/api/socket",
+      autoConnect: false,
     });
+
+    socket.on("connect", () => {
+      if (ENABLE_SOCKET_LOGGING) console.log("Connected to server");
+    });
+
+    socket.on("disconnect", () => {
+      if (ENABLE_SOCKET_LOGGING) console.log("Disconnected from server");
+    });
+
+    for (let key in SOCKET_SERVER_TO_CLIENT) {
+      socket.on(key, (payload) => {
+        if (ENABLE_SOCKET_LOGGING) console.log(key, payload);
+        subscribers.trigger(key as SOCKET_SERVER_TO_CLIENT, payload);
+      });
+    }
+
+    socket.connect();
+    setSocket(socket);
+    setConnected(true);
+  }, []);
+
+  const disconnect = React.useCallback(() => {
+    socket?.disconnect();
+    setSocket(undefined);
+    setConnected(false);
   }, []);
 
   const subscribe = React.useMemo(() => {
@@ -94,6 +114,9 @@ export function SocketStoreProvider(props: SocketStoreProvider) {
 
   const contextValue = React.useMemo(() => {
     return {
+      connected,
+      connect,
+      disconnect,
       socket,
       subscribe,
       unsubscribe,

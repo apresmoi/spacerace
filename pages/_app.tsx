@@ -1,15 +1,23 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { StoreProvider } from "../store";
-import { SocketStoreProvider } from "../socket/client";
+import {
+  SettingsStoreProvider,
+  SocketStoreProvider,
+  AppStoreProvider,
+  ChatStoreProvider,
+} from "../store";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <SocketStoreProvider>
-      <StoreProvider>
-        <Component {...pageProps} />
-      </StoreProvider>
-    </SocketStoreProvider>
+    <SettingsStoreProvider>
+      <SocketStoreProvider>
+        <AppStoreProvider>
+          <ChatStoreProvider>
+            <Component {...pageProps} />
+          </ChatStoreProvider>
+        </AppStoreProvider>
+      </SocketStoreProvider>
+    </SettingsStoreProvider>
   );
 }
 

@@ -26,7 +26,9 @@ export function useSubscriber<
   const removeSubscriber = React.useCallback(
     (key: K, callback: (...args: TArgs) => TReturn) => {
       if (!subscribers.current[key]) subscribers.current[key] = [];
-      subscribers.current[key].filter((cb) => cb !== callback);
+      subscribers.current[key] = subscribers.current[key].filter(
+        (cb) => cb !== callback
+      );
     },
     []
   );
