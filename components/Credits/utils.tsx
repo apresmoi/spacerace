@@ -7,7 +7,8 @@ export const data = [
       "Julián Mastieri",
       "Gabriel Rios",
       "Jonathan Rodriguez",
-      "Santiago Vallejo"
+      "Santiago Vallejo",
+      "Carlos Morales",
     ],
   },
   {
