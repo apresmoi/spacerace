@@ -34,12 +34,18 @@ export function useGame() {
   return React.useContext(GameStoreContext);
 }
 
+
+
 export function GameStore(props: React.PropsWithChildren<{}>) {
   const [playerID, setPlayerID] = React.useState<string>();
   const [room, setRoom] = React.useState<IRoom>();
   const router = useRouter();
 
   const moveSound = useSound("swooshMovement")
+  const kiperZone = useSound('kiperZone')
+  const saturnZone = useSound("saturnZone")
+  const meteorZone = useSound("meteorZone")
+  const supernovaZone = useSound("superNovaZone")
 
   const tryStart = useRoomPlayerStart();
   const tryMove = useRoomPlayerTryMove();
@@ -75,6 +81,30 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
     return (turnPlayer && player && turnPlayer.id === player.id) || false;
   }, [turnPlayer, player]);
 
+
+  React.useEffect(() => {
+    const activeCells = new Set();
+
+    room?.players.forEach(player => {
+      const activeCell = room.cells.find(cell => {
+        return cell.x === player.x && cell.y === player.y;
+      });
+
+      if (activeCell && ['KUIPER', 'METEOR','SATURN', 'SUPERNOVAE'].includes(activeCell.type)) {
+        activeCells.add(activeCell)
+      }
+    })
+
+    activeCells.forEach((cell: any) => {
+      if (cell.type === 'KUIPER') kiperZone?.play(30000);
+      if (cell.type === 'METEOR') meteorZone?.play(30000);
+      if (cell.type === 'SUPERNOVAE') supernovaZone?.play(30000);
+      if (cell.type === 'SATURN') saturnZone?.play(30000);
+    })
+
+    console.log(activeCells.forEach(console.log))
+  }, [room?.cells, room?.players, kiperZone, meteorZone, supernovaZone, saturnZone])
+    
   React.useEffect(() => {
     if (room?.turnStage === "END_GAME") {
       setTimeout(() => {

@@ -17,17 +17,18 @@ export const useSound = (
   const { sound: soundActivated } = useSettings();
 
   const sounds = React.useMemo(() => {
-    if (typeof window === 'undefined') return {};
+    if (typeof window === "undefined") return {};
 
     const btnClick = new Audio("sounds/btn-click.mp3");
     const creditsMusic = new Audio("sounds/credits-music.mp3");
     const bgMusic = new Audio("sounds/bg-music.mp3");
     const kiperZone = new Audio("sounds/kiper-zone.mp3");
-    const meteorZone = new Audio("sounds/meteorZone.mp3");
-    const saturnZone = new Audio("sounds/saturnZone.mp3");
+    const meteorZone = new Audio("sounds/meteor-zone.mp3");
+    const saturnZone = new Audio("sounds/saturn-zone.mp3");
     const swooshMovement = new Audio("sounds/swoosh-movement.mp3");
     const swooshRocket = new Audio("sounds/swoosh-plus-rocket.mp3");
-  
+    const superNovaZone = new Audio("sounds/supernova-zone.mp3");
+
     return {
       btnClick,
       creditsMusic,
@@ -37,9 +38,9 @@ export const useSound = (
       saturnZone,
       swooshMovement,
       swooshRocket,
+      superNovaZone,
     };
-  }, [])
-
+  }, []);
 
   return React.useMemo(() => {
     //@ts-ignore
@@ -47,14 +48,21 @@ export const useSound = (
     let isPlaying = false;
 
     if (sound)
+    sound.volume = 0.5
       return {
         isPlaying,
-        play: () => {
-          if (soundActivated && !isPlaying) {
+        play: (stopAt: number = null) => {
+          if (soundActivated) {
             sound.loop = options?.loop || false;
             sound.volume = options?.volume || 1;
             isPlaying = true;
-            return sound.play();
+            sound.play();
+
+            if (stopAt != null) {
+              setTimeout(() => {
+                sound.pause();
+              }, stopAt);
+            }
           }
           return new Promise(() => {});
         },
