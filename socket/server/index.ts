@@ -3,11 +3,13 @@ import { Server as ServerIO, Socket } from "socket.io";
 import { Server as NetServer } from "http";
 
 import {
+  handleRoomEvents,
   handleRoomPlayerJoin,
   handleRoomPlayerLeave,
   handleRoomPlayerMessageSend,
   handleRoomPlayerStart,
   handleRoomPlayerTryDice,
+  handleRoomPlayerTryDropItem,
   handleRoomPlayerTryMove,
 } from "./handler/room";
 import { ConnectedSocket } from "../types";
@@ -34,6 +36,10 @@ export function socketHandler(res: SocketNextApiResponse<any>) {
       const room = roomStore.getRoom(id);
 
       if (room) {
+        if (room.getPlayerCount() === 0) {
+          handleRoomEvents(room, server, socket);
+        }
+
         const player = room.addPlayer(socket.id, name);
 
         if (player) {
@@ -48,6 +54,7 @@ export function socketHandler(res: SocketNextApiResponse<any>) {
           handleRoomPlayerMessageSend(room, socket, server, player);
           handleRoomPlayerTryDice(room, socket, server, player);
           handleRoomPlayerTryMove(room, socket, server, player);
+          handleRoomPlayerTryDropItem(room, socket, server, player);
         }
       } else {
         socket.disconnect(true);

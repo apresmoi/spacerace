@@ -1,6 +1,7 @@
 import { Server, Socket } from "socket.io";
 import type {
   SocketRoomJoinedPayload,
+  SocketRoomPlayerDropItemPayload,
   SocketRoomPlayerJoinedPayload,
   SocketRoomPlayerLeftPayload,
   SocketRoomPlayerMessagePayload,
@@ -122,4 +123,16 @@ export function emitRoomPlayerPickUpItem(
   server
     .to(roomID)
     .emit(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_PICKED_UP_ITEM, payload);
+}
+
+export function emitRoomPlayerDropItem(
+  roomID: string,
+  server: Server,
+  socket: Socket,
+  payload: SocketRoomPlayerDropItemPayload
+) {
+  console.log(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_DROP_ITEM);
+  server
+    .to(roomID)
+    .emit(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_DROP_ITEM, payload);
 }

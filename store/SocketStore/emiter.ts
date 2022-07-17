@@ -2,10 +2,12 @@ import { SOCKET_CLIENT_TO_SERVER } from "../../socket/constants";
 import { useSocketStore } from "./SocketStore";
 import React from "react";
 import {
+  IItem,
   IPosition,
   SocketRoomPlayerMessageSendPayload,
   SocketRoomPlayerStartPayload,
   SocketRoomPlayerTryDicePayload,
+  SocketRoomPlayerTryDropItemPayload,
   SocketRoomPlayerTryMovePayload,
 } from "../../socket/types";
 
@@ -68,6 +70,27 @@ export function useRoomPlayerMessageSend() {
 
     return (content: string) => {
       handler({ message: { content } });
+    };
+  }, [emitInmediate]);
+}
+
+export function useRoomPlayerTryDropItem() {
+  const { emitInmediate } = useSocketStore();
+
+  return React.useMemo(() => {
+    const handler = (payload: SocketRoomPlayerTryDropItemPayload) => {
+      if (emitInmediate)
+        emitInmediate(
+          SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_TRY_DROP_ITEM,
+          payload
+        );
+    };
+
+    return (targetPlayerID: string, item: IItem) => {
+      handler({
+        targetPlayerID,
+        item,
+      });
     };
   }, [emitInmediate]);
 }

@@ -10,6 +10,8 @@ class Room {
     onTurnChange: [],
     onStart: [],
     onPickUpItem: [],
+    onDropItem: [],
+    onSystemMessage: [],
   };
 
   subscribe = (
@@ -51,7 +53,7 @@ class Room {
         { x: 7, y: 0, type: "METEOR" },
         { x: 8, y: 0, type: "NEUTRAL" },
         { x: 9, y: 0, type: "METEOR", item: "ROCKET_FIRE" },
-        { x: 10, y: 0, type: "NEUTRAL" },
+        { x: 10, y: 0, type: "DROP_ITEM" },
 
         { x: 0, y: 1, type: "KUIPER" },
         { x: 1, y: 1, type: "NEUTRAL" },
@@ -113,7 +115,7 @@ class Room {
         { x: 11, y: 8, type: "SUPERNOVAE", item: "ROCKET_TIP" },
         { x: 12, y: 8, type: "START" },
 
-        { x: 1, y: 9, type: "NEUTRAL" },
+        { x: 1, y: 9, type: "DROP_ITEM" },
         { x: 2, y: 9, type: "SATURN" },
         { x: 3, y: 9, type: "NEUTRAL" },
         { x: 4, y: 9, type: "SATURN", item: "ROCKET_FINS" },
@@ -218,6 +220,22 @@ class Room {
     return this._room.players[randomIndex];
   };
 
+  private sendSystemMessage = (message: string) => {
+    this.trigger("onSystemMessage", message);
+  };
+
+  private getCellAtPosition = (position: IPosition) => {
+    return this._room.cells.find(
+      (cell) => cell.x === position.x && cell.y === position.y
+    );
+  };
+
+  private getPlayerAtPosition = (position: IPosition) => {
+    return this._room.players.find(
+      (cell) => cell.x === position.x && cell.y === position.y
+    );
+  };
+
   private movePlayer = (playerID: string, position: IPosition) => {
     this._room.players = this._room.players.map((player) =>
       player.id === playerID ? { ...player, ...position } : player
@@ -248,6 +266,10 @@ class Room {
       const nextPlayer = this.getNextPlayer(this._room.currentTurnPlayerID);
       this._room.currentTurnPlayerID = nextPlayer.id;
       this._room.turnStage = "WAITING_FOR_ROLL";
+
+      this.sendSystemMessage(
+        `It's ${nextPlayer.name}'s turn. Please, roll the dice.`
+      );
     }
   };
 
@@ -256,6 +278,8 @@ class Room {
     if (winningPlayer) {
       this._room.currentTurnPlayerID = winningPlayer.id;
       this._room.turnStage = "END_GAME";
+      this.sendSystemMessage(`${winningPlayer.name} won the game.`);
+      this.sendSystemMessage(`The game ended.`);
       this.triggerTurnChange();
       return true;
     }
@@ -268,10 +292,12 @@ class Room {
     position: IPosition
   ) => {
     this.trigger("onPickUpItem", player, item, position);
+    this.sendSystemMessage(`${player.name} picked up a ${item}.`);
   };
 
   private triggerStart = () => {
     this.trigger("onStart", this._room.startedAt?.toISOString());
+    this.sendSystemMessage(`The game started.`);
   };
 
   private triggerTurnChange = () => {
@@ -290,7 +316,30 @@ class Room {
 
       if (currentPlayer) {
         this.trigger("onDiceRolled", currentPlayer, this._room.currentDice);
+        this.sendSystemMessage(
+          `${currentPlayer.name} rolled ${
+            this._room.currentDice[0] + this._room.currentDice[1]
+          }`
+        );
       }
+    }
+  };
+
+  private triggerDropItem = (
+    playerID: string,
+    targetPlayerID: string,
+    item: IItem
+  ) => {
+    const player = this.getPlayerById(playerID);
+    const targetPlayer = this.getPlayerById(targetPlayerID);
+    if (targetPlayer) {
+      this.trigger("onDropItem", player, item, {
+        x: targetPlayer.x,
+        y: targetPlayer.y,
+      });
+      this.sendSystemMessage(
+        `${player?.name} made ${targetPlayer?.name} drop the ${item}`
+      );
     }
   };
 
@@ -357,9 +406,55 @@ class Room {
       this.movePlayer(playerID, position);
       this.triggerPlayerMoved();
 
+      const cell = this.getCellAtPosition(position);
+
+      if (cell?.type === "DROP_ITEM") {
+        if (
+          this._room.players
+            .filter((p) => p.id !== playerID)
+            .some(
+              (p) =>
+                p.inventory.length &&
+                !this.getCellAtPosition({ x: p.x, y: p.y })?.item
+            )
+        ) {
+          this._room.turnStage = "WAITING_FOR_DROP_ITEM";
+          this.triggerTurnChange();
+          return;
+        } else {
+          const player = this.getPlayerById(playerID);
+          this.sendSystemMessage(
+            `Sorry ${player?.name}. There isn't any item to be dropped.`
+          );
+        }
+      }
+
       if (!this.checkEndGame()) {
         this.nextTurn();
         this.triggerTurnChange();
+      }
+    }
+  };
+
+  tryDropItem = (playerID: string, targetPlayerID: string, item: IItem) => {
+    if (
+      this._room.turnStage === "WAITING_FOR_DROP_ITEM" &&
+      this._room.currentTurnPlayerID === playerID
+    ) {
+      const targetPlayer = this.getPlayerById(targetPlayerID);
+      if (targetPlayer?.inventory.includes(item)) {
+        const playerPosition = { x: targetPlayer.x, y: targetPlayer.y };
+        const cell = this.getCellAtPosition(playerPosition);
+        if (cell && !cell.item) {
+          cell.item = item;
+          targetPlayer.inventory = targetPlayer.inventory.filter(
+            (i) => i !== item
+          );
+
+          this.triggerDropItem(playerID, targetPlayerID, item);
+          this.nextTurn();
+          this.triggerTurnChange();
+        }
       }
     }
   };

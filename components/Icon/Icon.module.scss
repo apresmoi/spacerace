@@ -1,0 +1,42 @@
+.rocketIcon {
+  * {
+    pointer-events: all;
+  }
+
+  &.hoverable {
+    .rocketIconRocketFire,
+    .rocketIconRocketBody,
+    .rocketIconRocketFins,
+    .rocketIconRocketTip {
+      opacity: 0.5;
+    }
+  }
+
+  .rocketIconRocketFire.hoverable {
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .rocketIconRocketBody.hoverable {
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .rocketIconRocketFins.hoverable {
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .rocketIconRocketTip.hoverable {
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

@@ -15,7 +15,8 @@ export type ICellType =
   | "SUPERNOVAE"
   | "SATURN"
   | "KUIPER"
-  | "METEOR";
+  | "METEOR"
+  | "DROP_ITEM";
 
 export type IItem =
   | "ROCKET_TIP"
@@ -29,7 +30,7 @@ export type ICell = IPosition & {
 };
 
 export type IMessage = {
-  playerID: string;
+  playerID?: string;
   date: Date;
   content: string;
 };
@@ -45,8 +46,8 @@ export type IPlayer = IPosition & {
 export type IRoomTurnStage =
   | "WAITING_FOR_START"
   | "WAITING_FOR_ROLL"
-  | "ROLLING_DICES"
   | "WAITING_FOR_MOVE"
+  | "WAITING_FOR_DROP_ITEM"
   | "END_GAME";
 
 export type IRoomSubscribers = {
@@ -55,6 +56,10 @@ export type IRoomSubscribers = {
   onDiceRolled: Array<(player: IPlayer, dice: IDice) => void>;
   onStart: Array<(player: IPlayer, startDate: Date) => void>;
   onPickUpItem: Array<(player: IPlayer, item: IItem) => void>;
+  onDropItem: Array<
+    (player: IPlayer, item: IItem, position: IPosition) => void
+  >;
+  onSystemMessage: Array<(message: string) => void>;
 };
 
 export type IRoom = {
@@ -106,6 +111,11 @@ export type SocketRoomPlayerMessageSendPayload = {
   message: Pick<IMessage, "content">;
 };
 
+export type SocketRoomPlayerTryDropItemPayload = {
+  targetPlayerID: string;
+  item: IItem;
+};
+
 //server to client
 
 export type SocketRoomJoinedPayload = {
@@ -149,6 +159,12 @@ export type SocketRoomStartedPayload = {
 };
 
 export type SocketRoomPlayerPickedUpItemPayload = {
+  playerID: string;
+  item: IItem;
+  position: IPosition;
+};
+
+export type SocketRoomPlayerDropItemPayload = {
   playerID: string;
   item: IItem;
   position: IPosition;

@@ -2,12 +2,14 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { useSound } from "../assets";
 import { useMusic } from "../hooks/useMusic";
-import { IPlayer, IPosition, IRoom } from "../socket/types";
+import { IItem, IPlayer, IPosition, IRoom } from "../socket/types";
 import { uniquePredicate } from "../utils/array";
 import {
   useRoomPlayerStart,
   useRoomPlayerTryDice,
+  useRoomPlayerTryDropItem,
   useRoomPlayerTryMove,
+  useSocketPlayerDropItem,
   useSocketPlayerPickupItem,
   useSocketRoomJoined,
   useSocketRoomPlayerJoined,
@@ -20,6 +22,7 @@ import {
 
 type IGameStoreContext = {
   tryMove: (position: IPosition) => void;
+  tryDropItem: (targetPlayerID: string, item: IItem) => void;
   tryDice: () => void;
   tryStart: () => void;
   room?: IRoom;
@@ -30,6 +33,7 @@ type IGameStoreContext = {
 
 export const GameStoreContext = React.createContext<IGameStoreContext>({
   tryDice: () => {},
+  tryDropItem: () => {},
   tryMove: () => {},
   tryStart: () => {},
   isMyTurn: false,
@@ -53,6 +57,7 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
   const tryStart = useRoomPlayerStart();
   const tryMove = useRoomPlayerTryMove();
   const tryDice = useRoomPlayerTryDice();
+  const tryDropItem = useRoomPlayerTryDropItem();
 
   const handleTryDice = React.useCallback(() => {
     tryDice();
@@ -70,6 +75,13 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
       moveSound?.play();
     },
     [tryMove, moveSound]
+  );
+
+  const handleTryDropItem = React.useCallback(
+    (targetPlayerID: string, item: IItem) => {
+      tryDropItem(targetPlayerID, item);
+    },
+    [tryDropItem, moveSound]
   );
 
   const player = React.useMemo(() => {
@@ -234,11 +246,39 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
     });
   });
 
+  useSocketPlayerDropItem((payload) => {
+    setRoom((room) => {
+      if (!room) return room;
+
+      return {
+        ...room,
+        cells: room.cells.map((cell) => {
+          if (cell.x === payload.position.x && cell.y === payload.position.y) {
+            return {
+              ...cell,
+              item: payload.item,
+            };
+          }
+          return cell;
+        }),
+        players: room.players.map((player) =>
+          player.id === payload.playerID
+            ? {
+                ...player,
+                inventory: player.inventory.filter((i) => i !== payload.item),
+              }
+            : player
+        ),
+      };
+    });
+  });
+
   const contextValue = React.useMemo(
     () => ({
       tryMove: handleTryMove,
       tryDice: handleTryDice,
       tryStart: handleTryStart,
+      tryDropItem: handleTryDropItem,
       isMyTurn,
       player,
       turnPlayer,
@@ -248,6 +288,7 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
       handleTryDice,
       handleTryMove,
       handleTryStart,
+      handleTryDropItem,
       isMyTurn,
       player,
       turnPlayer,

@@ -19,6 +19,8 @@ import {
   SocketRoomPlayerStartPayload,
   SocketRoomStartedPayload,
   SocketRoomPlayerPickedUpItemPayload,
+  SocketRoomPlayerTryDropItemPayload,
+  SocketRoomPlayerDropItemPayload,
 } from "../../socket/types";
 
 //SocketRoomSubscribers
@@ -34,6 +36,7 @@ export type SocketEventsMap = {
   [SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_MESSAGE]: SocketRoomPlayerMessagePayload;
   [SOCKET_SERVER_TO_CLIENT.ROOM_STARTED]: SocketRoomStartedPayload;
   [SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_PICKED_UP_ITEM]: SocketRoomPlayerPickedUpItemPayload;
+  [SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_DROP_ITEM]: SocketRoomPlayerDropItemPayload;
 };
 
 export type SocketStoreSubscribers = MakeOverloadings<
@@ -45,6 +48,7 @@ export type SocketEmitterMap = {
   [SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_TRY_MOVE]: SocketRoomPlayerTryMovePayload;
   [SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_TRY_DICE]: SocketRoomPlayerTryDicePayload;
   [SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_MESSAGE_SEND]: SocketRoomPlayerMessageSendPayload;
+  [SOCKET_CLIENT_TO_SERVER.ROOM_PLAYER_TRY_DROP_ITEM]: SocketRoomPlayerTryDropItemPayload;
 };
 
 export type SocketStoreEmitters = MakeOverloadings<

@@ -3,7 +3,7 @@
   left: 3vw;
   top: 18vw;
   height: 20vw;
-  width: 20vw;
+  width: 25vw;
   border: 1px solid white;
 
   display: flex;
@@ -24,7 +24,6 @@
     background: #1a1f30;
     border: 1px solid white;
     overflow-y: scroll;
-   
 
     .chatWindowMessage {
       padding: 2px;
@@ -37,7 +36,7 @@
       }
       span:last-child {
         font-family: "Bai Jamjuree";
-        font-size: 1.25em;
+        font-size: 0.9rem;
       }
 
       &.myMessage {
@@ -50,7 +49,17 @@
 
         .messageContent {
           font-family: "Bai Jamjuree" !important;
-          font-size: 1.25rem;
+          font-size: 0.9rem;
+        }
+      }
+
+      &.systemMessage {
+        flex-direction: row;
+        span:first-child {
+          font-size: 0.9rem;
+          font-family: "Bai Jamjuree" !important;
+          color: white;
+          margin-right: 5px;
         }
       }
     }

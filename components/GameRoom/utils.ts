@@ -24,6 +24,8 @@ export const getCellColor = (cell?: ICell) => {
       return "#4E66ED";
     case "SUPERNOVAE":
       return "#B4C4FA";
+    case "DROP_ITEM":
+      return "#FA3757"
   }
 };
 

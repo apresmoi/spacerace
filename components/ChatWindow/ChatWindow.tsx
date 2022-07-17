@@ -66,11 +66,14 @@ export function ChatWindow() {
               key={i}
               className={className(
                 styles.chatWindowMessage,
-                isMyMessage(m) && styles.myMessage
+                isMyMessage(m) && styles.myMessage,
+                !m.playerID && styles.systemMessage
               )}
             >
-              <span>{getPlayerName(m.playerID)}</span>
-              <span className={`${styles.messageContent} messageContent`}>{m.content}</span>
+              <span>{m.playerID ? getPlayerName(m.playerID) : "System:"}</span>
+              <span className={`${styles.messageContent} messageContent`}>
+                {m.content}
+              </span>
             </div>
           ))}
         </div>

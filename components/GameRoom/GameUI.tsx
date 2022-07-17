@@ -1,4 +1,5 @@
 import React from "react";
+import { IItem } from "../../socket/types";
 import { useGame } from "../../store";
 import { className } from "../../utils/classnames";
 import { DiceIcon, RocketIcon } from "../Icon";
@@ -7,9 +8,19 @@ import StartBackgroundButton from "../Icon/StartBackgroundButton";
 import styles from "./GameRoom.module.scss";
 
 export function GameUI() {
-  const { room, player, turnPlayer, isMyTurn, tryStart, tryDice, tryMove } =
+  const { room, player, turnPlayer, isMyTurn, tryStart, tryDice, tryDropItem } =
     useGame();
   if (!room) return null;
+
+  const handleDropItem = React.useCallback(
+    (targetPlayerID: string) => {
+      return (item: IItem) => {
+        if (isMyTurn && player && player.id !== targetPlayerID)
+          tryDropItem(targetPlayerID, item);
+      };
+    },
+    [tryDropItem, player]
+  );
 
   return (
     <div className={styles.gameUI}>
@@ -62,7 +73,15 @@ export function GameUI() {
               turnPlayer?.id === player.id && styles.playerHighlight
             )}
           >
-            <RocketIcon foundParts={player.inventory} />
+            <RocketIcon
+              foundParts={player.inventory}
+              hoverable={
+                room.turnStage === "WAITING_FOR_DROP_ITEM" &&
+                isMyTurn &&
+                turnPlayer?.id !== player.id
+              }
+              onClick={handleDropItem(player.id)}
+            />
             <div className={styles.playerName}>
               <StartBackgroundButton />
               <span>

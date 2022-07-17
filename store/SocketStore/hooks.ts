@@ -2,6 +2,7 @@ import React from "react";
 import { SOCKET_SERVER_TO_CLIENT } from "../../socket/constants";
 import {
   SocketRoomJoinedPayload,
+  SocketRoomPlayerDropItemPayload,
   SocketRoomPlayerJoinedPayload,
   SocketRoomPlayerLeftPayload,
   SocketRoomPlayerMessagePayload,
@@ -202,4 +203,23 @@ export function useSocketPlayerPickupItem(
       unsubscribe(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_PICKED_UP_ITEM, handler);
     };
   }, [subscribe, unsubscribe, onPickup]);
+}
+
+//** This gets triggered when a user leaves the page */
+export function useSocketPlayerDropItem(
+  onDrop?: (payload: SocketRoomPlayerDropItemPayload) => void
+) {
+  const { subscribe, unsubscribe } = useSocketStore();
+
+  React.useEffect(() => {
+    const handler = (payload: SocketRoomPlayerDropItemPayload) => {
+      onDrop?.(payload);
+    };
+
+    subscribe(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_DROP_ITEM, handler);
+
+    return () => {
+      unsubscribe(SOCKET_SERVER_TO_CLIENT.ROOM_PLAYER_DROP_ITEM, handler);
+    };
+  }, [subscribe, unsubscribe, onDrop]);
 }
