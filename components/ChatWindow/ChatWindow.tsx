@@ -16,7 +16,8 @@ export function ChatWindow() {
 
   const [message, setMessage] = React.useState("");
 
-  const handleMessageSubmit = React.useCallback(() => {
+  const handleMessageSubmit = React.useCallback((e) => {
+    e.preventDefault();
     sendMessage(message);
     setMessage("");
   }, [sendMessage, message]);
@@ -55,7 +56,7 @@ export function ChatWindow() {
   }, [messages]);
 
   return (
-    <div className={styles.chatWindow}>
+    <form className={styles.chatWindow}>
       <div className={styles.chatTitle}>SPACE CHAT</div>
       <div ref={ref} className={styles.chatWindowMessages}>
         <div className={styles.chatWindowMessagesInner}>
@@ -74,7 +75,7 @@ export function ChatWindow() {
         </div>
       </div>
       <input value={message} onChange={handleMessageChange} />
-      <button onClick={handleMessageSubmit}>SEND</button>
-    </div>
+      <button type="submit" onClick={handleMessageSubmit}>SEND</button>
+    </form>
   );
 }
