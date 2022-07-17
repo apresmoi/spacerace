@@ -28,9 +28,8 @@ const DefeatScreen: NextPage = () => {
             <span>
               OH NO!{" "}
               <span style={{ color: "white" }}>
-                <>{turnPlayer || "Player1"}</>
+                <>{turnPlayer || "Player1"} WON</>
               </span>{" "}
-              WON
               <br />
               YOU NEED TO BE FASTER <br />
               NEXT TIME <br />
