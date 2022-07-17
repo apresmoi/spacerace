@@ -1,10 +1,6 @@
 import React from "react";
 import { IMessage } from "../../socket/types";
 import { useChat, useGame } from "../../store";
-import {
-  useRoomPlayerMessageSend,
-  useSocketRoomPlayerMessage,
-} from "../../store/SocketStore";
 import { className } from "../../utils/classnames";
 import styles from "./ChatWindow.module.scss";
 
@@ -16,10 +12,16 @@ export function ChatWindow() {
 
   const [message, setMessage] = React.useState("");
 
-  const handleMessageSubmit = React.useCallback(() => {
-    sendMessage(message);
-    setMessage("");
-  }, [sendMessage, message]);
+  const handleMessageSubmit = React.useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      if (message) {
+        sendMessage(message);
+        setMessage("");
+      }
+    },
+    [sendMessage, message]
+  );
 
   const handleMessageChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +57,7 @@ export function ChatWindow() {
   }, [messages]);
 
   return (
-    <div className={styles.chatWindow}>
+    <form className={styles.chatWindow}>
       <div className={styles.chatTitle}>SPACE CHAT</div>
       <div ref={ref} className={styles.chatWindowMessages}>
         <div className={styles.chatWindowMessagesInner}>
@@ -68,13 +70,15 @@ export function ChatWindow() {
               )}
             >
               <span>{getPlayerName(m.playerID)}</span>
-              <span>{m.content}</span>
+              <span className={styles.messageContent}>{m.content}</span>
             </div>
           ))}
         </div>
       </div>
       <input value={message} onChange={handleMessageChange} />
-      <button onClick={handleMessageSubmit}>SEND</button>
-    </div>
+      <button type="submit" onClick={handleMessageSubmit}>
+        SEND
+      </button>
+    </form>
   );
 }

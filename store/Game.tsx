@@ -1,4 +1,7 @@
+import { useRouter } from "next/router";
 import * as React from "react";
+import { useSound } from "../assets";
+import { useMusic } from "../hooks/useMusic";
 import { IPlayer, IPosition, IRoom } from "../socket/types";
 import { uniquePredicate } from "../utils/array";
 import {
@@ -25,7 +28,12 @@ type IGameStoreContext = {
   isMyTurn: boolean;
 };
 
-export const GameStoreContext = React.createContext<IGameStoreContext>({});
+export const GameStoreContext = React.createContext<IGameStoreContext>({
+  tryDice: () => {},
+  tryMove: () => {},
+  tryStart: () => {},
+  isMyTurn: false,
+});
 
 export function useGame() {
   return React.useContext(GameStoreContext);
@@ -34,10 +42,31 @@ export function useGame() {
 export function GameStore(props: React.PropsWithChildren<{}>) {
   const [playerID, setPlayerID] = React.useState<string>();
   const [room, setRoom] = React.useState<IRoom>();
+  const router = useRouter();
+
+  const moveSound = useSound("swooshMovement");
 
   const tryStart = useRoomPlayerStart();
   const tryMove = useRoomPlayerTryMove();
   const tryDice = useRoomPlayerTryDice();
+
+  const handleTryDice = React.useCallback(() => {
+    tryDice();
+    moveSound?.play();
+  }, [tryDice, moveSound]);
+
+  const handleTryStart = React.useCallback(() => {
+    tryStart();
+    moveSound?.play();
+  }, [tryStart, moveSound]);
+
+  const handleTryMove = React.useCallback(
+    (position: IPosition) => {
+      tryMove(position);
+      moveSound?.play();
+    },
+    [tryMove, moveSound]
+  );
 
   const player = React.useMemo(() => {
     if (!room) return undefined;
@@ -53,11 +82,20 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
     return (turnPlayer && player && turnPlayer.id === player.id) || false;
   }, [turnPlayer, player]);
 
+  React.useEffect(() => {
+    if (room?.turnStage === "END_GAME") {
+      setTimeout(() => {
+        router.push(isMyTurn ? "/victory" : "/defeat");
+      }, 1000);
+    }
+  }, [room?.turnStage, isMyTurn]);
+
   useSocketRoomJoined((payload) => {
-    console.log(payload);
     setRoom(payload.room);
     setPlayerID(payload.playerID);
   });
+
+  useMusic();
 
   useSocketRoomPlayerJoined((payload) => {
     setRoom((room) => {
@@ -159,8 +197,24 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
   });
 
   const contextValue = React.useMemo(
-    () => ({ tryMove, tryDice, tryStart, isMyTurn, player, turnPlayer, room }),
-    [tryMove, tryDice, tryStart, isMyTurn, player, turnPlayer, room]
+    () => ({
+      tryMove: handleTryMove,
+      tryDice: handleTryDice,
+      tryStart: handleTryStart,
+      isMyTurn,
+      player,
+      turnPlayer,
+      room,
+    }),
+    [
+      handleTryDice,
+      handleTryMove,
+      handleTryStart,
+      isMyTurn,
+      player,
+      turnPlayer,
+      room,
+    ]
   );
 
   return (

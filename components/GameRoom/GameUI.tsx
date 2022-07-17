@@ -13,19 +13,20 @@ export function GameUI() {
 
   return (
     <div className={styles.gameUI}>
-      {/* <div>
-        {room.players.map((player) => (
-          <div key={player.id}>
-            {player.isAdmin ? "(Admin)" : ""} {player.name}
+      {room.turnStage !== "WAITING_FOR_START" && (
+        <div
+          className={className(
+            styles.dice,
+            room.turnStage === "WAITING_FOR_ROLL" &&
+              isMyTurn &&
+              styles.diceMyTurn
+          )}
+          onClick={() => (isMyTurn ? tryDice() : null)}
+        >
+          <div>
+            <DiceIcon />
           </div>
-        ))}
-      </div>
-      <div>
-        Dice: {room.currentDice?.[0]} / {room.currentDice?.[1]}
-      </div> */}
-      {isMyTurn && (
-        <div className={styles.dice} onClick={() => tryDice()}>
-          <DiceIcon />
+          <span>{room.currentDice[0] + room.currentDice[1]}</span>
         </div>
       )}
       {player?.isAdmin && !room.started && (
@@ -54,8 +55,14 @@ export function GameUI() {
       </div>
       <div className={styles.players}>
         {room.players.map((player, i) => (
-          <div key={player.id} className={styles[`player${i + 1}`]}>
-            <RocketIcon />
+          <div
+            key={player.id}
+            className={className(
+              styles[`player${i + 1}`],
+              turnPlayer?.id === player.id && styles.playerHighlight
+            )}
+          >
+            <RocketIcon foundParts={player.inventory} />
             <div className={styles.playerName}>
               <StartBackgroundButton />
               <span>
@@ -69,3 +76,13 @@ export function GameUI() {
     </div>
   );
 }
+
+<svg
+  width="88"
+  height="136"
+  viewBox="0 0 88 136"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect width="88" height="136" fill="white" />
+</svg>;

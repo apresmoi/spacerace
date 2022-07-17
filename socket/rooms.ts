@@ -140,6 +140,10 @@ class Room {
     return this._room.name;
   }
 
+  get started() {
+    return this._room.started;
+  }
+
   get players() {
     return this._room.players;
   }
@@ -152,15 +156,30 @@ class Room {
     return this._room.players.length;
   };
 
+  private getRandomColor = () => {
+    const colors = ["#4E66ED", "#563EB2", "#B4C4FA", "#3A4390"];
+    const usedColors = this._room.players.map((p) => p.color);
+
+    const availableColors = colors.filter(
+      (color) => !usedColors.includes(color)
+    );
+
+    return availableColors[
+      Math.floor(Math.random() * (availableColors.length - 1))
+    ];
+  };
+
   addPlayer = (id: string, name: string) => {
+    if (this._room.started) return;
     if (this.getPlayerCount() === 4) return; //max 4 players
 
-    const player = {
+    const player: IPlayer = {
       id,
       name,
       ...this._room.playerStartPosition,
       inventory: [],
       isAdmin: this.getPlayerCount() === 0,
+      color: this.getRandomColor(),
     };
     this._room.players.push(player);
 
@@ -230,6 +249,17 @@ class Room {
       this._room.currentTurnPlayerID = nextPlayer.id;
       this._room.turnStage = "WAITING_FOR_ROLL";
     }
+  };
+
+  private checkEndGame = () => {
+    const winningPlayer = this.getWinningPlayer();
+    if (winningPlayer) {
+      this._room.currentTurnPlayerID = winningPlayer.id;
+      this._room.turnStage = "END_GAME";
+      this.triggerTurnChange();
+      return true;
+    }
+    return false;
   };
 
   private triggerPickupItem = (
@@ -303,6 +333,22 @@ class Room {
     }
   };
 
+  getWinningPlayer = () => {
+    const endPosition = this._room.cells.find((cell) => cell.type === "END");
+    if (endPosition) {
+      return this._room.players.find((player) => {
+        return (
+          player.x === endPosition.x &&
+          player.y === endPosition.y &&
+          player.inventory.includes("ROCKET_BODY") &&
+          player.inventory.includes("ROCKET_FINS") &&
+          player.inventory.includes("ROCKET_FIRE") &&
+          player.inventory.includes("ROCKET_TIP")
+        );
+      });
+    }
+  };
+
   tryMovePlayer = (playerID: string, position: IPosition) => {
     if (
       this._room.turnStage === "WAITING_FOR_MOVE" &&
@@ -310,8 +356,11 @@ class Room {
     ) {
       this.movePlayer(playerID, position);
       this.triggerPlayerMoved();
-      this.nextTurn();
-      this.triggerTurnChange();
+
+      if (!this.checkEndGame()) {
+        this.nextTurn();
+        this.triggerTurnChange();
+      }
     }
   };
 }

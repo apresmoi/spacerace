@@ -18,6 +18,30 @@ export function Cell(props: CellProps) {
     onClick?.(cell);
   }, [onClick, cell]);
 
+  const cellText = React.useMemo(() => {
+    switch (cell.type) {
+      case "END":
+        return "END";
+      case "START":
+        return "START";
+      default:
+        return "";
+    }
+  }, [cell]);
+
+  const strokeColor = React.useMemo(() => {
+    if (props.highlight) {
+      return "#BEED00";
+    }
+    switch (cell.type) {
+      case "END":
+      case "START":
+        return "#FFCA30";
+      default:
+        return "transparent";
+    }
+  }, [cell, props.highlight]);
+
   return (
     <div
       className={className(styles.cell, props.highlight && styles.highlight)}
@@ -30,8 +54,12 @@ export function Cell(props: CellProps) {
         <path
           d="M0.5 49.1195L49.1195 0.5H117.88L166.5 49.1195V117.88L117.88 166.5H49.1195L0.5 117.88V49.1195Z"
           fill={getCellColor(cell)}
-          stroke="#0D141E"
+          stroke={strokeColor}
+          strokeWidth={12}
         />
+        <text fontSize={40} dy={100} dx={82} textAnchor="middle" fill="black">
+          {cellText}
+        </text>
       </svg>
     </div>
   );

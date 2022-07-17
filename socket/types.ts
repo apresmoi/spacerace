@@ -39,13 +39,15 @@ export type IPlayer = IPosition & {
   name: string;
   isAdmin?: boolean;
   inventory: IItem[];
+  color: string;
 };
 
 export type IRoomTurnStage =
   | "WAITING_FOR_START"
   | "WAITING_FOR_ROLL"
   | "ROLLING_DICES"
-  | "WAITING_FOR_MOVE";
+  | "WAITING_FOR_MOVE"
+  | "END_GAME";
 
 export type IRoomSubscribers = {
   onPlayerMove: Array<(player: IPlayer, position: IPosition) => void>;
@@ -78,6 +80,7 @@ export type IRoom = {
 
 export type IRoomList = Pick<IRoom, "id" | "name"> & {
   playerCount: number;
+  started: boolean;
 };
 
 export type ConnectedSocketData = {

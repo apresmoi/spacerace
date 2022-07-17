@@ -48,7 +48,10 @@ export function RoomList(props: RoomListProps) {
         </thead>
         <tbody>
           {rooms.map((room) => (
-            <tr key={room.id} onClick={handleRoomClick(room.id)}>
+            <tr
+              key={room.id}
+              onClick={!room.started ? handleRoomClick(room.id) : undefined}
+            >
               <td>{room.name}</td>
               <td>{room.playerCount}</td>
             </tr>
