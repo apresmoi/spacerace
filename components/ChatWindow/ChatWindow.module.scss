@@ -24,6 +24,7 @@
     background: #1a1f30;
     border: 1px solid white;
     overflow-y: scroll;
+   
 
     .chatWindowMessage {
       padding: 2px;
@@ -35,6 +36,8 @@
         color: #fa3757;
       }
       span:last-child {
+        font-family: "Bai Jamjuree";
+        font-size: 1.25em;
       }
 
       &.myMessage {
@@ -46,7 +49,7 @@
         }
 
         .messageContent {
-          font-family: "Bai Jamjuree";
+          font-family: "Bai Jamjuree" !important;
           font-size: 1.25rem;
         }
       }

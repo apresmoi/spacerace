@@ -70,7 +70,7 @@ export function ChatWindow() {
               )}
             >
               <span>{getPlayerName(m.playerID)}</span>
-              <span className={styles.messageContent}>{m.content}</span>
+              <span className={`${styles.messageContent} messageContent`}>{m.content}</span>
             </div>
           ))}
         </div>
