@@ -314,7 +314,7 @@ class Room {
       this._room.startedAt = new Date();
 
       this._room.currentTurnPlayerID = this.getRandomPlayer().id;
-      this._room.turnStage = "END_GAME";
+      this._room.turnStage = "WAITING_FOR_ROLL";
 
       this.triggerStart();
       this.triggerTurnChange();
