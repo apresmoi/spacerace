@@ -44,27 +44,29 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
   const [room, setRoom] = React.useState<IRoom>();
   const router = useRouter();
 
-  const moveSound = useSound("swooshMovement")
+  const moveSound = useSound("swooshMovement");
 
   const tryStart = useRoomPlayerStart();
   const tryMove = useRoomPlayerTryMove();
   const tryDice = useRoomPlayerTryDice();
-  
-  const handleTryDice = React.useCallback((...args) => {
-    tryDice(...args);
-    moveSound?.play()
 
-  }, [tryDice, moveSound])
+  const handleTryDice = React.useCallback(() => {
+    tryDice();
+    moveSound?.play();
+  }, [tryDice, moveSound]);
 
-  const handleTryStart = React.useCallback((...args) => {
-    tryStart(...args);
-    moveSound?.play()
-  }, [tryStart,moveSound])
+  const handleTryStart = React.useCallback(() => {
+    tryStart();
+    moveSound?.play();
+  }, [tryStart, moveSound]);
 
-  const handleTryMove = React.useCallback((...args) => {
-    tryMove(...args);
-    moveSound?.play()
-  }, [tryMove, moveSound])
+  const handleTryMove = React.useCallback(
+    (position: IPosition) => {
+      tryMove(position);
+      moveSound?.play();
+    },
+    [tryMove, moveSound]
+  );
 
   const player = React.useMemo(() => {
     if (!room) return undefined;
@@ -195,8 +197,24 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
   });
 
   const contextValue = React.useMemo(
-    () => ({ tryMove: handleTryMove, tryDice: handleTryDice, tryStart: handleTryStart, isMyTurn, player, turnPlayer, room }),
-    [handleTryDice, handleTryMove, handleTryStart, isMyTurn, player, turnPlayer, room]
+    () => ({
+      tryMove: handleTryMove,
+      tryDice: handleTryDice,
+      tryStart: handleTryStart,
+      isMyTurn,
+      player,
+      turnPlayer,
+      room,
+    }),
+    [
+      handleTryDice,
+      handleTryMove,
+      handleTryStart,
+      isMyTurn,
+      player,
+      turnPlayer,
+      room,
+    ]
   );
 
   return (
