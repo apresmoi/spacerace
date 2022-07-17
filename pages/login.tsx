@@ -21,12 +21,13 @@ const Login: NextPage = () => {
     []
   );
 
-  const handleOnClick = React.useCallback(() => {
+  const handleOnClick = React.useCallback((e) => {
+    e.preventDefault();
     if (name) router.push("/rooms");
   }, [name, router]);
 
   return (
-    <div className={styles.login}>
+    <form className={styles.login}>
       <Background />
       <StarsBackground />
       <div className={styles.content}>
@@ -41,7 +42,7 @@ const Login: NextPage = () => {
       <div style={{ position: "absolute", bottom: "20px", left: "20px" }}>
         <LeniolabsLogo />
       </div>
-    </div>
+    </form>
   );
 };
 

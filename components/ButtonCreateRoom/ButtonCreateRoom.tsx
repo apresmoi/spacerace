@@ -11,7 +11,7 @@ export const ButtonCreateRoom = (props:ButtonCreateRoomProps) => {
   const { onClick, text, disabled } = props;
   
   return (
-    <button className={styles.button} onClick={onClick} disabled={disabled}>
+    <button className={styles.button} type="submit" onClick={onClick} disabled={disabled}>
       <span>{text}</span>
     </button>
   );

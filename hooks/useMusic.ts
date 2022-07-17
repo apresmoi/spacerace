@@ -14,8 +14,6 @@ export function useMusic() {
       const path = location.pathname;
   
       setTimeout(() => {
-        console.log("called with " + path);
-  
         if (["/", "/play", "/rooms", "/instructions", "/login", "/createNewRoom"].includes(path)) {
             bgMusic?.play();
         }
