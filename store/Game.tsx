@@ -26,7 +26,12 @@ type IGameStoreContext = {
   isMyTurn: boolean;
 };
 
-export const GameStoreContext = React.createContext<IGameStoreContext>({});
+export const GameStoreContext = React.createContext<IGameStoreContext>({
+  tryDice: () => {},
+  tryMove: () => {},
+  tryStart: () => {},
+  isMyTurn: false,
+});
 
 export function useGame() {
   return React.useContext(GameStoreContext);

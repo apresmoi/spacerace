@@ -102,7 +102,7 @@ export function MusicIcon() {
             d="M120.812 89.2907C126.171 87.2765 133.957 82.3247 135.632 81.8211C138.311 80.9818 138.897 80.73 138.478 78.8836C137.641 75.5265 136.971 72.0854 135.967 68.7282C134.292 63.2729 132.283 57.9015 130.357 52.53C130.19 52.1943 130.106 51.7747 129.938 51.439C128.264 51.2711 126.422 51.355 124.747 51.439C120.31 51.8586 115.789 52.4461 111.351 52.8657C110.263 52.9497 109.258 53.1175 108.17 53.0336C106.579 53.0336 104.904 52.53 103.313 52.53C101.22 52.53 100.718 53.0336 99.2108 54.2925C91.7591 60.5872 84.6424 66.9657 77.8606 73.5122C60.3617 76.8693 43.6165 81.4015 28.7969 88.8711C29.4667 97.0122 34.1554 106.832 38.7603 113.714C42.1931 116.819 46.4631 119.337 50.8169 121.855C60.6966 127.31 74.0091 133.437 82.2143 134.109C84.2238 134.276 88.4938 133.521 93.1825 132.43C99.3782 130.5 105.072 129.073 110.263 126.723C111.184 125.044 110.514 122.61 110.932 120.932L114.198 98.2711C116.71 95.3336 118.97 92.3961 120.812 89.2907V89.2907Z"
             fill="url(#paint13_radial_32_1197)"
           />
-          <g style="mix-blend-mode:screen" opacity="0.5">
+          <g style={{mixBlendMode:'screen'}} opacity="0.5">
             <path
               fillRule="evenodd"
               clipRule="evenodd"
@@ -116,7 +116,7 @@ export function MusicIcon() {
             d="M68.4003 37.171C67.4793 36.6674 67.2281 34.9049 67.898 34.1495C70.4098 31.4638 73.6751 29.4495 77.0241 27.771C78.1126 27.1835 79.6197 27.0995 80.7081 27.6031C83.806 29.1138 87.155 30.7924 89.0807 33.646C91.8437 37.7585 79.9546 38.6817 78.1126 38.6817C74.7635 38.6817 71.4145 38.6817 68.484 37.087L68.4003 37.171Z"
             fill="url(#paint14_radial_32_1197)"
           />
-          <g style="mix-blend-mode:screen" opacity="0.5">
+          <g style={{mixBlendMode:'screen'}} opacity="0.5">
             <path
               fillRule="evenodd"
               clipRule="evenodd"
@@ -130,7 +130,7 @@ export function MusicIcon() {
             d="M99.3791 35.3247C98.8768 35.3247 96.8673 35.8283 95.8626 36.4997C95.444 36.8354 95.1928 37.6747 95.444 38.1783C96.1975 39.7729 98.4581 41.2836 100.216 42.2908C100.886 42.7104 101.891 42.7943 102.561 42.2908C103.565 41.5354 104.235 40.2765 104.486 39.0176C104.57 38.4301 104.068 36.9194 103.314 36.3319C102.561 35.7444 100.719 35.4926 99.2954 35.3247H99.3791Z"
             fill="url(#paint15_radial_32_1197)"
           />
-          <g style="mix-blend-mode:screen" opacity="0.5">
+          <g style={{mixBlendMode:'screen'}} opacity="0.5">
             <path
               fillRule="evenodd"
               clipRule="evenodd"
@@ -172,9 +172,9 @@ export function MusicIcon() {
           width="164"
           height="164"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -207,9 +207,9 @@ export function MusicIcon() {
           width="150.215"
           height="149.047"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"

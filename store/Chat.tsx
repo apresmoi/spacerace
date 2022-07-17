@@ -11,7 +11,10 @@ type IChatStoreContext = {
   sendMessage: (content: string) => void;
 };
 
-export const ChatStoreContext = React.createContext<IChatStoreContext>({});
+export const ChatStoreContext = React.createContext<IChatStoreContext>({
+  messages: [],
+  sendMessage: () => {},
+});
 
 export function useChat() {
   return React.useContext(ChatStoreContext);

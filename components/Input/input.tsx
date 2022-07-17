@@ -2,9 +2,10 @@ import React from "react";
 import styles from "./input.module.scss";
 
 interface inputProps {
-  onChange?: () => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
   placeholder?: string;
+  minLength?: number;
 }
 
 export const Input = (props: inputProps) => {
