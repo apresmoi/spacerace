@@ -13,18 +13,22 @@ export function GameUI() {
 
   return (
     <div className={styles.gameUI}>
-      <div
-        className={className(
-          styles.dice,
-          room.turnStage === "WAITING_FOR_ROLL" && isMyTurn && styles.diceMyTurn
-        )}
-        onClick={() => (isMyTurn ? tryDice() : null)}
-      >
-        <div>
-          <DiceIcon />
+      {room.turnStage !== "WAITING_FOR_START" && (
+        <div
+          className={className(
+            styles.dice,
+            room.turnStage === "WAITING_FOR_ROLL" &&
+              isMyTurn &&
+              styles.diceMyTurn
+          )}
+          onClick={() => (isMyTurn ? tryDice() : null)}
+        >
+          <div>
+            <DiceIcon />
+          </div>
+          <span>{room.currentDice[0] + room.currentDice[1]}</span>
         </div>
-        <span>{room.currentDice[0] + room.currentDice[1]}</span>
-      </div>
+      )}
       {player?.isAdmin && !room.started && (
         <div className={styles.startButton} onClick={() => tryStart()}>
           <StartBackgroundButton />
@@ -51,7 +55,13 @@ export function GameUI() {
       </div>
       <div className={styles.players}>
         {room.players.map((player, i) => (
-          <div key={player.id} className={styles[`player${i + 1}`]}>
+          <div
+            key={player.id}
+            className={className(
+              styles[`player${i + 1}`],
+              turnPlayer?.id === player.id && styles.playerHighlight
+            )}
+          >
             <RocketIcon foundParts={player.inventory} />
             <div className={styles.playerName}>
               <StartBackgroundButton />
