@@ -1,0 +1,47 @@
+.true {
+  background: url(./ButtonTrue.svg);
+  font-family: "Bungee", cursive;
+  padding: 0;
+  margin: 0 2rem;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  width: 200px;
+
+  span {
+    padding: 30px 60px;
+    font-size: 30px;
+    line-height: 50px;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.false {
+  background: url(./ButtonFalse.svg);
+  font-family: "Bungee", cursive;
+  padding: 0;
+  margin: 0 2rem;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  width: 200px;
+
+  span {
+    padding: 30px 60px;
+    font-size: 30px;
+    line-height: 50px;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+  }
+}
