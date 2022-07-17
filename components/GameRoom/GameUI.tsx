@@ -63,7 +63,7 @@ export function GameUI() {
           >
             <RocketIcon foundParts={player.inventory} />
             <div className={styles.playerName}>
-              <StartBackgroundButton highlight={turnPlayer?.id === player.id}/>
+              <StartBackgroundButton highlight={turnPlayer?.id === player.id} />
               <span>
                 {player.name}
                 {player.isAdmin ? " (Admin)" : ""}

@@ -7,10 +7,11 @@ import { Cells } from "./Cells";
 import styles from "./GameRoom.module.scss";
 import { GameUI } from "./GameUI";
 import { Players } from "./Players";
-import { StarsBackground } from "../StarsBackground"
-import { Header} from './components/Header'
+import { StarsBackground } from "../StarsBackground";
+import { Header } from "./components/Header";
 import { DetailsBackground } from "../DetailsBackground";
-
+import { RocketIcon } from "../Icon";
+import { Rocket } from "../Rocket";
 
 interface GameRoomProps {
   onNotLoggedIn?: () => void;
@@ -29,13 +30,14 @@ export function GameRoom(props: GameRoomProps) {
   return (
     <div className={styles.gameRoom}>
       <Background />
-      <StarsBackground/>
+      <StarsBackground />
       <DetailsBackground />
       <Board>
         <Cells />
         <Players />
+        <Rocket />
       </Board>
-      <Header/>
+      <Header />
       <GameUI />
       <ChatWindow />
     </div>
