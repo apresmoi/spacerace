@@ -1,0 +1,1 @@
+export { LeniolabsLogo } from './LeniolabsLogo';

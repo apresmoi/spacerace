@@ -1,8 +1,9 @@
 import React from 'react';
 import { Background } from '../Background';
-import { Button } from '../Button';
+import { ButtonStart } from '../ButtonStart';
 import { RocketWithShape } from '../Icon/RocketWithShape';
 import { StarsBackground } from '../StarsBackground';
+import LeniolabsLogo from '../LeniolabsLogo/LeniolabsLogo';
 
 export const HomeComponent = () => {
   return (
@@ -37,12 +38,18 @@ export const HomeComponent = () => {
               fontSize: '150px',
               lineHeight: '150px',
               marginTop: '-70px',
+              marginBottom: '30px',
             }}
           >
             SPACE RACE
           </h1>
 
-          <Button text='Start' />
+          <div style={{ width: '100%', textAlign: 'center' }}>
+            <ButtonStart />
+          </div>
+          <div style={{ position: 'absolute', bottom: '20px', left: '20px' }}>
+            <LeniolabsLogo />
+          </div>
         </div>
       </div>
     </>
