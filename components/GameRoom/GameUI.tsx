@@ -36,7 +36,24 @@ export function GameUI() {
       <div className={styles.dice}>
         <DiceIcon />
       </div>
-      
+      <div className={styles.zones}>
+        <div>
+          <StartBackgroundButton />
+          <span>KUIPER ZONE</span>
+        </div>
+        <div>
+          <StartBackgroundButton />
+          <span>METEOR ZONE</span>
+        </div>
+        <div>
+          <StartBackgroundButton />
+          <span>SATURN ZONE</span>
+        </div>
+        <div>
+          <StartBackgroundButton />
+          <span>SUPERNOVAE ZONE</span>
+        </div>
+      </div>
       <div className={styles.players}>
         {room.players.map((player, i) => (
           <div key={player.id} className={styles[`player${i + 1}`]}>
