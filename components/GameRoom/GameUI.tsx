@@ -13,16 +13,6 @@ export function GameUI() {
 
   return (
     <div className={styles.gameUI}>
-      {/* {player?.isAdmin && (
-        <button disabled={room.started} onClick={() => tryStart()}>
-          Start Game
-        </button>
-      )} */}
-      {/* {isMyTurn && (
-        <>
-          <button onClick={() => tryDice()}>Roll dice</button>
-        </>
-      )} */}
       {/* <div>
         {room.players.map((player) => (
           <div key={player.id}>
@@ -68,7 +58,10 @@ export function GameUI() {
             <RocketIcon />
             <div className={styles.playerName}>
               <StartBackgroundButton />
-              <span>{player.name}</span>
+              <span>
+                {player.name}
+                {player.isAdmin ? " (Admin)" : ""}
+              </span>
             </div>
           </div>
         ))}
