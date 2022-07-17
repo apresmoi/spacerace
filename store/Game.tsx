@@ -190,8 +190,8 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
   });
 
   const contextValue = React.useMemo(
-    () => ({ tryMove: handleTryMove, tryDice: handleTryMove, tryStart: handleTryStart, isMyTurn, player, turnPlayer, room }),
-    [handleTryMove, handleTryMove, handleTryStart, isMyTurn, player, turnPlayer, room]
+    () => ({ tryMove: handleTryMove, tryDice: handleTryDice, tryStart: handleTryStart, isMyTurn, player, turnPlayer, room }),
+    [handleTryDice, handleTryMove, handleTryStart, isMyTurn, player, turnPlayer, room]
   );
 
   return (
