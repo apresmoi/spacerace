@@ -1,0 +1,63 @@
+.creditsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3;
+  width: 60%;
+  height: 75%;
+  position: absolute;
+  left: 20%;
+  top: 5%;
+}
+.bigTitle{
+    font-family: 'Bungee', cursive;;
+    font-style: normal;
+    font-weight: 400;
+    color: #FFF;
+    z-index: 4;
+    font-size:70px;
+    margin: 0;
+}
+.containerTitles{
+    display:flex; 
+    justify-content:flex-end; 
+    margin-top:-40px;
+    width:50%
+}
+.mediumTitle{
+    font-family: 'Bungee', cursive;
+    font-style: normal;
+    font-weight: 400;
+    color: #FFF;
+    z-index: 4;
+    font-size:50px;
+    display:inline;
+    margin: 0;
+    
+}
+.container {
+    display: flex;
+    justify-content:center;
+    width: 100%;
+    z-index: 4;
+    margin-bottom:50px;
+    margin-top:30px
+}
+.namesContainer {
+    display: flex;
+    flex-direction: column;
+    z-index: 4;
+    margin-left: 50px;
+    width:50%
+}
+.names{
+    display:inline;
+    font-family: 'Bai Jamjuree';
+    font-weight: 400;
+    font-style: normal;
+    color: #FFF;
+    z-index: 4;
+    font-size:20px;
+    margin:0
+}
+
