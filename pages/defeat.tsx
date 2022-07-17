@@ -11,6 +11,7 @@ import { useGame } from "../store";
 const DefeatScreen: NextPage = () => {
   const { turnPlayer } = useGame();
   const router = useRouter();
+
   const handleOnClick = (bool: boolean) => {
     if (bool) {
       router.push("/rooms");
@@ -18,6 +19,7 @@ const DefeatScreen: NextPage = () => {
       router.push("/credits");
     }
   };
+
   return (
     <>
       <Background />
@@ -28,7 +30,7 @@ const DefeatScreen: NextPage = () => {
             <span>
               OH NO!{" "}
               <span style={{ color: "white" }}>
-                <>{turnPlayer || "Player1"} WON</>
+                <>{turnPlayer?.name || "Player1"} WON</>
               </span>{" "}
               <br />
               YOU NEED TO BE FASTER <br />
