@@ -40,10 +40,21 @@
         height: 100%;
       }
 
-      border: 1px solid transparent;
-
       &.highlight {
-        border: 1px solid green;
+        cursor: pointer;
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+
+    .player {
+      svg {
+        margin-left: 15%;
+        margin-top: 15%;
+        padding: 0;
+        width: 75%;
+        height: 75%;
       }
     }
 
@@ -77,6 +88,21 @@
       cursor: pointer;
       pointer-events: all;
       transform: translate(0, -50%);
+      border: 0.5px solid white;
+      padding: 5px;
+
+      div:first-child {
+        padding: 12px;
+        width: 100%;
+        border: 0.5px solid white;
+      }
+      span:last-child {
+        text-align: center;
+        width: 100%;
+        display: block;
+        border: 0.5px solid white;
+        font-size: 60px;
+      }
     }
 
     .startButton {

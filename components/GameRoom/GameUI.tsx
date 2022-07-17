@@ -25,7 +25,10 @@ export function GameUI() {
       </div> */}
       {isMyTurn && (
         <div className={styles.dice} onClick={() => tryDice()}>
-          <DiceIcon />
+          <div>
+            <DiceIcon />
+          </div>
+          <span>{room.currentDice[0] + room.currentDice[1]}</span>
         </div>
       )}
       {player?.isAdmin && !room.started && (
