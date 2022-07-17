@@ -8,3 +8,4 @@ export { ResetIcon } from "./ResetIcon";
 export { RocketIcon } from "./RocketIcon";
 export { Buildings } from "./Buildings";
 export { SpaceShip } from "./SpaceShip";
+export { SoundToggleIcon } from "./SoundToggleIcon";

@@ -24,7 +24,8 @@ export function CreateRoom(props: CreateRoomProps) {
     []
   );
 
-  const handleRoomCreate = React.useCallback(() => {
+  const handleRoomCreate = React.useCallback((e) => {
+    e.preventDefault();
     createRoom(roomName).then((room) => {
       if (room) {
         connect(room.id, name);
@@ -36,7 +37,7 @@ export function CreateRoom(props: CreateRoomProps) {
   }, [roomName, createRoom, name, onCreate]);
 
   return (
-    <div className={styles.createRoom}>
+    <form className={styles.createRoom}>
       <Input
         onChange={handleRoomNameChange}
         placeholder="Room Name"
@@ -44,6 +45,6 @@ export function CreateRoom(props: CreateRoomProps) {
         minLength={6}
       />
       <ButtonCreateRoom text="Create a room" onClick={handleRoomCreate} disabled={roomName.length < 6}/>
-    </div>
+    </form>
   );
 }
