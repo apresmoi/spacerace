@@ -11,6 +11,7 @@ export function GameUI() {
     useGame();
   if (!room) return null;
 
+
   return (
     <div className={styles.gameUI}>
       {/* <div>
@@ -58,7 +59,7 @@ export function GameUI() {
       <div className={styles.players}>
         {room.players.map((player, i) => (
           <div key={player.id} className={styles[`player${i + 1}`]}>
-            <RocketIcon />
+            <RocketIcon foundParts={player.inventory} />
             <div className={styles.playerName}>
               <StartBackgroundButton />
               <span>
