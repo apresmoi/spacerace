@@ -1,0 +1,70 @@
+.playInstructions {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  justify-content: space-between;
+  padding: 0 50px;
+}
+
+.title {
+  margin-top: 25px;
+  font-size: 70px;
+  z-index: 1;
+  color: #F9F5FF;
+  text-align: center;
+}
+
+.instructions {
+  display: flex;
+  justify-content: center;
+}
+
+.instruction {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  width: 33%;
+  margin: 0 25px;
+  z-index: 1;
+  color: white;
+
+  .img {
+    margin-bottom: 10px;
+  }
+
+  & svg {
+    height: 80px;
+  }
+
+  .text {
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Bai Jamjuree', sans-serif;
+  }
+}
+
+.rocket {
+  position: relative;
+  z-index: 1;
+  height: 280px;
+  width: 100%;
+  background: url('/RocketWithSmoke.svg');
+  background-position: top;
+  background-repeat: no-repeat;
+
+  .text {
+    position: absolute;
+    left: calc(50% + 100px);
+    top: 25px;
+    width: 35%;
+    color: white;
+    font-family: 'Bai Jamjuree', sans-serif;
+  }
+}
+
+.logo {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}

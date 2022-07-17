@@ -4,8 +4,15 @@ import { ButtonStart } from '../ButtonStart';
 import { RocketWithShape } from '../Icon/RocketWithShape';
 import { StarsBackground } from '../StarsBackground';
 import LeniolabsLogo from '../LeniolabsLogo/LeniolabsLogo';
+import { useRouter } from 'next/router';
 
 export const HomeComponent = () => {
+  const router = useRouter();
+
+  const handleOnClick = React.useCallback(() => {
+    router.push('/instructions');
+  }, [router]);
+
   return (
     <>
       <Background />
@@ -45,7 +52,7 @@ export const HomeComponent = () => {
           </h1>
 
           <div style={{ width: '100%', textAlign: 'center' }}>
-            <ButtonStart />
+            <ButtonStart onClick={handleOnClick} />
           </div>
           <div style={{ position: 'absolute', bottom: '20px', left: '20px' }}>
             <LeniolabsLogo />
