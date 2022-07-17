@@ -3,13 +3,14 @@ import styles from './ButtonCreateRoom.module.scss';
 
 interface ButtonCreateRoomProps {
   onClick?: () => void;
+  text?: string;
 }
 
 export const ButtonCreateRoom = (props:ButtonCreateRoomProps) => {
-  const { onClick } = props;
+  const { onClick,text } = props;
   return (
     <button className={styles.button} onClick={onClick}>
-      <span>Create New Room</span>
+      <span>{text}</span>
     </button>
   );
 };
