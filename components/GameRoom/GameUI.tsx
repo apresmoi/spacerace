@@ -2,7 +2,6 @@ import React from "react";
 import { useGame } from "../../store";
 import { className } from "../../utils/classnames";
 import { DiceIcon, RocketIcon } from "../Icon";
-import { RocketWithShape } from "../Icon/RocketWithShape";
 import StartBackgroundButton from "../Icon/StartBackgroundButton";
 import styles from "./GameRoom.module.scss";
 
@@ -64,7 +63,7 @@ export function GameUI() {
           >
             <RocketIcon foundParts={player.inventory} />
             <div className={styles.playerName}>
-              <StartBackgroundButton />
+              <StartBackgroundButton highlight={turnPlayer?.id === player.id}/>
               <span>
                 {player.name}
                 {player.isAdmin ? " (Admin)" : ""}
