@@ -14,16 +14,6 @@ export function GameUI() {
 
   return (
     <div className={styles.gameUI}>
-      {/* {player?.isAdmin && (
-        <button disabled={room.started} onClick={() => tryStart()}>
-          Start Game
-        </button>
-      )} */}
-      {/* {isMyTurn && (
-        <>
-          <button onClick={() => tryDice()}>Roll dice</button>
-        </>
-      )} */}
       {/* <div>
         {room.players.map((player) => (
           <div key={player.id}>
@@ -34,9 +24,17 @@ export function GameUI() {
       <div>
         Dice: {room.currentDice?.[0]} / {room.currentDice?.[1]}
       </div> */}
-      <div className={styles.dice}>
-        <DiceIcon />
-      </div>
+      {isMyTurn && (
+        <div className={styles.dice} onClick={() => tryDice()}>
+          <DiceIcon />
+        </div>
+      )}
+      {player?.isAdmin && !room.started && (
+        <div className={styles.startButton} onClick={() => tryStart()}>
+          <StartBackgroundButton />
+          <span>Start</span>
+        </div>
+      )}
       <div className={styles.zones}>
         <div>
           <StartBackgroundButton />
@@ -61,7 +59,10 @@ export function GameUI() {
             <RocketIcon foundParts={player.inventory} />
             <div className={styles.playerName}>
               <StartBackgroundButton />
-              <span>{player.name}</span>
+              <span>
+                {player.name}
+                {player.isAdmin ? " (Admin)" : ""}
+              </span>
             </div>
           </div>
         ))}

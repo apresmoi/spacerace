@@ -74,6 +74,33 @@
       right: 5%;
       top: 50%;
       width: 12vw;
+      cursor: pointer;
+      pointer-events: all;
+      transform: translate(0, -50%);
+    }
+
+    .startButton {
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      width: 12vw;
+      transform: translate(0, -50%);
+      cursor: pointer;
+      pointer-events: all;
+
+      svg {
+        height: 4vw;
+        width: 12vw;
+      }
+
+      span {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        color: #fecb2f;
+      }
     }
 
     .zones {
@@ -134,6 +161,7 @@
           left: 50%;
           top: 50%;
           transform: translate(-50%, -50%);
+          white-space: nowrap;
         }
       }
 

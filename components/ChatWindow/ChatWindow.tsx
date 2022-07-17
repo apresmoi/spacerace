@@ -51,7 +51,7 @@ export function ChatWindow() {
   React.useLayoutEffect(() => {
     if (ref.current) {
       const { height } = ref.current.getBoundingClientRect();
-      ref.current.scrollTo(0, 1000);
+      ref.current.scrollTo(0, height);
     }
   }, [messages]);
 
