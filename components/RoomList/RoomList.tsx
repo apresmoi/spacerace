@@ -1,11 +1,9 @@
 import React from "react";
 import { useAppStore } from "../../store";
-import {
-  useRoomPlayerMessageSend,
-  useSocketRoomPlayerMessage,
-  useSocketStore,
-} from "../../store/SocketStore";
+import { useSocketStore } from "../../store/SocketStore";
 import styles from "./RoomList.module.scss";
+import Image from "next/image";
+import roomTable from "./roomTable.png";
 
 interface RoomListProps {
   onJoin?: () => {};
@@ -41,11 +39,11 @@ export function RoomList(props: RoomListProps) {
 
   return (
     <div className={styles.roomList}>
-      <table>
+      <table className={styles.table}>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Players</th>
+            <th className={styles.tableHeader}>Room</th>
+            <th className={styles.tableHeader}>Players</th>
           </tr>
         </thead>
         <tbody>
