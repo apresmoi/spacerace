@@ -19,6 +19,7 @@ export const sounds = (() => {
   const swooshMovement = new Audio("sounds/swoosh-movement.mp3");
   const swooshRocket = new Audio("sounds/swoosh-plus-rocket.mp3");
   const superNovaZone = new Audio("sounds/supernova-zone.mp3");
+  const dice = new Audio("sounds/dice.mp3")
 
   return {
     btnClick,
@@ -30,6 +31,7 @@ export const sounds = (() => {
     swooshMovement,
     swooshRocket,
     superNovaZone,
+    dice
   };
 })();
 
