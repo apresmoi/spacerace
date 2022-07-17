@@ -13,14 +13,18 @@ export function GameUI() {
 
   return (
     <div className={styles.gameUI}>
-      {isMyTurn && (
-        <div className={styles.dice} onClick={() => tryDice()}>
-          <div>
-            <DiceIcon />
-          </div>
-          <span>{room.currentDice[0] + room.currentDice[1]}</span>
+      <div
+        className={className(
+          styles.dice,
+          room.turnStage === "WAITING_FOR_ROLL" && isMyTurn && styles.diceMyTurn
+        )}
+        onClick={() => (isMyTurn ? tryDice() : null)}
+      >
+        <div>
+          <DiceIcon />
         </div>
-      )}
+        <span>{room.currentDice[0] + room.currentDice[1]}</span>
+      </div>
       {player?.isAdmin && !room.started && (
         <div className={styles.startButton} onClick={() => tryStart()}>
           <StartBackgroundButton />

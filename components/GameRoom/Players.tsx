@@ -7,11 +7,14 @@ export function Players() {
   const { room, turnPlayer } = useGame();
   if (!room) return null;
 
+console.log(room.players)
+
   return (
     <>
       {room.players.map((player) => (
         <Player
-          key={getBlockId(player.x, player.y)}
+          key={player.id}
+          data-id={player.id}
           player={player}
           highlight={turnPlayer?.id === player.id}
         />

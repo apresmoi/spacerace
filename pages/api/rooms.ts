@@ -22,6 +22,7 @@ export default async function handler(
         id: room.id,
         name: room.name,
         playerCount: room.getPlayerCount(),
+        started: room.started,
       }))
     );
   } else if (req.method === "POST") {
