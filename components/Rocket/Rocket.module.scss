@@ -1,14 +1,14 @@
 .rocket {
-  z-index: 0;
+  z-index: -1;
   position: absolute;
   overflow: hidden;
   pointer-events: none;
 
   svg {
     display: block;
-    width: 15%;
+    width: 23%;
     height: 100%;
-    margin-top: 25%;
-    margin-left: 43%;
+    margin-top: 28%;
+    margin-left: 38%;
   }
 }
