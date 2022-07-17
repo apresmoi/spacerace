@@ -21,6 +21,7 @@ export function useMusic() {
         }
   
         if (path === "/credits") {
+          bgMusic?.stop();
           creditsMusic?.play();
         }
       }, 10);
