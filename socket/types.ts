@@ -39,6 +39,7 @@ export type IPlayer = IPosition & {
   name: string;
   isAdmin?: boolean;
   inventory: IItem[];
+  color: string;
 };
 
 export type IRoomTurnStage =
@@ -79,6 +80,7 @@ export type IRoom = {
 
 export type IRoomList = Pick<IRoom, "id" | "name"> & {
   playerCount: number;
+  started: boolean;
 };
 
 export type ConnectedSocketData = {

@@ -120,8 +120,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(2136.71 129.455) scale(1514.98 1240.37)"
         >
-          <stop stop-color="#4E5470" />
-          <stop offset="1" stop-color="#252E4F" />
+          <stop stopColor="#4E5470" />
+          <stop offset="1" stopColor="#252E4F" />
         </radialGradient>
         <radialGradient
           id="paint1_radial_32_1192"
@@ -131,8 +131,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(2708.36 1147.82) scale(4598.59 3765.04)"
         >
-          <stop stop-color="#676C94" />
-          <stop offset="1" stop-color="#17233A" />
+          <stop stopColor="#676C94" />
+          <stop offset="1" stopColor="#17233A" />
         </radialGradient>
         <radialGradient
           id="paint2_radial_32_1192"
@@ -142,8 +142,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(-12.878 39.8323) scale(361.305 295.814)"
         >
-          <stop stop-color="#7C8FB2" />
-          <stop offset="1" stop-color="#515682" />
+          <stop stopColor="#7C8FB2" />
+          <stop offset="1" stopColor="#515682" />
         </radialGradient>
         <radialGradient
           id="paint3_radial_32_1192"
@@ -153,8 +153,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(-6.08138 -69.4139) scale(207.84 170.166)"
         >
-          <stop stop-color="#8899C2" />
-          <stop offset="1" stop-color="#727696" />
+          <stop stopColor="#8899C2" />
+          <stop offset="1" stopColor="#727696" />
         </radialGradient>
         <radialGradient
           id="paint4_radial_32_1192"
@@ -164,8 +164,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(1053.15 -670.707) scale(1420.18 1162.75)"
         >
-          <stop stop-color="#8899C2" />
-          <stop offset="1" stop-color="#727696" />
+          <stop stopColor="#8899C2" />
+          <stop offset="1" stopColor="#727696" />
         </radialGradient>
         <radialGradient
           id="paint5_radial_32_1192"
@@ -175,8 +175,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(15.7403 89.9157) scale(218.572 178.953)"
         >
-          <stop stop-color="#5A6084" />
-          <stop offset="1" stop-color="#323B63" />
+          <stop stopColor="#5A6084" />
+          <stop offset="1" stopColor="#323B63" />
         </radialGradient>
         <radialGradient
           id="paint6_radial_32_1192"
@@ -186,8 +186,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(453.241 586.649) scale(748.367 612.716)"
         >
-          <stop stop-color="#4E5470" />
-          <stop offset="1" stop-color="#252E4F" />
+          <stop stopColor="#4E5470" />
+          <stop offset="1" stopColor="#252E4F" />
         </radialGradient>
         <radialGradient
           id="paint7_radial_32_1192"
@@ -197,8 +197,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(1903.47 1076.06) scale(1925.65 1576.6)"
         >
-          <stop stop-color="#4E5470" />
-          <stop offset="1" stop-color="#252E4F" />
+          <stop stopColor="#4E5470" />
+          <stop offset="1" stopColor="#252E4F" />
         </radialGradient>
         <radialGradient
           id="paint8_radial_32_1192"
@@ -208,8 +208,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(2863.97 -106.61) scale(1663.08 1361.62)"
         >
-          <stop stop-color="#8899C2" />
-          <stop offset="1" stop-color="#727696" />
+          <stop stopColor="#8899C2" />
+          <stop offset="1" stopColor="#727696" />
         </radialGradient>
         <radialGradient
           id="paint9_radial_32_1192"
@@ -219,8 +219,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(3777.25 -119.204) scale(1286.39 1053.21)"
         >
-          <stop stop-color="#4E5470" />
-          <stop offset="1" stop-color="#252E4F" />
+          <stop stopColor="#4E5470" />
+          <stop offset="1" stopColor="#252E4F" />
         </radialGradient>
         <radialGradient
           id="paint10_radial_32_1192"
@@ -230,8 +230,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(4244.44 -12.3012) scale(357.728 292.885)"
         >
-          <stop stop-color="#8899C2" />
-          <stop offset="1" stop-color="#727696" />
+          <stop stopColor="#8899C2" />
+          <stop offset="1" stopColor="#727696" />
         </radialGradient>
         <radialGradient
           id="paint11_radial_32_1192"
@@ -241,8 +241,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(4256.6 -50.9621) scale(161.693 132.384)"
         >
-          <stop stop-color="#8899C2" />
-          <stop offset="1" stop-color="#727696" />
+          <stop stopColor="#8899C2" />
+          <stop offset="1" stopColor="#727696" />
         </radialGradient>
         <radialGradient
           id="paint12_radial_32_1192"
@@ -252,8 +252,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(4234.07 16.9874) scale(361.662 296.107)"
         >
-          <stop stop-color="#7C8FB2" />
-          <stop offset="1" stop-color="#515682" />
+          <stop stopColor="#7C8FB2" />
+          <stop offset="1" stopColor="#515682" />
         </radialGradient>
         <radialGradient
           id="paint13_radial_32_1192"
@@ -263,8 +263,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(4112.08 113.639) scale(228.588 187.154)"
         >
-          <stop stop-color="#5A6084" />
-          <stop offset="1" stop-color="#323B63" />
+          <stop stopColor="#5A6084" />
+          <stop offset="1" stopColor="#323B63" />
         </radialGradient>
         <radialGradient
           id="paint14_radial_32_1192"
@@ -274,8 +274,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(2136.35 119.79) scale(1511.4 1237.44)"
         >
-          <stop stop-color="#7C8FB2" />
-          <stop offset="1" stop-color="#515682" />
+          <stop stopColor="#7C8FB2" />
+          <stop offset="1" stopColor="#515682" />
         </radialGradient>
         <radialGradient
           id="paint15_radial_32_1192"
@@ -285,8 +285,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(939.751 -440.206) scale(1705.65 1396.48)"
         >
-          <stop stop-color="#676C94" />
-          <stop offset="1" stop-color="#17233A" />
+          <stop stopColor="#676C94" />
+          <stop offset="1" stopColor="#17233A" />
         </radialGradient>
         <radialGradient
           id="paint16_radial_32_1192"
@@ -296,8 +296,8 @@ export function HeaderIcon() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(2651.84 306.065) scale(3523.62 2884.92)"
         >
-          <stop stop-color="#676C94" />
-          <stop offset="1" stop-color="#17233A" />
+          <stop stopColor="#676C94" />
+          <stop offset="1" stopColor="#17233A" />
         </radialGradient>
         <clipPath id="clip0_32_1192">
           <rect width="4283" height="258" fill="white" />

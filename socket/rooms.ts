@@ -140,6 +140,10 @@ class Room {
     return this._room.name;
   }
 
+  get started() {
+    return this._room.started;
+  }
+
   get players() {
     return this._room.players;
   }
@@ -152,15 +156,30 @@ class Room {
     return this._room.players.length;
   };
 
+  private getRandomColor = () => {
+    const colors = ["#4E66ED", "#563EB2", "#B4C4FA", "#3A4390"];
+    const usedColors = this._room.players.map((p) => p.color);
+
+    const availableColors = colors.filter(
+      (color) => !usedColors.includes(color)
+    );
+
+    return availableColors[
+      Math.floor(Math.random() * (availableColors.length - 1))
+    ];
+  };
+
   addPlayer = (id: string, name: string) => {
+    if (this._room.started) return;
     if (this.getPlayerCount() === 4) return; //max 4 players
 
-    const player = {
+    const player: IPlayer = {
       id,
       name,
       ...this._room.playerStartPosition,
       inventory: [],
       isAdmin: this.getPlayerCount() === 0,
+      color: this.getRandomColor(),
     };
     this._room.players.push(player);
 

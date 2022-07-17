@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import * as React from "react";
 import { useSound } from "../assets";
 import { useMusic } from "../hooks/useMusic";
@@ -36,6 +37,7 @@ export function useGame() {
 export function GameStore(props: React.PropsWithChildren<{}>) {
   const [playerID, setPlayerID] = React.useState<string>();
   const [room, setRoom] = React.useState<IRoom>();
+  const router = useRouter();
 
   const moveSound = useSound("swooshMovement")
 
@@ -73,8 +75,15 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
     return (turnPlayer && player && turnPlayer.id === player.id) || false;
   }, [turnPlayer, player]);
 
+  React.useEffect(() => {
+    if (room?.turnStage === "END_GAME") {
+      setTimeout(() => {
+        router.push(isMyTurn ? "/victory" : "/defeat");
+      }, 1000);
+    }
+  }, [room?.turnStage, isMyTurn]);
+
   useSocketRoomJoined((payload) => {
-    console.log(payload);
     setRoom(payload.room);
     setPlayerID(payload.playerID);
   });
