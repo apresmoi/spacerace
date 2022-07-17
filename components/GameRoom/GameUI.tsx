@@ -3,14 +3,12 @@ import { IItem } from "../../socket/types";
 import { useGame } from "../../store";
 import { className } from "../../utils/classnames";
 import { DiceIcon, RocketIcon } from "../Icon";
-import { RocketWithShape } from "../Icon/RocketWithShape";
 import StartBackgroundButton from "../Icon/StartBackgroundButton";
 import styles from "./GameRoom.module.scss";
 
 export function GameUI() {
   const { room, player, turnPlayer, isMyTurn, tryStart, tryDice, tryDropItem } =
     useGame();
-  if (!room) return null;
 
   const handleDropItem = React.useCallback(
     (targetPlayerID: string) => {
@@ -22,6 +20,7 @@ export function GameUI() {
     [tryDropItem, player]
   );
 
+  if (!room) return null;
   return (
     <div className={styles.gameUI}>
       {room.turnStage !== "WAITING_FOR_START" && (
@@ -83,7 +82,7 @@ export function GameUI() {
               onClick={handleDropItem(player.id)}
             />
             <div className={styles.playerName}>
-              <StartBackgroundButton />
+              <StartBackgroundButton highlight={turnPlayer?.id === player.id} />
               <span>
                 {player.name}
                 {player.isAdmin ? " (Admin)" : ""}
@@ -95,13 +94,3 @@ export function GameUI() {
     </div>
   );
 }
-
-<svg
-  width="88"
-  height="136"
-  viewBox="0 0 88 136"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <rect width="88" height="136" fill="white" />
-</svg>;

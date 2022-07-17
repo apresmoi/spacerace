@@ -13,7 +13,7 @@ const CreateNewRoom: NextPage = () => {
   const router = useRouter();
 
   return (
-    <div className={styles.createNewRoom}>
+    <form className={styles.createNewRoom}>
       <Background />
       <StarsBackground />
       <div className={styles.createRoomContent}>
@@ -26,7 +26,7 @@ const CreateNewRoom: NextPage = () => {
       <div style={{ position: "absolute", bottom: "20px", left: "20px" }}>
         <LeniolabsLogo />
       </div>
-    </div>
+    </form>
   );
 };
 

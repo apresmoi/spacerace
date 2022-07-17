@@ -49,6 +49,7 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
   const router = useRouter();
 
   const moveSound = useSound("swooshMovement");
+  const diceSound = useSound("dice");
   const kiperZone = useSound("kiperZone");
   const saturnZone = useSound("saturnZone");
   const meteorZone = useSound("meteorZone");
@@ -58,31 +59,6 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
   const tryMove = useRoomPlayerTryMove();
   const tryDice = useRoomPlayerTryDice();
   const tryDropItem = useRoomPlayerTryDropItem();
-
-  const handleTryDice = React.useCallback(() => {
-    tryDice();
-    moveSound?.play();
-  }, [tryDice, moveSound]);
-
-  const handleTryStart = React.useCallback(() => {
-    tryStart();
-    moveSound?.play();
-  }, [tryStart, moveSound]);
-
-  const handleTryMove = React.useCallback(
-    (position: IPosition) => {
-      tryMove(position);
-      moveSound?.play();
-    },
-    [tryMove, moveSound]
-  );
-
-  const handleTryDropItem = React.useCallback(
-    (targetPlayerID: string, item: IItem) => {
-      tryDropItem(targetPlayerID, item);
-    },
-    [tryDropItem, moveSound]
-  );
 
   const player = React.useMemo(() => {
     if (!room) return undefined;
@@ -272,6 +248,34 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
       };
     });
   });
+
+  const handleTryDice = React.useCallback(() => {
+    const canRollDice = room?.turnStage === "WAITING_FOR_ROLL" && isMyTurn;
+    if (canRollDice) {
+      diceSound?.play();
+    }
+    tryDice();
+  }, [tryDice, diceSound, room?.turnStage, isMyTurn]);
+
+  const handleTryStart = React.useCallback(() => {
+    tryStart();
+    moveSound?.play();
+  }, [tryStart, moveSound]);
+
+  const handleTryMove = React.useCallback(
+    (position: IPosition) => {
+      tryMove(position);
+      moveSound?.play();
+    },
+    [tryMove, moveSound]
+  );
+
+  const handleTryDropItem = React.useCallback(
+    (targetPlayerID: string, item: IItem) => {
+      tryDropItem(targetPlayerID, item);
+    },
+    [tryDropItem, moveSound]
+  );
 
   const contextValue = React.useMemo(
     () => ({

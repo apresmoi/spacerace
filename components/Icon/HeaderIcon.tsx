@@ -1,12 +1,8 @@
 import React from "react";
 
-export function HeaderIcon() {
+export function HeaderIcon({ children }: React.PropsWithChildren<{}>) {
   return (
-    <svg
-      viewBox="0 0 4284 258"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg viewBox="0 0 4284 258" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_32_1192)">
         <path
           fillRule="evenodd"
@@ -111,6 +107,9 @@ export function HeaderIcon() {
           fill="url(#paint16_radial_32_1192)"
         />
       </g>
+
+      <g transform="translate(4000, 50)">{children}</g>
+
       <defs>
         <radialGradient
           id="paint0_radial_32_1192"

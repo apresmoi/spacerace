@@ -7,6 +7,34 @@ interface AudioHelper {
   isPlaying: boolean;
 }
 
+export const sounds = (() => {
+  if (typeof window === "undefined") return {};
+
+  const btnClick = new Audio("sounds/btn-click.mp3");
+  const creditsMusic = new Audio("sounds/credits-music.mp3");
+  const bgMusic = new Audio("sounds/bg-music.mp3");
+  const kiperZone = new Audio("sounds/kiper-zone.mp3");
+  const meteorZone = new Audio("sounds/meteor-zone.mp3");
+  const saturnZone = new Audio("sounds/saturn-zone.mp3");
+  const swooshMovement = new Audio("sounds/swoosh-movement.mp3");
+  const swooshRocket = new Audio("sounds/swoosh-plus-rocket.mp3");
+  const superNovaZone = new Audio("sounds/supernova-zone.mp3");
+  const dice = new Audio("sounds/dice.mp3")
+
+  return {
+    btnClick,
+    creditsMusic,
+    bgMusic,
+    kiperZone,
+    meteorZone,
+    saturnZone,
+    swooshMovement,
+    swooshRocket,
+    superNovaZone,
+    dice
+  };
+})();
+
 export const useSound = (
   name: keyof typeof sounds,
   options?: {
@@ -16,31 +44,6 @@ export const useSound = (
 ): AudioHelper | undefined => {
   const { sound: soundActivated } = useSettings();
 
-  const sounds = React.useMemo(() => {
-    if (typeof window === "undefined") return {};
-
-    const btnClick = new Audio("sounds/btn-click.mp3");
-    const creditsMusic = new Audio("sounds/credits-music.mp3");
-    const bgMusic = new Audio("sounds/bg-music.mp3");
-    const kiperZone = new Audio("sounds/kiper-zone.mp3");
-    const meteorZone = new Audio("sounds/meteor-zone.mp3");
-    const saturnZone = new Audio("sounds/saturn-zone.mp3");
-    const swooshMovement = new Audio("sounds/swoosh-movement.mp3");
-    const swooshRocket = new Audio("sounds/swoosh-plus-rocket.mp3");
-    const superNovaZone = new Audio("sounds/supernova-zone.mp3");
-
-    return {
-      btnClick,
-      creditsMusic,
-      bgMusic,
-      kiperZone,
-      meteorZone,
-      saturnZone,
-      swooshMovement,
-      swooshRocket,
-      superNovaZone,
-    };
-  }, []);
 
   return React.useMemo(() => {
     //@ts-ignore

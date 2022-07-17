@@ -24,26 +24,34 @@ export function CreateRoom(props: CreateRoomProps) {
     []
   );
 
-  const handleRoomCreate = React.useCallback(() => {
-    createRoom(roomName).then((room) => {
-      if (room) {
-        connect(room.id, name);
-        setTimeout(() => {
-          onCreate?.();
-        }, 100);
-      }
-    });
-  }, [roomName, createRoom, name, onCreate]);
+  const handleRoomCreate = React.useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      createRoom(roomName).then((room) => {
+        if (room) {
+          connect(room.id, name);
+          setTimeout(() => {
+            onCreate?.();
+          }, 100);
+        }
+      });
+    },
+    [roomName, createRoom, name, onCreate]
+  );
 
   return (
-    <div className={styles.createRoom}>
+    <form className={styles.createRoom}>
       <Input
         onChange={handleRoomNameChange}
         placeholder="Room Name"
         value={roomName}
         minLength={6}
       />
-      <ButtonCreateRoom text="Create a room" onClick={handleRoomCreate} disabled={roomName.length < 6}/>
-    </div>
+      <ButtonCreateRoom
+        text="Create a room"
+        onClick={handleRoomCreate}
+        disabled={roomName.length < 6}
+      />
+    </form>
   );
 }
