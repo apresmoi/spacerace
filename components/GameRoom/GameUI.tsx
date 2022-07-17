@@ -33,9 +33,17 @@ export function GameUI() {
       <div>
         Dice: {room.currentDice?.[0]} / {room.currentDice?.[1]}
       </div> */}
-      <div className={styles.dice}>
-        <DiceIcon />
-      </div>
+      {isMyTurn && (
+        <div className={styles.dice} onClick={() => tryDice()}>
+          <DiceIcon />
+        </div>
+      )}
+      {player?.isAdmin && !room.started && (
+        <div className={styles.startButton} onClick={() => tryStart()}>
+          <StartBackgroundButton />
+          <span>Start</span>
+        </div>
+      )}
       <div className={styles.zones}>
         <div>
           <StartBackgroundButton />
