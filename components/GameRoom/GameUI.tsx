@@ -11,19 +11,8 @@ export function GameUI() {
     useGame();
   if (!room) return null;
 
-
   return (
     <div className={styles.gameUI}>
-      {/* <div>
-        {room.players.map((player) => (
-          <div key={player.id}>
-            {player.isAdmin ? "(Admin)" : ""} {player.name}
-          </div>
-        ))}
-      </div>
-      <div>
-        Dice: {room.currentDice?.[0]} / {room.currentDice?.[1]}
-      </div> */}
       {isMyTurn && (
         <div className={styles.dice} onClick={() => tryDice()}>
           <div>
@@ -73,3 +62,13 @@ export function GameUI() {
     </div>
   );
 }
+
+<svg
+  width="88"
+  height="136"
+  viewBox="0 0 88 136"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect width="88" height="136" fill="white" />
+</svg>;
