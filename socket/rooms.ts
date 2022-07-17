@@ -123,7 +123,7 @@ class Room {
         { x: 10, y: 9, type: "SUPERNOVAE" },
       ],
       effects: [],
-      height: 13,
+      height: 10,
       width: 13,
       currentTurnPlayerID: undefined,
       started: false,

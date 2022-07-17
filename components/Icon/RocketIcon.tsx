@@ -10,7 +10,6 @@ export function RocketIcon() {
       xmlns="http://www.w3.org/2000/svg"
     >
       <g clip-path="url(#clip0_32_1193)">
-        <rect width="456" height="354" fill="white" />
         <path
           d="M114.67 38.8521L118.045 44.0739L123.59 46.5931L118.576 50.0503L116.174 55.7854L112.799 50.5636L107.254 48.0443L112.268 44.5871L114.67 38.8521Z"
           fill="white"

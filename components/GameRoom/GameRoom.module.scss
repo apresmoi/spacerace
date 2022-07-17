@@ -4,15 +4,24 @@
 
   width: 100vw;
   height: 100vh;
-  .header{
-    top: 0;
+
+  .header {
+    top: -5px;
     position: absolute;
-    width:100%;
-    z-index:2
+    width: 100%;
+    z-index: 2;
+    span {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      top: 50%;
+      font-size: 3rem;
+      transform: translate(-50%, -50%);
+    }
   }
+
   .board {
-    width: 80vh;
-    height: 80vh;
+    width: 50%;
     display: grid;
     z-index: 2;
     position: relative;
@@ -56,5 +65,63 @@
     display: flex;
     flex-direction: column;
     z-index: 3;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+
+    .dice {
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      width: 12vw;
+    }
+
+    .players {
+      .playerName {
+        position: relative;
+        height: 4vw;
+        svg {
+          position: absolute;
+          width: 12vw;
+          height: 4vw;
+        }
+        span {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      & > div {
+        width: 12vw;
+        position: absolute;
+
+        & > svg {
+          width: 12vw;
+          height: 8vw;
+        }
+      }
+
+      .player1 {
+        left: 1vw;
+        top: 6vw;
+      }
+
+      .player2 {
+        right: 1vw;
+        top: 6vw;
+      }
+
+      .player3 {
+        left: 1vw;
+        bottom: 2vw;
+      }
+
+      .player4 {
+        right: 1vw;
+        bottom: 2vw;
+      }
+    }
   }
 }
