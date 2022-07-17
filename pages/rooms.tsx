@@ -25,10 +25,7 @@ const Rooms: NextPage = () => {
           <h1 className={styles.title}>Choose a room</h1>
           <RoomList onJoin={() => router.push("/play")} />
           <p>or</p>
-          {/* <button className={styles.button} onClick={handleCreateRoom}>
-            Create New Room
-          </button> */}
-        <ButtonCreateRoom onClick={handleCreateRoom}/>
+        <ButtonCreateRoom text='Create New Room' onClick={handleCreateRoom}/>
         </div>
       </div>
       <div style={{ position: "absolute", bottom: "20px", left: "20px" }}>

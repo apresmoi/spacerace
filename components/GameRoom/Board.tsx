@@ -50,6 +50,8 @@ export function Board(props: React.PropsWithChildren<{}>) {
         gridTemplateAreas,
         gridTemplateRows,
         gridTemplateColumns,
+        width: `${(width || 0) * 3}vw`,
+        height: `${(height || 0) * 3}vw`,
       }}
     >
       {props.children}

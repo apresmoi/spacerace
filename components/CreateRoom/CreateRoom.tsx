@@ -1,6 +1,8 @@
 import React from "react";
 import { useAppStore } from "../../store";
 import { useSocketStore } from "../../store/SocketStore";
+import { ButtonCreateRoom } from "../ButtonCreateRoom";
+import { Input } from "../Input";
 import styles from "./CreateRoom.module.scss";
 
 interface CreateRoomProps {
@@ -35,23 +37,13 @@ export function CreateRoom(props: CreateRoomProps) {
 
   return (
     <div className={styles.createRoom}>
-      <h1 className={styles.label}>New room name</h1>
-      <input
-        className={styles.input}
-        type="text"
-        placeholder="Room Name"
+      <Input
         onChange={handleRoomNameChange}
+        placeholder="Room Name"
         value={roomName}
-        required
         minLength={6}
       />
-      <button
-        className={styles.button}
-        disabled={roomName.length < 6}
-        onClick={handleRoomCreate}
-      >
-        Create Room!
-      </button>
+      <ButtonCreateRoom text="Create a room" onClick={handleRoomCreate} disabled={roomName.length < 6}/>
     </div>
   );
 }

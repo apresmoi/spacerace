@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import * as React from "react";
 import { IPlayer, IPosition, IRoom } from "../socket/types";
 import { uniquePredicate } from "../utils/array";
@@ -34,6 +35,7 @@ export function useGame() {
 export function GameStore(props: React.PropsWithChildren<{}>) {
   const [playerID, setPlayerID] = React.useState<string>();
   const [room, setRoom] = React.useState<IRoom>();
+  const router = useRouter();
 
   const tryStart = useRoomPlayerStart();
   const tryMove = useRoomPlayerTryMove();
@@ -52,6 +54,14 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
   const isMyTurn = React.useMemo(() => {
     return (turnPlayer && player && turnPlayer.id === player.id) || false;
   }, [turnPlayer, player]);
+
+  React.useEffect(() => {
+    if (room?.turnStage === "END_GAME") {
+      setTimeout(() => {
+        router.push(isMyTurn ? "/victory" : "/defeat");
+      }, 1000);
+    }
+  }, [room?.turnStage, isMyTurn]);
 
   useSocketRoomJoined((payload) => {
     console.log(payload);

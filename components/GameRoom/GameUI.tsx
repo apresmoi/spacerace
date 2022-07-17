@@ -1,5 +1,9 @@
 import React from "react";
 import { useGame } from "../../store";
+import { className } from "../../utils/classnames";
+import { DiceIcon, RocketIcon } from "../Icon";
+import { RocketWithShape } from "../Icon/RocketWithShape";
+import StartBackgroundButton from "../Icon/StartBackgroundButton";
 import styles from "./GameRoom.module.scss";
 
 export function GameUI() {
@@ -9,26 +13,62 @@ export function GameUI() {
 
   return (
     <div className={styles.gameUI}>
-      {player?.isAdmin && (
-        <button disabled={room.started} onClick={() => tryStart()}>
-          Start Game
-        </button>
-      )}
       {isMyTurn && (
-        <>
-          <button onClick={() => tryDice()}>Roll dice</button>
-        </>
+        <div className={styles.dice} onClick={() => tryDice()}>
+          <div>
+            <DiceIcon />
+          </div>
+          <span>{room.currentDice[0] + room.currentDice[1]}</span>
+        </div>
       )}
-      <div>
-        {room.players.map((player) => (
-          <div key={player.id}>
-            {player.isAdmin ? "(Admin)" : ""} {player.name}
+      {player?.isAdmin && !room.started && (
+        <div className={styles.startButton} onClick={() => tryStart()}>
+          <StartBackgroundButton />
+          <span>Start</span>
+        </div>
+      )}
+      <div className={styles.zones}>
+        <div>
+          <StartBackgroundButton />
+          <span>KUIPER ZONE</span>
+        </div>
+        <div>
+          <StartBackgroundButton />
+          <span>METEOR ZONE</span>
+        </div>
+        <div>
+          <StartBackgroundButton />
+          <span>SATURN ZONE</span>
+        </div>
+        <div>
+          <StartBackgroundButton />
+          <span>SUPERNOVAE ZONE</span>
+        </div>
+      </div>
+      <div className={styles.players}>
+        {room.players.map((player, i) => (
+          <div key={player.id} className={styles[`player${i + 1}`]}>
+            <RocketIcon foundParts={player.inventory} />
+            <div className={styles.playerName}>
+              <StartBackgroundButton />
+              <span>
+                {player.name}
+                {player.isAdmin ? " (Admin)" : ""}
+              </span>
+            </div>
           </div>
         ))}
-      </div>
-      <div>
-        Dice: {room.currentDice?.[0]} / {room.currentDice?.[1]}
       </div>
     </div>
   );
 }
+
+<svg
+  width="88"
+  height="136"
+  viewBox="0 0 88 136"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect width="88" height="136" fill="white" />
+</svg>;

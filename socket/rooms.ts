@@ -123,7 +123,7 @@ class Room {
         { x: 10, y: 9, type: "SUPERNOVAE" },
       ],
       effects: [],
-      height: 13,
+      height: 10,
       width: 13,
       currentTurnPlayerID: undefined,
       started: false,
@@ -232,6 +232,17 @@ class Room {
     }
   };
 
+  private checkEndGame = () => {
+    const winningPlayer = this.getWinningPlayer();
+    if (winningPlayer) {
+      this._room.currentTurnPlayerID = winningPlayer.id;
+      this._room.turnStage = "END_GAME";
+      this.triggerTurnChange();
+      return true;
+    }
+    return false;
+  };
+
   private triggerPickupItem = (
     player: IPlayer,
     item: IItem,
@@ -303,6 +314,22 @@ class Room {
     }
   };
 
+  getWinningPlayer = () => {
+    const endPosition = this._room.cells.find((cell) => cell.type === "END");
+    if (endPosition) {
+      return this._room.players.find((player) => {
+        return (
+          player.x === endPosition.x &&
+          player.y === endPosition.y &&
+          player.inventory.includes("ROCKET_BODY") &&
+          player.inventory.includes("ROCKET_FINS") &&
+          player.inventory.includes("ROCKET_FIRE") &&
+          player.inventory.includes("ROCKET_TIP")
+        );
+      });
+    }
+  };
+
   tryMovePlayer = (playerID: string, position: IPosition) => {
     if (
       this._room.turnStage === "WAITING_FOR_MOVE" &&
@@ -310,8 +337,11 @@ class Room {
     ) {
       this.movePlayer(playerID, position);
       this.triggerPlayerMoved();
-      this.nextTurn();
-      this.triggerTurnChange();
+
+      if (!this.checkEndGame()) {
+        this.nextTurn();
+        this.triggerTurnChange();
+      }
     }
   };
 }

@@ -4,7 +4,6 @@ const StartBackgroundButton = () => {
   return (
     <svg xmlns='http://www.w3.org/2000/svg' width='631' height='213' viewBox='0 0 631 213' fill='none'>
       <g clipPath='url(#clip0_46_1622)'>
-        <rect width='631' height='213' fill='white' />
         <path
           fillRule='evenodd'
           clipRule='evenodd'

@@ -34,7 +34,7 @@ export function socketHandler(res: SocketNextApiResponse<any>) {
       const room = roomStore.getRoom(id);
 
       if (room) {
-        const player = room.addPlayer(id, name);
+        const player = room.addPlayer(socket.id, name);
 
         if (player) {
           socket.data = {

@@ -1,10 +1,13 @@
 import React from "react";
 import { NextPage } from "next";
-import { Container } from "../components/layout/Container";
-import Image from "next/image";
 import styles from "../styles/Login.module.scss";
 import { useRouter } from "next/router";
 import { useAppStore } from "../store";
+import { Background } from "../components/Background";
+import { StarsBackground } from "../components/StarsBackground";
+import { ButtonCreateRoom } from "../components/ButtonCreateRoom";
+import { LeniolabsLogo } from "../components/LeniolabsLogo";
+import { Input } from "../components/Input";
 
 const Login: NextPage = () => {
   const { name, changeName } = useAppStore();
@@ -23,30 +26,22 @@ const Login: NextPage = () => {
   }, [name, router]);
 
   return (
-    <Container>
-      <div className={styles.login}>
-        <div className={styles.content}>
-          <Image
-            src="https://via.placeholder.com/287x36.png"
-            height={36}
-            width={287}
-            alt="instructions"
-          />
-          <h1 className={styles.title}>Choose your name</h1>
-          <input
-            className={styles.input}
-            type="text"
-            placeholder="Choose your name!"
-            onChange={handleOnChangeName}
-            value={name}
-            required
-          />
-          <button className={styles.button} onClick={handleOnClick}>
-            Find a room
-          </button>
-        </div>
+    <div className={styles.login}>
+      <Background />
+      <StarsBackground />
+      <div className={styles.content}>
+        <h1 className={styles.title}>Choose your name</h1>
+        <Input
+          onChange={handleOnChangeName}
+          placeholder="Choose your name!"
+          value={name}
+        />
+        <ButtonCreateRoom text="Find New Room" onClick={handleOnClick} />
       </div>
-    </Container>
+      <div style={{ position: "absolute", bottom: "20px", left: "20px" }}>
+        <LeniolabsLogo />
+      </div>
+    </div>
   );
 };
 

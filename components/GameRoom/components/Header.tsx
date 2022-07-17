@@ -6,6 +6,7 @@ export const Header = () => {
   return (
     <div className={className(styles.header)}>
       <HeaderIcon />
+      <span>Space Race</span>
     </div>
   );
 };

@@ -1,23 +1,82 @@
 .chatWindow {
   position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translate(0, -50%);
-  height: 200px;
-  width: 200px;
+  left: 3vw;
+  top: 18vw;
+  height: 20vw;
+  width: 20vw;
   border: 1px solid white;
+
+  display: flex;
+  flex-direction: column;
+
+  .chatTitle {
+    margin: 5px;
+    border: 1px solid white;
+    font-size: 14px;
+    padding: 5px;
+  }
+
   .chatWindowMessages {
+    margin: 5px;
+    margin-top: 0;
     padding: 12px;
-    height: calc(200px - 45px);
-    background: black;
+    height: calc(20vw - 45px - 2vw);
+    background: #1a1f30;
+    border: 1px solid white;
+    overflow-y: scroll;
 
     .chatWindowMessage {
       padding: 2px;
+      display: flex;
+      flex-direction: column;
+      height: max-content;
+
+      span:first-child {
+        color: #fa3757;
+      }
+      span:last-child {
+      }
+
+      &.myMessage {
+        span:first-child {
+          color: #69b3b2;
+        }
+        span {
+          margin-left: auto;
+        }
+
+        .messageContent {
+          font-family: "Bai Jamjuree";
+          font-size: 1.25rem;
+        }
+      }
     }
   }
-  .chatWindowInput {
-    padding: 12px 6px;
+  input {
+    font-family: "Bai Jamjuree";
+    font-size: 1.5rem;
+    background-color: #1a1f30;
+    box-shadow: none;
+    color: white;
+    border: 1px solid white;
+    margin: 5px;
+    padding: 12px;
     display: flex;
     height: 45px;
+  }
+
+  button {
+    font-weight: bolder;
+    font-size: 1.5rem;
+    font-family: "Bungee", cursive;
+    background: #fecb2f;
+    color: #1a1f30;
+    width: 7vw;
+    height: 2vw;
+    margin-left: auto;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
   }
 }
