@@ -47,30 +47,29 @@ export const useSound = (
     const sound: HTMLAudioElement | undefined = sounds[name];
     let isPlaying = false;
 
-    if (sound)
-    sound.volume = 0.5
-      return {
-        isPlaying,
-        play: (stopAt: number = null) => {
-          if (soundActivated) {
-            sound.loop = options?.loop || false;
-            sound.volume = options?.volume || 1;
-            isPlaying = true;
-            sound.play();
+    if (sound) sound.volume = 0.5;
+    return {
+      isPlaying,
+      play: (stopAt: number | null = null) => {
+        if (soundActivated && sound) {
+          sound.loop = options?.loop || false;
+          sound.volume = options?.volume || 1;
+          isPlaying = true;
+          sound.play();
 
-            if (stopAt != null) {
-              setTimeout(() => {
-                sound.pause();
-              }, stopAt);
-            }
+          if (stopAt != null) {
+            setTimeout(() => {
+              sound.pause();
+            }, stopAt);
           }
-          return new Promise(() => {});
-        },
-        stop: () => {
-          sound.pause();
-          isPlaying = false;
-        },
-      };
+        }
+        return new Promise(() => {});
+      },
+      stop: () => {
+        sound?.pause();
+        isPlaying = false;
+      },
+    };
   }, [name, options, sounds, soundActivated]);
 };
 

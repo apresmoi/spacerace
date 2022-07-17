@@ -388,8 +388,8 @@ export function DetailsBackground() {
             y2="2343.83"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#63A5B7" />
-            <stop offset="1" stop-color="#6F5DDF" stop-opacity="0.24" />
+            <stop stopColor="#63A5B7" />
+            <stop offset="1" stopColor="#6F5DDF" stopOpacity="0.24" />
           </linearGradient>
         </defs>
       </svg>

@@ -21,10 +21,13 @@ const Login: NextPage = () => {
     []
   );
 
-  const handleOnClick = React.useCallback((e) => {
-    e.preventDefault();
-    if (name) router.push("/rooms");
-  }, [name, router]);
+  const handleOnClick = React.useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      if (name) router.push("/rooms");
+    },
+    [name, router]
+  );
 
   return (
     <form className={styles.login}>
