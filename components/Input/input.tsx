@@ -12,7 +12,7 @@ export const Input = (props: inputProps) => {
   return (
     <input
       className={styles.input}
-      maxlength={10}
+      maxlength={15}
       type="text"
       placeholder={placeholder}
       onChange={onChange}

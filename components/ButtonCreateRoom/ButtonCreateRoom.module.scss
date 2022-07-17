@@ -17,4 +17,9 @@
     line-height: 50px;
     color: #fecb2f;
   }
+
+  &:disabled {
+    opacity: 50%;
+  }
+
 }
