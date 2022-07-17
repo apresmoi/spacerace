@@ -1,6 +1,6 @@
-import { useSettings } from "@store";
 import debounce from "lodash.debounce";
 import * as React from "react";
+import { useSettings } from "../store";
 
 const Ambient = new Audio("sounds/ambient.mp3");
 const Moving = new Audio("sounds/moving.mp3");
