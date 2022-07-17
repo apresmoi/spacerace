@@ -333,7 +333,7 @@ class Room {
     const player = this.getPlayerById(playerID);
     const targetPlayer = this.getPlayerById(targetPlayerID);
     if (targetPlayer) {
-      this.trigger("onDropItem", player, item, {
+      this.trigger("onDropItem", targetPlayer, item, {
         x: targetPlayer.x,
         y: targetPlayer.y,
       });

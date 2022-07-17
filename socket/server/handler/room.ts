@@ -31,7 +31,7 @@ import {
 export async function handleRoomEvents(
   room: Room,
   server: Server,
-  socket: Socket,
+  socket: Socket
 ) {
   //@ts-ignore
   room.subscribe("onTurnChange", (player: IPlayer, turn: IRoomTurnStage) => {
@@ -209,9 +209,9 @@ export async function handleRoomPlayerTryDropItem(
   room.subscribe(
     "onDropItem",
     //@ts-ignore
-    (player: IPlayer, item: IItem, position: IPosition) => {
+    (targetPlayer: IPlayer, item: IItem, position: IPosition) => {
       emitRoomPlayerDropItem(room.id, server, socket, {
-        playerID: player.id,
+        playerID: targetPlayer.id,
         item,
         position,
       });
