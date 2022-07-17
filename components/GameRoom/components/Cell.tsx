@@ -9,10 +9,11 @@ interface CellProps {
   cell: ICell;
   highlight?: boolean;
   onClick?: (cell: ICell) => void;
+  isMyTurn?: boolean;
 }
 
 export function Cell(props: CellProps) {
-  const { cell, onClick } = props;
+  const { cell, onClick, isMyTurn } = props;
 
   const handleClick = React.useCallback(() => {
     onClick?.(cell);
@@ -31,7 +32,10 @@ export function Cell(props: CellProps) {
 
   const strokeColor = React.useMemo(() => {
     if (props.highlight) {
-      return "#BEED00";
+      if (isMyTurn) {
+        return "#BEED00";
+      }
+      return "white";
     }
     switch (cell.type) {
       case "END":
@@ -40,11 +44,11 @@ export function Cell(props: CellProps) {
       default:
         return "transparent";
     }
-  }, [cell, props.highlight]);
+  }, [cell, props.highlight, isMyTurn]);
 
   return (
     <div
-      className={className(styles.cell, props.highlight && styles.highlight)}
+      className={className(styles.cell, isMyTurn && props.highlight && styles.highlight)}
       style={{
         gridArea: getBlockId(cell.x, cell.y),
       }}
@@ -55,7 +59,7 @@ export function Cell(props: CellProps) {
           d="M0.5 49.1195L49.1195 0.5H117.88L166.5 49.1195V117.88L117.88 166.5H49.1195L0.5 117.88V49.1195Z"
           fill={getCellColor(cell)}
           stroke={strokeColor}
-          strokeWidth={12}
+          strokeWidth={18}
         />
         <text fontSize={40} dy={100} dx={82} textAnchor="middle" fill="black">
           {cellText}
