@@ -4,6 +4,7 @@
   height: 100vh;
   overflow: hidden;
   z-index: 2;
+  pointer-events: none;
 
   svg {
     width: 100%;
