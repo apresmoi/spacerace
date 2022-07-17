@@ -1,13 +1,10 @@
 import React from "react";
 import { useGame } from "../../store";
 import { Player } from "./components/Player";
-import { getBlockId } from "./utils";
 
 export function Players() {
   const { room, turnPlayer } = useGame();
   if (!room) return null;
-
-console.log(room.players)
 
   return (
     <>

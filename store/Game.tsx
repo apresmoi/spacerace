@@ -64,7 +64,6 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
   }, [room?.turnStage, isMyTurn]);
 
   useSocketRoomJoined((payload) => {
-    console.log(payload);
     setRoom(payload.room);
     setPlayerID(payload.playerID);
   });
