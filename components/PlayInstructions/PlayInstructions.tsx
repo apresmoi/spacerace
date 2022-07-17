@@ -14,12 +14,12 @@ export function PlayInstructions() {
 
   const instructions = [
     {
-      text: "The goal is to find 4 parts of the spaceship that are sparsed along the board in order to take off and go back to Earth.",
+      text: "The goal is to find 4 parts of the spaceship that are dispersed along the board in order to take off and go back to Earth.",
       img: Instruction1,
       id: "instruction1",
     },
     {
-      text: "The players take turns to roll the dice. The board is divided into 4 zones with different colours. In each one of them the player will be able to obtain a part of the spaceship.",
+      text: "The players take turns to roll the dice. The board is divided into 4 zones with different colors. In each one of them the player will be able to obtain a part of the spaceship.",
       img: Instruction2,
       id: "instruction2",
     },

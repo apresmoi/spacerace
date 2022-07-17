@@ -6,3 +6,5 @@ export { MusicIcon } from "./MusicIcon";
 export { PauseIcon } from "./PauseIcon";
 export { ResetIcon } from "./ResetIcon";
 export { RocketIcon } from "./RocketIcon";
+export { Buildings } from "./Buildings";
+export { SpaceShip } from "./SpaceShip";

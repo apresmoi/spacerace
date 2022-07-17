@@ -9,6 +9,7 @@ import { GameUI } from "./GameUI";
 import { Players } from "./Players";
 import { StarsBackground } from "../StarsBackground"
 import { Header} from './components/Header'
+import { DetailsBackground } from "../DetailsBackground";
 
 
 interface GameRoomProps {
@@ -29,6 +30,7 @@ export function GameRoom(props: GameRoomProps) {
     <div className={styles.gameRoom}>
       <Background />
       <StarsBackground/>
+      <DetailsBackground />
       <Board>
         <Cells />
         <Players />

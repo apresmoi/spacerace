@@ -7,10 +7,9 @@ import { findCellByPosition, getBlockId, getPosibleMovements } from "./utils";
 
 export function Cells() {
   const { room, player, isMyTurn, tryMove } = useGame();
-  if (!room) return null;
 
   const possibleBlocks = React.useMemo(() => {
-    if (isMyTurn && player) {
+    if (room && isMyTurn && player) {
       const steps = room.currentDice.reduce((r, x) => r + x, 0);
       return getPosibleMovements(
         room.cells,
@@ -20,11 +19,12 @@ export function Cells() {
       );
     }
     return [];
-  }, [isMyTurn, player, room.currentDice]);
+  }, [isMyTurn, player, room?.currentDice]);
 
   const isBlockHighlighted = React.useCallback(
     (cell: ICell) => {
       return (
+        room &&
         isMyTurn &&
         room.turnStage === "WAITING_FOR_MOVE" &&
         !!findCellByPosition(possibleBlocks, {
@@ -33,7 +33,7 @@ export function Cells() {
         })
       );
     },
-    [room.turnStage, possibleBlocks]
+    [room?.turnStage, possibleBlocks]
   );
 
   const handleCellClick = React.useCallback(
@@ -42,6 +42,8 @@ export function Cells() {
     },
     [tryMove, isBlockHighlighted]
   );
+
+  if (!room) return null;
 
   return (
     <>

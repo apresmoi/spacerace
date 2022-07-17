@@ -13,7 +13,7 @@ export function ChatWindow() {
   const [message, setMessage] = React.useState("");
 
   const handleMessageSubmit = React.useCallback(
-    (e) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       if (message) {
         sendMessage(message);
