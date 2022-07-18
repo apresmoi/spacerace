@@ -91,10 +91,10 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
     });
 
     activeCells.forEach((cell: any) => {
-      if (cell.type === "KUIPER") kiperZone?.play(30000);
-      if (cell.type === "METEOR") meteorZone?.play(30000);
-      if (cell.type === "SUPERNOVAE") supernovaZone?.play(30000);
-      if (cell.type === "SATURN") saturnZone?.play(30000);
+      if (cell.type === "KUIPER") kiperZone?.play();
+      if (cell.type === "METEOR") meteorZone?.play();
+      if (cell.type === "SUPERNOVAE") supernovaZone?.play();
+      if (cell.type === "SATURN") saturnZone?.play();
     });
 
     console.log(activeCells.forEach(console.log));
