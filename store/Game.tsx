@@ -91,7 +91,8 @@ export function GameStore(props: React.PropsWithChildren<{}>) {
     });
 
     activeCells.forEach((cell: any) => {
-      if (cell.type === "KUIPER") kiperZone?.play();
+      // todo: change music since it sounds bad in conjunction with the main theme
+      // if (cell.type === "KUIPER") kiperZone?.play();
       if (cell.type === "METEOR") meteorZone?.play();
       if (cell.type === "SUPERNOVAE") supernovaZone?.play();
       if (cell.type === "SATURN") saturnZone?.play();
